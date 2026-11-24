@@ -1,0 +1,16 @@
+Perform the source-verification task only.
+
+Read the assignment brief in materials/assignment02/ and the original Fuel&Go presentation and prior product PRD in materials/fuel-and-go/.
+
+Update docs/REQUIREMENTS_CHECKLIST.md with:
+- Explicit lecturer requirements and exact source pages.
+- The exact English page-count wording and whether front/back matter inclusion is specified.
+- Whether a particular report title or framing is required.
+- Original Fuel&Go features, with slide/section references, especially EXT-01..05.
+- Reading limitations and unresolved questions.
+
+Separate lecturer requirements, original product content, and team proposals. Report any conflict with the current PRD rather than silently changing it. Do not infer that an unmentioned feature is excluded.
+
+Save this prompt in prompts/ using the next available number. Update only the relevant TODO task status based on work actually completed.
+
+Do not rewrite PRD or PLAN, write chapters, launch sessions, or perform Git operations. Finish with a concise Hebrew summary of findings and decisions still needed.

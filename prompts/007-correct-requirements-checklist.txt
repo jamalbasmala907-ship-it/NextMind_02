@@ -1,0 +1,10 @@
+Correct REQUIREMENTS_CHECKLIST.md only. Save this prompt in prompts/.
+
+1. Distinguish explicit Assignment 02 requirements from preparation-book examples, recommendations, and reusable templates. Do not label 15 papers, 14 weeks, exactly 5 work packages, or specific typography as mandatory unless the assignment explicitly incorporates those requirements. Verify against the actual sources; otherwise mark applicability pending.
+2. Replace “explicit exclusion” of convenience-store ordering with “not found in the reviewed sources”; the Yellow comparison alone does not establish exclusion.
+3. Distinguish monthly financial/usage reports from corporate or VAT invoicing. Mark invoicing unverified unless directly supported.
+4. Correct reading limitations: reading related documents does not constitute direct review of another file.
+5. Keep the 25-page English target. Leave front/back matter inclusion unresolved; do not call either interpretation safer without evidence.
+6. Remove the claim that the proposed outline covers every required concept unless an explicit section-to-requirement mapping supports it.
+
+Preserve useful verified findings. Do not modify PRD, PLAN, or TODO, launch agents, or perform Git operations. Return a brief Hebrew summary.

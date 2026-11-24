@@ -1,0 +1,26 @@
+We are pausing work. Publish my current Fuel&Go Assignment 02 work to our shared repository so Basmala can pull it:
+
+https://github.com/jamalbasmala907-ship-it/NextMind_02.git
+
+This authorizes the necessary local Git setup, commit, and push after the checks below.
+
+1. Inspect the project root, local Git status, branch, remotes, and existing remote history. Preserve all local files and Basmala's existing commits. Do not force-push, reset destructively, or overwrite conflicting files. If histories or files conflict, stop and explain.
+
+2. Verify the local commit author identity belongs to Maria's GitHub account, mariamnasra4-cmd. If the correct linked email is unknown, ask me for it. Do not infer it from the Antigravity login, impersonate Basmala, or change global Git settings.
+
+3. Prepare .gitignore before staging. Exclude:
+- agy-multi-agent-mesh/ and its environment.
+- Runtime .mesh/ state, caches, virtual environments, and temporary build files.
+- Credentials, tokens, private settings, and personal submission receipts.
+- Lecturer-provided PDFs and other course materials pending redistribution permission.
+Check for junctions/symlinks and avoid staging duplicate or external content.
+
+4. Include our current planning work: the latest Assignment 02 PRD, PLAN.md, TODO.md, docs, actual prompts, role-specific SKILL.md files, and relevant curated evidence. Include portable team configuration only after checking it for secrets and machine-specific paths. Preserve the old product PRD separately as background.
+
+5. Inspect staged files/diff, commit with a clear message, integrate remote history safely, and push to main. If direct push is blocked, push to a new branch and report.
+
+Finish with a brief Hebrew summary covering:
+- Push outcome.
+- Branch and commit hash.
+- What was uploaded vs. excluded.
+- The exact pull command for Basmala.

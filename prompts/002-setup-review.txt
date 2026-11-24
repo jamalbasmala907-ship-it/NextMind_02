@@ -1,0 +1,15 @@
+Save this follow-up prompt verbatim as prompts/002-setup-review.txt.
+
+The team has decided:
+- The Fuel&Go report will be entirely in English.
+- The visual design will be decided by Maria and Basmala later; mark it as pending.
+- The new GitHub repository is https://github.com/jamalbasmala907-ship-it/NextMind_02. Do not connect, commit, or push yet.
+
+Before proceeding, show a concise setup audit:
+1. List the actual paths of all files created during setup.
+2. Confirm which role-specific SKILL.md files exist and how each agent will read its skill.
+3. Show the exact launch command and explain whether its configuration has been validated without launching agents.
+4. Quote the assignment's exact page-count requirement with its PDF page number. Distinguish English from mixed-language requirements.
+5. List unresolved errors and reading limitations.
+
+Do not launch agents or write report chapters yet. Explain the audit in Hebrew, keeping filenames and commands in English.

@@ -1,0 +1,1 @@
+Do not retrieve or print credentials, passwords, or tokens. Use the normal Git authentication flow through the credential manager/browser. Inspect the current Git state and continue the authorized commit and push safely. If interactive login is required, guide me through it without exposing secrets.

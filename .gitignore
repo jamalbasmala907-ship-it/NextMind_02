@@ -1,5 +1,42 @@
-# External local multi-agent utility directory (kept local, never tracked)
+# External local multi-agent utility directory & virtual environments (kept local, never tracked)
 agy-multi-agent-mesh/
+**/agy-multi-agent-mesh/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Mesh runtime state, journals, boards, results, and local logs
+.mesh/
+*.log
+*.pid
+*.sock
+
+# Agent directory junctions / symlinks
+agents/*/agy-multi-agent-mesh/
+agents/*/config/
+agents/*/.venv/
+
+# Secrets, environment variables, credentials, and tokens
+.env
+.env.*
+*.env
+credentials.json
+token.json
+secrets.*
+
+# Submission receipts and confirmation PDFs (personal, do not redistribute)
+submissions/*_receipt.*
+submissions/*_confirmation.*
+submissions/*.pdf
+
+# Lecturer-provided PDFs and large course materials pending redistribution permission
+materials/assignment02/*.pdf
+materials/fuel-and-go/*.pptx
+materials/fuel-and-go/*.pdf
+
+# Local working copy duplicates
+PRD (1).md
 
 # Transient LaTeX build artifacts (keep curated QA/build logs under qa/)
 *.aux
@@ -17,9 +54,3 @@ agy-multi-agent-mesh/
 *.synctex.gz
 *.toc
 build/
-
-# Python virtual environments & caches
-__pycache__/
-*.py[cod]
-.venv/
-venv/

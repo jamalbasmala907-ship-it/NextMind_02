@@ -1,0 +1,40 @@
+{
+    "version":  "1.00",
+    "copyright":  "© 2026 Dr. Yoram Segal, Gal Technologies Artificial Intelligence Ltd. All rights reserved.",
+    "name":  "fuel-and-go-report",
+    "master":  {
+                   "name":  "master",
+                   "folder":  "master",
+                   "role":  "Coordinate the Fuel\u0026Go report team, delegate tasks, and track verified deliverables."
+               },
+    "agents":  [
+                   {
+                       "instructions":  "Read your assigned SKILL.md before working. Verify sources, distinguish evidence from assumptions, and never invent citations or data.",
+                       "name":  "research",
+                       "folder":  "research",
+                       "task_template":  "Research and write the assigned Fuel\u0026Go report task: {topic}",
+                       "role":  "Research and writing"
+                   },
+                   {
+                       "instructions":  "Read your assigned SKILL.md before working. Build modular LaTeX, a custom CLS, and reproducible Python graphs. Check Hebrew-English layout.",
+                       "name":  "design",
+                       "folder":  "design",
+                       "task_template":  "Complete the assigned Fuel\u0026Go design task: {topic}",
+                       "role":  "LaTeX design and visualization"
+                   },
+                   {
+                       "instructions":  "Read your assigned SKILL.md before working. Report defects with evidence and acceptance criteria. Do not modify the files being reviewed.",
+                       "name":  "detector",
+                       "folder":  "detector",
+                       "task_template":  "Review the assigned Fuel\u0026Go deliverables: {topic}",
+                       "role":  "Independent quality reviewer"
+                   },
+                   {
+                       "instructions":  "Read your assigned SKILL.md before working. Fix assigned defects, document root causes and missed detection, and return changes for independent review.",
+                       "name":  "fixer",
+                       "folder":  "fixer",
+                       "task_template":  "Fix the assigned Fuel\u0026Go defects: {topic}",
+                       "role":  "Defect correction"
+                   }
+               ]
+}

@@ -1,0 +1,28 @@
+You are setting up Assignment 02 for team NextMind: a professional Fuel&Go report produced by a real multi-agent team.
+
+Work only within the current NextMind-ex02 project. Do not change global settings, access unrelated personal folders, or modify the lecturer's agy-multi-agent-mesh source repository.
+
+First save this exact user prompt to prompts/001-team-setup.txt.
+
+Inspect:
+- agents/team.json
+- materials/assignment02/
+- materials/fuel-and-go/
+- the lecturer's local mesh documentation and configuration, read-only.
+
+Read the assignment documents and relevant guides. If PDF or PowerPoint extraction is unavailable or produces unreadable text, report that clearly; do not claim you read them.
+
+Prepare the team infrastructure:
+1. Create role-specific SKILL.md files for master, research, design, detector, and fixer, using the skill format supported by this CLI. Give each role explicit instructions for locating and reading its skill.
+2. Define scope, inputs, outputs, file ownership, verification rules, and handoff procedures for each role.
+3. Keep Detector independent: it records defects with evidence but does not edit reviewed deliverables. Fixer corrects assigned defects and returns them to Detector for retesting.
+4. Require incident records explaining why each defect occurred and why earlier checks missed it.
+5. Require real mesh messages between separate agent sessions. Never simulate worker responses or fabricate logs, sources, tests, or contributions.
+6. Treat the previous Fuel&Go PRD as background for Assignment 01, not as the new report requirements.
+7. Prepare project-local launch configuration and documented commands for agents/team.json. Preserve permission checks. Do not launch agents yet.
+8. Prepare a requirements checklist with source filenames and page references where readable. Separate explicit lecturer requirements from your proposals and unresolved questions.
+9. Document how to keep the lecturer's nested utility repository separate from our future submission repository. Do not initialize Git, commit, push, or publish anything yet.
+
+Do not write report chapters or finalize the new PRD yet. Do not overwrite existing materials.
+
+Finish by listing the files actually created, checks actually performed, any reading limitations, and the next setup step. Explain the summary to me in Hebrew.

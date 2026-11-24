@@ -1,0 +1,23 @@
+Create TODO.md in English at the project root, based on the updated PLAN.md and "./PRD (1).md" (v1.2.0-draft).
+
+Save this prompt verbatim in prompts/ using the next available number. If TODO.md exists, preserve a backup before updating it.
+
+Keep it concise and actionable. Group tasks by the PLAN phases. For each task include:
+- Stable task ID.
+- Clear action.
+- Responsible partner or agent.
+- Dependencies, if any.
+- Status: TODO, IN PROGRESS, BLOCKED, or DONE.
+- Completion criterion and evidence path.
+
+Maria owns TODO.md and PLAN.md; Basmala owns the PRD; major decisions and final approval are joint.
+
+Include source/scope verification, report audience, the 25-page counting boundary, outline approval, early Git setup and ongoing collaboration checkpoints, research, writing, visual sample approval, LaTeX production, reproducible Python graphs, independent Detector–Fixer–Detector review, actual evidence preservation, README, and separate personal Moodle submission forms.
+
+Mark tasks DONE only when actual evidence supports completion. Do not treat draft creation as content approval. Keep unresolved decisions visible without blocking unrelated work. Do not invent deadlines or evidence.
+
+List the next three actionable tasks at the top.
+
+Only create or update TODO.md and save this prompt. Do not execute the listed tasks, change PRD or PLAN, launch agents, commit, or push.
+
+Finish with the file path and a brief Hebrew summary. Do not print the full file.

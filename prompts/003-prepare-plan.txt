@@ -1,0 +1,35 @@
+Use "./PRD (1).md" at the project root as the Assignment 02 specification. Verify that its version is 1.2.0-draft. Keep it unchanged.
+Prepare PLAN.md for the Fuel&Go Assignment 02 report.
+
+First locate and read the latest PRD (v1.2.0-draft). If multiple PRDs exist, identify the Assignment 02 version; do not use the old product PRD as the report specification.
+
+Read the available assignment instructions in materials/assignment02/ and product background in materials/fuel-and-go/. Report missing or unreadable sources briefly.
+
+Save this prompt verbatim in prompts/ using the next available numbered filename.
+
+Create PLAN.md in English at the project root. If it already exists, preserve a backup and update it.
+
+Include:
+1. Report objective and scope, linked to the PRD.
+2. Current project state: distinguish verified completed work from planned work.
+3. Human responsibilities: Basmala owns PRD; Maria owns PLAN and TODO; both review major decisions and the final report.
+4. Agent responsibilities: Master coordinates; Research researches and drafts; Design produces LaTeX, diagrams, and Python graphs; Detector reviews independently; Fixer corrects defects for independent retesting.
+5. Work phases, dependencies, expected outputs, and completion criteria:
+   - Verify source instructions and resolve scope questions.
+   - Approve the report outline and indicative 25-page English budget.
+   - Research and verify sources/data.
+   - Draft content.
+   - Approve a visual sample and integrate LaTeX/figures.
+   - Compile, review, correct, and retest.
+   - Complete repository documentation and submission checks.
+6. Reproducible build and Python graph verification.
+7. Preservation of real prompts, agent messages, QA evidence, and incident records.
+8. Git collaboration checkpoints that preserve both partners' genuine contributions and exclude the lecturer's utility repository.
+9. Open decisions and risks, including visual design, disputed product features, and which pages count toward the 25-page requirement.
+10. Separate personal Moodle submission checks for each partner.
+
+Use relative paths consistent with the existing project. Do not invent deadlines, source references, completed tests, or approvals. Keep unresolved decisions visible, and allow independent planning work to proceed.
+
+Keep the plan concise and practical. Do not rewrite PRD.md, create TODO.md yet, write report chapters, launch agents, commit, or push.
+
+Finish with the PLAN.md path, a short Hebrew explanation, and any decisions needed from Maria and Basmala. Do not print the entire file.

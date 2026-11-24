@@ -1,0 +1,12 @@
+Apply minimal corrections to TODO.md only. Preserve a backup and save this prompt in prompts/.
+
+1. Align drafting tasks and filenames with the PRD's proposed outline; final chapter structure requires partner approval.
+2. Make final PRD content approval depend on source verification. Resolve each disputed feature from the original Fuel&Go materials and partner review, rather than automatically excluding it.
+3. Resolve the 25-page counting boundary from lecturer instructions or clarification, not an arbitrary team choice.
+4. Decouple early Git setup from page-budget approval. Before any future setup, inspect existing local Git state and remote history, preserve Basmala's existing work, and verify local author identity. Never overwrite history or force-push.
+5. Assign build execution to Design, coordinated by Master.
+6. Fixer documents diagnosis and changes; Detector alone records independent retest results. Allow repeated fix/retest cycles when needed.
+7. Separate each partner's required Moodle submission-form PDF from the submission confirmation. Archive confirmation in whatever format Moodle actually provides; do not assume a downloadable receipt PDF.
+8. Treat DONE setup items as historical verified milestones, not proof that sessions remain live. Replace bare log filenames with actual retrievable relative evidence paths where available; otherwise note that evidence still needs archiving.
+
+Do not execute tasks, modify PRD or PLAN, launch agents, commit, or push. Return a brief Hebrew summary only.
