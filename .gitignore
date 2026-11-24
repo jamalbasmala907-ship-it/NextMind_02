@@ -1,0 +1,25 @@
+# External local multi-agent utility directory (kept local, never tracked)
+agy-multi-agent-mesh/
+
+# Transient LaTeX build artifacts (keep curated QA/build logs under qa/)
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex.gz
+*.toc
+build/
+
+# Python virtual environments & caches
+__pycache__/
+*.py[cod]
+.venv/
+venv/

@@ -6,20 +6,22 @@
 | **Deliverable** | Assignment 02 Engineering Report (Working Framing: *Preliminary Design Report* — Pending Verification) |
 | **Team** | NextMind |
 | **Team Partners** | Maria Mnasra, Basmala Jamal |
+| **PRD Owner** | Basmala Jamal (Requirements Owner; Joint Major-Decision Approval with Maria Mnasra) |
 | **Document Language** | English (en-US) |
-| **Target & Acceptance Length** | Strictly 25 Pages (Exact) |
+| **Target & Acceptance Length** | Strictly 25 English Pages (Exact; front/back matter inclusion unresolved — see `Q-01`) |
 | **Typesetting Engine** | LuaLaTeX + Biber (`biblatex`, IEEE style) |
 | **Document Class** | Custom LaTeX Class (`nextmind-pdr.cls` — Working Filename, Visual Design Pending Approval) |
-| **Version** | 1.1.0-draft |
+| **Version** | 1.2.0-draft |
 | **Status** | **Draft — Pending Team Review** |
-| **Previous Baseline Backup** | `backups/PRD.original.md` (v1.0.0) |
+| **Previous Baseline Backups** | `backups/PRD.original.md` (v1.0.0), `backups/PRD.v1.1.0-draft.bak.md` (v1.1.0-draft) |
 
 ### Revision History
 
 | Version | Date | Author / Role | Summary of Changes |
 | --- | --- | --- | --- |
 | `1.0.0` | 2026-11-24 | Initial Draft | Initial baseline PRD draft (archived unmodified in `backups/PRD.original.md`). |
-| `1.1.0-draft` | 2026-11-24 | Revision Draft | Authoritative Assignment 02 revision for Team NextMind (Maria Mnasra & Basmala Jamal): status set to `Draft — Pending Team Review`; aligned Fuel&Go core scope to fueling + EV charging; demoted unsupported extras to proposed extensions/future scope; locked strict 25-page target with inclusion open question; separated report readers from app users; added 5-agent roles/SKILL.md/handoffs/zero-fabrication governance; separated product design verification from report QA with Detector/Fixer 5-part incidents and red-teaming; mandated reproducible Python graphs with provenance labels; standardized on IEEE citations (removed APA); marked visual design as proposals pending team approval; added structured provenance for numerical targets & candidate tech; added full deliverables, repository rules, and 5-category provenance separation. |
+| `1.1.0-draft` | 2026-11-24 | Revision Draft | Authoritative Assignment 02 revision for Team NextMind (archived unmodified in `backups/PRD.v1.1.0-draft.bak.md`). |
+| `1.2.0-draft` | 2026-11-24 | Targeted Correction Pass | Clarified deliverables & human ownership (`PRD.md` Basmala Jamal; `PLAN.md` & `TODO.md` Maria Mnasra; `README.md` joint); scoped `Master`, `Research`, and `Design` roles with single-writer handoffs; marked disputed scope extras `"Unverified — pending source review"`; reclassified 5-agent setup & 5-part incident format as team workflow choices unless backed by actual lecturer citations; replaced premature `"Implemented / Tested"` with `"Planned — verification pending"` and separated artifact type from completion status; documented local `agy-multi-agent-mesh/` `.gitignore` exclusion; made 25-page budget flexibly rebalanceable without cramming references/appendices into 1 page or hard-coding `"Page X of 25"`; replaced arbitrary numeric targets with `"TBD — requires rationale and team approval"`. |
 
 ---
 
@@ -29,7 +31,7 @@
 This Product Requirements Document (PRD) serves as the authoritative working specification for **Team NextMind** (**Maria Mnasra** and **Basmala Jamal**) to plan, govern, produce, verify, and submit **Assignment 02**. It defines:
 1. The **Fuel&Go** core product scope (fueling and EV charging) and explicit separation from proposed extensions/future scope.
 2. The **exact 25-page** English PDF deliverable structure, LuaLaTeX + Biber (IEEE) architecture, reproducible Python figure pipeline, and custom `.cls` styling governance.
-3. The **5-role multi-agent workflow** (Master, Research, Design, Detector, Fixer), quality assurance separation, red-team expectations, and strict **zero-fabrication** evidence rules.
+3. The **5-role multi-agent workflow** (team workflow choice: Master, Research, Design, Detector, Fixer), partner ownership (`PRD.md`, `PLAN.md`, `TODO.md`, `README.md`), quality assurance separation, red-team expectations, and strict **zero-fabrication** evidence rules.
 4. Clear provenance separating explicit lecturer requirements, confirmed team decisions, proposed choices, assumptions, and open decisions awaiting Maria and Basmala's sign-off.
 
 ### 1.2 Report Framing & Title Verification
@@ -52,8 +54,8 @@ This PRD strictly separates **who reads the Assignment 02 report** from **who us
 | --- | --- | --- |
 | **ICE / Hybrid Vehicle Driver** | **Core Scope** | Locates nearby fuel stations with live prices and pump availability, authorizes pump activation, monitors live fuel dispensing, pays contactlessly, and receives a digital receipt. |
 | **Electric Vehicle (EV) Driver** | **Core Scope** | Locates compatible EV charging stations (connector type, kW rating, live availability/pricing), initiates/stops charging sessions, monitors live kWh/SoC/cost telemetry, pays contactlessly, and receives a digital receipt. |
-| **Fleet Manager / Commercial Driver** | *Proposed Extension / Future Scope* | Corporate policy limits, multi-vehicle expense tracking, consolidated invoicing (excluded from core unless approved in `Q-05`). |
-| **Station / Forecourt Operator** | *Proposed Extension / Future Scope* | Operational dashboard, manual override visibility, pricing management, convenience order fulfillment (excluded from core unless approved in `Q-05`). |
+| **Fleet Manager / Commercial Driver** | *Proposed Extension / Future Scope (`Unverified — pending source review`)* | Corporate policy limits, multi-vehicle expense tracking, consolidated invoicing (excluded from core unless verified against original Fuel&Go sources and approved in `Q-05`). |
+| **Station / Forecourt Operator** | *Proposed Extension / Future Scope (`Unverified — pending source review`)* | Operational dashboard, manual override visibility, pricing management, convenience order fulfillment (excluded from core unless verified against original Fuel&Go sources and approved in `Q-05`). |
 
 ---
 
@@ -71,84 +73,106 @@ The following capabilities constitute the **core Fuel&Go scope** to be specified
 - **FR-05 — Contactless Payment Settlement & Basic Digital Receipt**: Final capture of exact dispensed/charged amount, automatic release of unused pre-authorization hold, and generation of a basic itemized digital receipt stored in session history.
 - **FR-06 — Session Fault Handling & Basic User Support**: Graceful handling of authorization timeout, nozzle/cable disconnect failure, payment decline, or station connectivity loss, with transparent user notifications and basic receipt/session issue reporting.
 
-### 2.2 Proposed Extensions / Future Scope (Explicitly Out of Core Scope)
-The following items appeared in `backups/PRD.original.md` (v1.0.0) without confirmed assignment backing. They are **demoted from core scope** and labeled strictly as **Proposed Extensions / Future Scope** unless Maria and Basmala explicitly vote to promote any specific item (`Q-05`):
+### 2.2 Disputed Features & Proposed Extensions / Future Scope (Explicitly Out of Core Scope)
+The following features appeared in `backups/PRD.original.md` (v1.0.0) without verified backing from the original Fuel&Go slides or prior project PRD. Because the original Fuel&Go slides/prior PRD are **not present in this project folder** (and unrelated personal folders were not scanned), their provenance cannot be cited yet and is marked **`Unverified — pending source review`**. They remain demoted out of core scope until Maria and Basmala review them against the original Fuel&Go source materials (`Q-05`):
 
-| ID | Capability | Classification | Notes / Rationale for Demotion |
-| --- | --- | --- | --- |
-| **EXT-01** | Convenience-Store Pre-Ordering & Pickup | *Proposed Extension / Future Scope* | Adds retail catalog, inventory, and fulfillment complexity unrelated to core fueling + EV charging. |
-| **EXT-02** | Loyalty Points & Promotions Engine | *Proposed Extension / Future Scope* | Commercial marketing add-on; not required to prove core fueling/EV charging engineering design. |
-| **EXT-03** | Fleet Management Portal & Driver Policies | *Proposed Extension / Future Scope* | Separate B2B product surface; keep out of core scope to protect depth within 25 pages. |
-| **EXT-04** | Consolidated Corporate / VAT Invoicing | *Proposed Extension / Future Scope* | Distinct tax/accounting workflow beyond basic per-session digital receipts. |
-| **EXT-05** | Station Operator Forecourt Dashboard | *Proposed Extension / Future Scope* | Operator web console is an auxiliary B2B interface; core report focuses on driver-side platform and station/CPMS integration boundary. |
+| ID | Capability | Scope Classification | Source Provenance (Original Fuel&Go Slides / Prior PRD) | Notes |
+| --- | --- | --- | --- | --- |
+| **EXT-01** | Convenience-Store Pre-Ordering & Pickup | *Proposed Extension / Future Scope* | `Unverified — pending source review` | Retail catalog/fulfillment outside confirmed fueling + EV charging core. |
+| **EXT-02** | Loyalty Points & Promotions Engine | *Proposed Extension / Future Scope* | `Unverified — pending source review` | Marketing/rewards add-on outside confirmed fueling + EV charging core. |
+| **EXT-03** | Fleet Management Portal & Driver Policies | *Proposed Extension / Future Scope* | `Unverified — pending source review` | Separate B2B product surface; do not expand core scope without source verification. |
+| **EXT-04** | Consolidated Corporate / VAT Invoicing | *Proposed Extension / Future Scope* | `Unverified — pending source review` | Distinct accounting workflow beyond basic per-session digital receipts. |
+| **EXT-05** | Station Operator Forecourt Dashboard | *Proposed Extension / Future Scope* | `Unverified — pending source review` | Auxiliary operator console; core design focuses on driver platform and station/CPMS integration boundary. |
 
-*Rule*: If kept as Future Scope, these extensions may be referenced briefly (at most a compact roadmap/future-work table) so they do not consume core requirements, architecture, or page budget.
+*Rule*: Never invent slide numbers or prior-PRD citations. Once Maria and Basmala inspect the original Fuel&Go slides/prior PRD, update each row with the exact slide/section citation or confirm permanent Future Scope status. If kept as Future Scope, these items may only appear briefly in a compact roadmap note so they do not consume core requirements, architecture, or page budget.
 
 ---
 
-## 3. Strict 25-Page Target & Realistic Section Budget
+## 3. Strict 25-Page Target & Rebalanceable Section Budget
 
 ### 3.1 Page-Count Acceptance Criterion
-- **Target & Acceptance Criterion**: The final compiled PDF must be **strictly 25 pages** (exact: `pages == 25`).
-- **Explicit Prohibition**: The target is **NOT** "at least 25 pages" and **NOT** an approximate range. A 24-page or 26-page build is a failed QA gate that must be logged by the Detector and resolved by the Fixer before release.
+- **Target & Acceptance Criterion**: The report length is **strictly 25 English pages** (exact).
+- **Explicit Prohibition**: The target is **NOT** "at least 25 pages" and **NOT** an approximate range. Falling short of or exceeding 25 pages within the confirmed page-count boundary is a failed QA gate that must be logged by the Detector and resolved by the Fixer before release.
 
 ### 3.2 Open Question on Page-Count Boundary (`Q-01`)
-> **Open Question (`Q-01` — Unclarified)**: Does the strict **25-page** requirement count the **cover page, table of contents / lists, references, and appendices** inside the 25-page total (i.e., `Total PDF Pages = 25`), OR are cover, front matter, references, and/or appendices excluded from the 25-page count (i.e., `25 pages of main body + front/back matter`)?
+> **Open Question (`Q-01` — Unresolved)**: Does the strict **25 English pages** requirement include the **cover page, table of contents / lists, references, and appendices** inside the 25 pages (i.e., `Total PDF Pages == 25`), OR does it require **25 body pages** excluding those front/back matter parts?
 >
-> **Action Required**: Maria and Basmala must verify this directly against the official Assignment 02 lecturer instructions before chapter drafting begins.
+> **Handling Rule**: If the confirmed lecturer requirement specifies **25 body pages**, then excluded front/back matter parts (cover, table of contents/lists, IEEE references, and appendices) are **additional** to the 25 body pages (total PDF pages = `25 + excluded front/back matter`) rather than compressed or omitted. Maria and Basmala must verify this against the official Assignment 02 lecturer instructions before locking the final budget.
 
-### 3.3 Proposed Section-by-Section Page Budget (Working Baseline: 25 Total PDF Pages)
-*Approval Status*: **Proposed Allocation — Pending Maria & Basmala's Approval** (assumes cover, ToC, references, and appendices are included in the 25-page PDF total; if `Q-01` resolves to "25 body pages excluding front/back matter", the ~4.0 pages of front/back matter will be reallocated proportionally into Sections 3–8).
+### 3.3 Proposed Section-by-Section Page Budget (Rebalanceable Working Baseline)
+*Approval Status*: **Proposed Allocation — Pending Maria & Basmala's Approval**. Section allocations below are **rebalanceable** during drafting and layout integration to preserve readability and technical balance—**without forcing IEEE references and appendices into a single 1-page slot**.
 
-| Section | Proposed Title | Target Pages | Page Range | Planned Technical Content & Visuals |
-| --- | --- | :---: | :---: | --- |
-| **Front** | Cover Page | 1.0 | p. 1 | NextMind identity, Maria Mnasra & Basmala Jamal, Assignment 02, Fuel&Go title, version/date |
-| **Front** | Document Control, Executive Summary & Audience Framing | 1.0 | p. 2 | Metadata, scope summary (fueling + EV charging), key conceptual highlights, reader framing |
-| **Front** | Table of Contents, List of Figures/Tables & Acronyms | 1.0 | p. 3 | Auto-generated ToC, compact LoF/LoT, domain acronyms (EV, OCPP, IFSF, PCI DSS, SoC, etc.) |
-| **Sec. 1** | Introduction, Motivation & Scope Boundaries | 2.0 | pp. 4–5 | Fueling + EV charging user pain points, project goals, Core vs. Future Scope boundary table |
-| **Sec. 2** | Users, Stakeholders & Market/Domain Context | 2.0 | pp. 6–7 | App user personas (ICE/hybrid & EV drivers), report vs. system stakeholder distinction, Python chart #1 (market/adoption or dwell-time comparison with explicit provenance) |
-| **Sec. 3** | System Requirements Specification (`FR` & `NFR`) | 3.0 | pp. 8–10 | Core `FR-01..06`, quantified `NFR` table with rationale/verification/status, TikZ use-case diagram, MoSCoW prioritization |
-| **Sec. 4** | Preliminary System Architecture & Technology Trade-Offs | 4.0 | pp. 11–14 | TikZ multi-layer architecture diagram (mobile, edge/API, fueling + EV orchestrator, forecourt & CPMS adapters), TikZ unified fueling/EV session state machine, candidate technology trade-off table (conceptual vs. implemented distinction) |
-| **Sec. 5** | Data Model & External Protocols (Forecourt, EV CPMS & Payment) | 3.0 | pp. 15–17 | TikZ conceptual ERD, REST/WebSocket contract summary, TikZ end-to-end pump & EV charger authorization/settlement sequence diagram, Python chart #2 (conceptual latency/throughput budget or EV charging curve model) |
-| **Sec. 6** | UX/UI Preliminary Flows & Accessibility | 2.0 | pp. 18–19 | Core mobile journeys (station/charger discovery, scan/authorize, live fueling vs. EV telemetry, digital receipt), WCAG accessibility rules |
-| **Sec. 7** | Security, Physical Safety, Privacy & Compliance | 2.0 | pp. 20–21 | Threat model (STRIDE summary), PCI DSS tokenization & GDPR controls, TikZ physical safety interlock boundary diagram (fuel dispenser + EVSE local cutoffs) |
-| **Sec. 8** | Verification, Validation, QA & Red-Team Summary | 2.0 | pp. 22–23 | Separation of Product Design Verification vs. Report QA, requirement traceability matrix, Detector/Fixer incident & red-team findings summary, Python chart #3 (conceptual reliability/error-budget or QA/traceability summary) |
-| **Sec. 9** | Project Plan, Risks, Multi-Agent Process & Conclusions | 1.0 | p. 24 | Risk register, team roles (Maria & Basmala + 5-agent workflow summary), transition to next phase, Future Scope roadmap note |
-| **Back** | IEEE References (`biber`) & Compact Appendix | 1.0 | p. 25 | Verified IEEE bibliography + compact appendix (reproduction commands / provenance legend); *if references exceed 0.7 pages, rebalance 0.5 pages from Sec. 4 or Sec. 8 to keep strictly 25 pages* |
-| **TOTAL** | **Complete Assignment 02 PDF** | **25.0** | **pp. 1–25** | **Strictly 25 Pages (Exact)** |
+- **Option A (Working Baseline — 25 Total PDF Pages including front/back matter)**:
+
+| Section | Proposed Title | Indicative Budget (Rebalanceable) | Planned Technical Content & Visuals |
+| --- | --- | :---: | --- |
+| **Front** | Cover Page | 1.0 | NextMind identity, Maria Mnasra & Basmala Jamal, Assignment 02, Fuel&Go title, version/date |
+| **Front** | Document Control, Executive Summary & Audience Framing | 1.0 | Metadata, scope summary (fueling + EV charging), key conceptual highlights, reader framing |
+| **Front** | Table of Contents, List of Figures/Tables & Acronyms | 1.0 | Auto-generated ToC, compact LoF/LoT, domain acronyms (EV, OCPP, IFSF, PCI DSS, SoC, etc.) |
+| **Sec. 1** | Introduction, Motivation & Scope Boundaries | 1.5–2.0 | Fueling + EV charging user pain points, project goals, Core vs. Future Scope boundary table |
+| **Sec. 2** | Users, Stakeholders & Domain Context | 1.5–2.0 | App user personas (ICE/hybrid & EV drivers), report vs. system stakeholder distinction, reproducible Python chart #1 (with explicit provenance) |
+| **Sec. 3** | System Requirements Specification (`FR` & `NFR`) | 2.5–3.0 | Core `FR-01..06`, `NFR` table with rationale/verification/status, TikZ use-case diagram, MoSCoW prioritization |
+| **Sec. 4** | Preliminary System Architecture & Technology Trade-Offs | 3.5–4.0 | TikZ multi-layer architecture diagram (mobile, edge/API, fueling + EV orchestrator, forecourt & CPMS adapters), TikZ unified fueling/EV session state machine, candidate technology trade-off table |
+| **Sec. 5** | Data Model & External Protocols (Forecourt, EV CPMS & Payment) | 2.5–3.0 | TikZ conceptual ERD, REST/WebSocket contract summary, TikZ end-to-end pump & EV charger authorization/settlement sequence diagram, reproducible Python chart #2 |
+| **Sec. 6** | UX/UI Preliminary Flows & Accessibility | 1.5–2.0 | Core mobile journeys (station/charger discovery, scan/authorize, live fueling vs. EV telemetry, digital receipt), WCAG accessibility rules |
+| **Sec. 7** | Security, Physical Safety, Privacy & Compliance | 2.0 | Threat model (STRIDE summary), PCI DSS tokenization & GDPR controls, TikZ physical safety interlock boundary diagram (fuel dispenser + EVSE local cutoffs) |
+| **Sec. 8** | Verification, Validation, QA & Red-Team Summary | 1.5–2.0 | Separation of Product Design Verification vs. Report QA, requirement traceability matrix, Detector/Fixer incident & red-team summary, reproducible Python chart #3 |
+| **Sec. 9** | Project Plan, Risks, Multi-Agent Process & Conclusions | 1.0–1.5 | Risk register, partner & agent workflow summary, transition to next phase, Future Scope roadmap note |
+| **Back** | IEEE References (`biber`) | 1.0–1.5 *(flexible)* | Full verified IEEE bibliography sized naturally for readability |
+| **Back** | Appendices (Optional / As Needed) | 0.5–1.5 *(flexible)* | Reproduction commands, provenance legend, or supplementary tables (rebalanced with body sections so Option A totals **exactly 25.0 pages**) |
+| **TOTAL (Option A)** | **Complete Assignment 02 PDF** | **Exactly 25.0** | **Rebalanced across sections to hit strictly 25 English pages** |
+
+- **Option B (If `Q-01` confirms 25 Body Pages excluding front/back matter)**: Sections 1–9 rebalance to **exactly 25.0 body pages**, and Cover, Front Matter (ToC/Lists), IEEE References, and Appendices appear as **additional** pages sized naturally without artificial 1-page compression.
 
 ---
 
-## 4. Multi-Agent Architecture, Roles, Ownership & Evidence Integrity
+## 4. Human Ownership, Multi-Agent Roles, Handoffs & Evidence Integrity
 
-Assignment 02 utilizes a structured **5-role multi-agent workflow** supervised by **Maria Mnasra** and **Basmala Jamal**.
+> **Governance Classification Note**: The **5-role multi-agent setup** (`Master`, `Research`, `Design`, `Detector`, `Fixer`), role-specific `SKILL.md` structure, and **5-part incident record format** are **Team NextMind Workflow Choices** (see Section 11.2), unless explicitly required by verified lecturer instruction files with exact filenames and page numbers.
 
-### 4.1 The Five Multi-Agent Roles & `SKILL.md` Files
-Each role must have a dedicated, version-controlled `SKILL.md` file specifying its mandate, permitted tools, prohibited actions, input/output contracts, and verification rules:
+### 4.1 Human Partner Ownership & Approval Authority
+Human partners hold ultimate ownership and decision authority; agents assist within scoped roles and never replace partner ownership:
 
-| Role | Skill File Path (Proposed) | Primary Mandate | Exclusive File Ownership | Prohibited Actions |
+| Partner | Owned Core Deliverables | Decision & Sign-Off Authority |
+| --- | --- | --- |
+| **Basmala Jamal** | `PRD.md` (requirements, scope governance, acceptance criteria) | Approves requirements changes; co-approves all major project decisions and final release. |
+| **Maria Mnasra** | `PLAN.md` (phases, dependencies, owners, quality gates) and `TODO.md` (tasks, owners, status, evidence) | Approves execution plan & task gating; co-approves all major project decisions and final release. |
+| **Joint (Maria Mnasra & Basmala Jamal)** | `README.md` (project overview, both authors, build/reproduction steps, screenshots, figures, real agent evidence) | Jointly approve scope promotions, visual design, numerical targets, external submissions (Moodle), and final 25-page PDF sign-off. |
+
+### 4.2 The Five Multi-Agent Roles & `SKILL.md` Files (Team Workflow Choice)
+Each agent role has a dedicated, version-controlled `SKILL.md` file specifying its mandate, permitted tools, prohibited actions, input/output contracts, and handoff rules:
+
+| Role | Skill File Path (Proposed) | Primary Mandate | Scoped Write Domain (During Active Handoff Lock) | Prohibited Actions |
 | --- | --- | --- | --- | --- |
-| **1. Master** | `agents/master/SKILL.md` | Plans milestones, coordinates handoffs, resolves cross-role conflicts, enforces 25-page budget and team decisions, approves final merge readiness with Maria & Basmala. | `PRD.md` (with team approval), coordination logs (`agents/messages/`), release checklists | Must not fabricate evidence or override unresolved Detector critical defects without Fixer resolution and Detector retest. |
-| **2. Research** | `agents/research/SKILL.md` | Gathers and verifies literature, standards versions, domain protocols (IFSF, OCPP, ISO 15118, PCI DSS, etc.), empirical data sources, and curated IEEE `.bib` entries. | `bib/references.bib`, `data/sources/` (source verification notes & raw cited data) | Must not invent citations, DOIs, URLs, standard versions, or empirical statistics. |
-| **3. Design** | `agents/design/SKILL.md` | Authors custom `.cls` styling (once approved), modular LaTeX sections, TikZ/vector diagrams, and reproducible Python plotting scripts. | `nextmind-pdr.cls`, `main.tex`, `sections/*.tex`, `figures/*.tex`, `scripts/plots/*.py` | Must not self-certify QA sign-off or alter Detector incident logs. |
+| **1. Master** | `agents/master/SKILL.md` | Coordinates workflow phases, dispatches handoffs, enforces single-writer locks and quality/page gates, tracks agent dependencies, and escalates major decisions to Maria & Basmala **without replacing human ownership**. | Coordination & handoff logs (`agents/messages/`) | Must NOT replace Basmala's ownership of `PRD.md`, Maria's ownership of `PLAN.md`/`TODO.md`, or joint partner sign-off; must not fabricate evidence or bypass unresolved Detector defects. |
+| **2. Research** | `agents/research/SKILL.md` | Researches domain literature, verifies sources/standards/protocols (IFSF, OCPP, ISO 15118, PCI DSS, etc.), curates IEEE `.bib` entries and raw data sources, **and drafts technical report content**. | `bib/references.bib`, `data/sources/`, and technical content drafts (`sections/*.tex` or staged drafts during Research lock) | Must not invent citations, DOIs, URLs, standard versions, or empirical statistics; must not edit `.cls` or layout files while `Design` holds the lock. |
+| **3. Design** | `agents/design/SKILL.md` | Handles **LaTeX engineering, custom `.cls` styling (once approved), document layout & pagination integration, TikZ/vector diagrams, and reproducible Python graphs**. | `nextmind-pdr.cls`, `main.tex`, `figures/*.tex`, `scripts/plots/*.py`, and layout integration of `sections/*.tex` (only after Research handoff) | Must not alter verified source citations without Research review, self-certify QA sign-off, or edit Detector incident logs. |
 | **4. Detector** | `agents/detector/SKILL.md` | Independent auditor & red-teamer: executes Product Design Verification and Report QA, visually inspects rendered PDF pages, audits citations/provenance/reproducibility, logs 5-part incidents, and performs independent retests. | `qa/incidents/*.md`, `qa/redteam/*.md`, `qa/reports/*.md` | **Read-only on production report/code files**: must NOT directly edit `sections/`, `.cls`, `.bib`, or plotting scripts (strict separation of duties). |
-| **5. Fixer** | `agents/fixer/SKILL.md` | Performs root-cause remediation of Detector-logged defects in LaTeX, `.cls`, bibliography, or Python scripts; documents exact changes and preventive guardrails; hands back to Detector for retest. | Targeted fixes on defect-referenced files (`sections/`, `.cls`, `bib/`, `scripts/plots/`) during assigned fix tickets | Must not close Detector incidents or skip independent Detector retest. |
+| **5. Fixer** | `agents/fixer/SKILL.md` | Performs root-cause remediation of Detector-logged defects in LaTeX, `.cls`, bibliography, or Python scripts; documents exact changes and preventive guardrails; hands back to Detector for independent retest. | Scoped defect-referenced files (`sections/`, `.cls`, `bib/`, `scripts/plots/`) only while holding an active Fixer incident lock | Must not close Detector incidents, skip independent Detector retest, or edit files outside assigned incident scope. |
 
-### 4.2 Real Cross-Session Messages & Handoff Protocol
-- **Authentic Cross-Session Communication**: All inter-agent assignments, clarifications, incident escalations, and retest handoffs across sessions must be captured as **real logged messages** (e.g., timestamped markdown/JSON files in `agents/messages/` or exported session logs). Simulated or post-hoc reconstructed dialogues are strictly prohibited.
+### 4.3 Real Cross-Session Messages & Single-Writer Handoff Protocol
+- **Authentic Cross-Session Communication**: All inter-agent assignments, clarifications, incident escalations, and retest handoffs across sessions must be captured as **real logged messages** (timestamped files in `agents/messages/` or exported session logs). Simulated or post-hoc reconstructed dialogues are strictly prohibited.
+- **Preventing Simultaneous Edits (Single-Writer Lock & Handoff Flow)**:
+  1. **No Concurrent Writes**: Only one role (or partner) may hold write ownership of a given file at any time. `Research` and `Design` never edit the same `sections/*.tex` file simultaneously; `Design` and `Fixer` never edit `.cls`, `sections/`, or `scripts/plots/` simultaneously.
+  2. **Standard Stage-Gate Handoff Sequence**:
+     - `Master` logs handoff to `Research` -> `Research` verifies sources and drafts section content + `bib/references.bib` -> commits & logs handoff back to `Master`/`Design` (releasing write lock).
+     - `Design` receives lock -> integrates content into LaTeX layout, builds TikZ diagrams & Python graphs, enforces page budget -> commits & logs handoff to `Detector` (releasing write lock).
+     - `Detector` audits read-only -> logs 5-part incidents in `qa/incidents/` -> logs handoff to `Master`/`Fixer`.
+     - `Fixer` acquires scoped lock on defect-referenced files -> applies minimal root-cause fix -> commits & logs handoff back to `Detector` (releasing write lock).
+     - `Detector` independently retests -> records `PASS`/`FAIL` retest result.
+     - Major scope, visual, or submission decisions always pause for explicit approval by **Basmala Jamal** and **Maria Mnasra**.
 - **Standard Handoff Payload**: Every handoff message between roles must include:
   1. `Timestamp` and `Session ID`
   2. `From Role` -> `To Role`
-  3. `Artifact Paths / Commit Hash` being handed off
+  3. `Files Released / Lock Transferred` and `Commit Hash`
   4. `Scope of Request / Acceptance Checks`
   5. `Known Limitations or Open Questions`
-- **Conflict Prevention**: Only the owning role (or Fixer operating under an active, logged Detector incident ticket) may modify a given file at any time.
 
-### 4.3 Preserved Real Prompts, Evidence & Zero-Fabrication Policy
-- **Preserved Real Prompts**: Every substantive user/team prompt driving project work must be saved verbatim in `prompts/` using sequential numbered filenames (e.g., `prompts/prompt_01_revise_prd.md`, `prompts/prompt_02_...md`).
+### 4.4 Preserved Real Prompts, Evidence & Zero-Fabrication Policy
+- **Preserved Real Prompts**: Every substantive user/team prompt driving project work must be saved verbatim in `prompts/` using sequential numbered filenames (e.g., `prompts/prompt_01_revise_prd.md`, `prompts/prompt_02_targeted_prd_corrections.md`).
 - **Preserved Build & QA Evidence**: Actual LuaLaTeX/Biber logs, Python script outputs, PDF page-count checks, and incident records must be preserved honestly.
 - **Zero Fabrication Rule (Non-Negotiable)**:
-  - Never invent lecturer requirements, document filenames, or page numbers from files that were not actually read.
+  - Never invent lecturer requirements, document filenames, slide numbers, or page numbers from files that were not actually read.
   - Never invent citations, authors, publication years, standard version numbers, or benchmark measurements.
   - Never fabricate cross-session agent messages, prompts, incident logs, or test passes.
   - Whenever an item cannot be verified (e.g., missing source file or inability to visually inspect a rendered page), explicitly log the limitation rather than guessing.
@@ -168,13 +192,13 @@ Evaluates whether the designed Fuel&Go system is internally coherent, safe, and 
 
 ### 5.2 Report Quality Assurance — Report QA (Deliverable Soundness)
 Evaluates the compiled Assignment 02 PDF and repository package:
-- **Exact Page Count Gate**: `pdfinfo` / LuaLaTeX log confirms **strictly 25 pages** (`pages == 25`).
+- **Exact Page Count Gate**: `pdfinfo` / LuaLaTeX log confirms **strictly 25 English pages** according to the confirmed `Q-01` boundary (either `Total PDF Pages == 25`, or `Body Pages == 25` with excluded front/back matter pages counted additionally).
 - **Clean Deterministic Compilation**: `lualatex -> biber -> lualatex -> lualatex` completes with exit code `0`, zero LaTeX errors, zero Biber errors, zero `??` unresolved cross-references, and zero undefined citation keys.
 - **Visual & Typographic Inspection**: Rendered PDF pages are visually inspected (converted to PNG or viewed directly) for clipped tables, overlapping TikZ labels, broken margins, widow/orphan headings, header/footer consistency, and readable text contrast. If visual inspection cannot be executed in a given environment, that limitation must be logged explicitly.
 - **IEEE Citation & Standard Verification**: All citations render in consistent IEEE numerical style (`[1]`, `[2]`, ...) with verified sources and verified standard editions.
 - **Python Figure Reproducibility**: Running the documented regeneration command in a clean environment reproduces all Python figures identically from committed scripts and data, with explicit provenance labels on every chart.
 
-### 5.3 Detector vs. Fixer Workflow & Mandatory 5-Part Incident Records
+### 5.3 Detector vs. Fixer Workflow & Mandatory 5-Part Incident Records (Team Workflow Choice)
 Every defect discovered during Product Design Verification, Report QA, or Red-Teaming must follow the strict **Detector -> Fixer -> Detector Retest** loop:
 1. **Detector** discovers a defect and opens a numbered incident file (`qa/incidents/INC-XXX.md`) without modifying the production file.
 2. **Master** (or automated handoff) assigns the incident to **Fixer**.
@@ -240,8 +264,8 @@ Structural and behavioral diagrams shall be authored as crisp **TikZ / vector di
 - **Removal of APA**: APA style (and any mixed author-year / numeric style) is **explicitly prohibited**. All in-text citations must use consistent IEEE numeric brackets (`[1]`, `[2]–[4]`) matching the bibliography order of appearance.
 - **Database**: All bibliography entries live in `bib/references.bib` (UTF-8).
 
-### 7.2 Source Verification & Proposed Reference Count
-- **Proposed Reference Count**: `15–20` verified authoritative references (**Proposed Target — Pending Team Approval**; not a confirmed lecturer minimum unless verified in the official Assignment 02 brief).
+### 7.2 Source Verification & Reference Count Target
+- **Reference Count Target**: `TBD — requires rationale and team approval` (verified via `biber` audit and Research claim-to-source coverage review; not an arbitrary pre-set number or unverified lecturer minimum).
 - **Verified Supporting Sources Only**: Every cited paper, specification, or technical report must be retrieved and verified by the Research role or team partners before entering `bib/references.bib`. Zero fabricated titles, DOIs, URLs, authors, or publication dates.
 
 ### 7.3 Candidate Standards Requiring Version Verification Before Final Citation
@@ -266,8 +290,8 @@ The following candidate standards are relevant to Fuel&Go (fueling + EV charging
 
 ### 8.1 Non-Negotiable Visual Principles (Preserved Across Any Approved Theme)
 - **Custom Class Encapsulation**: All layout, typography, colors, headers/footers, cover page macros, and reusable environments must live in a custom LaTeX class file (`nextmind-pdr.cls`, built for LuaLaTeX).
-- **Readability First**: Comfortable body font size (`10pt`–`10.5pt`), clean line spacing (`1.12`–`1.15`), balanced A4 margins (`20mm`–`25mm`), and zero cramped tables or microscopic figure labels.
-- **Accessible Contrast**: Body text, headings, table headers, callout backgrounds, and Python/TikZ chart palettes must preserve strong legibility and accessible color contrast (targeting WCAG AA contrast `>= 4.5:1` for normal text and `>= 3:1` for large text/graphical elements), plus grayscale/print legibility.
+- **Readability First**: Comfortable body font size, balanced line spacing, generous A4 margins, and zero cramped tables or microscopic figure labels (exact measurements finalized in `nextmind-pdr.cls` once Maria and Basmala approve the sample render).
+- **Accessible Contrast**: Body text, headings, table headers, callout backgrounds, and Python/TikZ chart palettes must preserve strong legibility and accessible color contrast per W3C WCAG Level AA (`>= 4.5:1` for normal text and `>= 3:1` for large text/non-text UI/graphical elements; exact WCAG edition to be verified by Research), plus grayscale/print legibility.
 - **LuaLaTeX Native Fonts**: Loaded via `fontspec` using fonts verified to exist in the target TeX/Windows environment (with deterministic fallbacks so builds never fail across Maria's and Basmala's machines).
 
 ### 8.2 Proposed Visual System (Pending Maria & Basmala's Approval)
@@ -276,121 +300,131 @@ The following candidate standards are relevant to Fuel&Go (fueling + EV charging
 - **Proposed Class Macros & Environments**:
   - Metadata macros: `\projecttitle`, `\reportsubtitle`, `\assignmentcode`, `\teamname`, `\teammembers`, `\docversion`, `\docdate`.
   - Cover macro: `\makepdrcover` (vector TikZ cover layout, pending visual sign-off).
-  - Running headers/footers via `fancyhdr` + `lastpage` (`Page X of 25`).
+  - Dynamic running headers/footers via `fancyhdr` + `lastpage` (`Page \thepage\ of \pageref{LastPage}` — never hard-coding `"Page X of 25"` so pagination remains accurate regardless of `Q-01` resolution).
   - Styled callout boxes (`tcolorbox`), standardized `booktabs`/`tabularx` requirement tables, and consistent TikZ styles shared across all figures.
 
 ---
 
-## 9. Numerical Targets & Candidate Technologies (Provenance & Maturity)
+## 9. Targets & Candidate Technologies (Provenance, Artifact Type & Status)
 
-### 9.1 Conceptual Design vs. Implemented / Tested Distinction
-To uphold zero fabrication and complete academic transparency, the report must explicitly distinguish two maturity states everywhere:
-- **Conceptual Design**: All Fuel&Go runtime software/hardware components (mobile app, backend microservices, payment tokenization pipeline, forecourt gateway, EV CPMS adapter, cloud database, and runtime SLA targets). These are **designed and analyzed**, not built or field-tested in Assignment 02.
-- **Implemented / Tested**: Artifacts actually built and executed during Assignment 02 — specifically the custom LuaLaTeX `.cls` class, LaTeX/Biber compilation pipeline, Python chart generation scripts, automated PDF page-count/log verification scripts, and real multi-agent workflows/QA audits.
+### 9.1 Artifact Type vs. Completion Status Distinction
+To uphold zero fabrication and complete academic transparency, this PRD strictly separates **Artifact Type** from **Completion Status**:
+- **Artifact Type**:
+  - *Conceptual System Design*: Fuel&Go runtime software/hardware components (mobile app, backend services, payment tokenization flow, forecourt gateway, EV CPMS adapter, database, and runtime targets) that are **designed and analyzed**, not built or field-tested in Assignment 02.
+  - *Report / Pipeline Artifact*: Assignment 02 engineering deliverables that will actually be built and verified in this repository (custom LuaLaTeX `.cls`, LaTeX/Biber pipeline, Python plotting scripts, and automated QA checks).
+- **Completion Status**: Nothing is marked `Implemented / Tested` until it has been built, executed, and verified with preserved real evidence. Until then, planned artifacts carry status **`Planned — verification pending`**.
 
-### 9.2 Proposed Numerical Targets (Conceptual Fuel&Go System)
-All numerical values below are **Proposed Conceptual Targets** awaiting Maria and Basmala's approval and Research validation — they are **not** measured field benchmarks.
+### 9.2 System Targets (Justified Standards vs. TBD Numerical Targets)
+Arbitrary numerical values without source backing are **prohibited**. Quantitative targets without an approved rationale/source are marked **`TBD — requires rationale and team approval`** alongside their verification method; justified standards-backed targets cite their governing standard (with exact version to be verified by Research):
 
-| ID | Metric | Proposed Target | Rationale / Source | Conceptual Verification Method | Approval Status | Design Maturity |
+| ID | Metric / Property | Target | Rationale / Source | Verification Method | Approval Status | Artifact Type |
 | --- | --- | --- | --- | --- | --- | --- |
-| **NFR-01a** | Station & Charger Discovery Latency (P95) | `<= 500 ms` | Interactive mobile map UX responsiveness baseline *(Source to be verified by Research, e.g., Nielsen Norman Group response-time guidelines)* | Analytical latency budget (conceptual) / future API load test | *Proposed — Pending Team Approval* | Conceptual Design |
-| **NFR-01b** | Pump / EV Charger Authorization Round-Trip (P95) | `<= 3.0 s` | End-to-end payment pre-auth + station/CPMS handshake budget *(Proposed Engineering Baseline — Source Needed)* | Sequence-diagram timing breakdown & simulation (conceptual) / future HIL test | *Proposed — Pending Team Approval* | Conceptual Design |
-| **NFR-02** | Live Telemetry Refresh Cadence | Fueling: `1–2 s`; EV Charging: `5–15 s` | Fueling finishes in ~2–5 min (requires fast feedback); EV charging lasts ~20–60+ min (lower polling/WebSocket cadence saves bandwidth/battery) *(Proposed Engineering Baseline)* | Protocol payload calculation (conceptual) / future simulator test | *Proposed — Pending Team Approval* | Conceptual Design |
-| **NFR-03** | Core Session Service Availability | `>= 99.9%` (or `99.95%` — to be selected) | Balances retail mobility uptime with realistic preliminary architecture complexity *(Proposed Baseline — Source/Cost Trade-Off Needed)* | Redundancy & failure-mode analysis (FMEA / conceptual) | *Proposed — Pending Team Approval* | Conceptual Design |
-| **NFR-04** | Peak Concurrent Active Sessions | `>= 5,000` (regional launch baseline; scalable to `10,000+`) | Sized for regional multi-station rush-hour concurrency *(Assumption — to be parameterized in Python sizing calculation)* | Analytical capacity calculation in reproducible Python script | *Proposed — Pending Team Approval* | Conceptual Design |
-| **NFR-05** | Payment & Transport Security | `0` raw PANs stored; TLS 1.3; AES-256 at rest | Aligned with PCI DSS tokenization & OWASP cryptographic guidance *(Exact standard versions to be verified)* | Architecture & STRIDE threat-model review + Red-Team audit | *Proposed — Pending Team Approval* | Conceptual Design |
-| **NFR-06** | Physical Safety Interlock Independence | `100%` local hardware enforcement | Mobile/cloud layers must never bypass certified fuel-dispenser or EVSE emergency shutoffs *(Safety Principle — standard to be verified)* | Safety boundary diagram review & Red-Team fault-injection analysis | *Proposed — Pending Team Approval* | Conceptual Design |
-| **NFR-07** | Mobile Flow Simplicity & Accessibility | `<= 4–5` taps to start session; WCAG AA contrast | Reduces forecourt distraction and ensures accessible UI *(W3C WCAG version to be verified)* | Wireframe walkthrough & contrast ratio check | *Proposed — Pending Team Approval* | Conceptual Design |
+| **NFR-01a** | Station & Charger Discovery Latency (P95) | `TBD — requires rationale and team approval` | Must be anchored to a verified mobile UX responsiveness reference (e.g., Nielsen Norman Group / cited latency study verified by Research) before setting a number | Analytical latency budget (conceptual) / future API load benchmark | Pending Research rationale & team approval | Conceptual System Design |
+| **NFR-01b** | Pump / EV Charger Authorization Round-Trip (P95) | `TBD — requires rationale and team approval` | Must be derived from cited PSP pre-authorization + forecourt/OCPP handshake timing budgets | Sequence-diagram timing breakdown (conceptual) / future simulator or HIL test | Pending Research rationale & team approval | Conceptual System Design |
+| **NFR-02** | Live Telemetry Refresh Cadence (Fueling vs. EV Charging) | `TBD — requires rationale and team approval` | Fueling sessions are short (minutes) whereas EV sessions are longer; exact cadences must be justified from protocol specs (IFSF / OCPP) and payload math | Protocol payload & bandwidth calculation (conceptual) / future simulator test | Pending Research rationale & team approval | Conceptual System Design |
+| **NFR-03** | Core Session Service Availability | `TBD — requires rationale and team approval` | Availability tier must be justified against redundancy architecture and operational cost trade-offs | Redundancy & failure-mode analysis (FMEA / conceptual) | Pending Research rationale & team approval | Conceptual System Design |
+| **NFR-04** | Peak Concurrent Active Sessions | `TBD — requires rationale and team approval` | Concurrency sizing must be derived explicitly from cited station-count/demand assumptions in a reproducible Python sizing script | Reproducible Python analytical capacity calculation (explicitly tagged *Calculation* / *Assumption*) | Pending Research rationale & team approval | Conceptual System Design |
+| **NFR-05** | Payment & Transport Security | `0` raw PANs stored on Fuel&Go servers; encrypted transit & storage | Justified by **PCI DSS** cardholder-data-environment scope reduction via PSP tokenization and **OWASP** transport/storage guidance *(exact versions to be verified by Research)* | Architecture & STRIDE threat-model review + Detector Red-Team audit | *Proposed — Pending Team Approval* | Conceptual System Design |
+| **NFR-06** | Physical Safety Interlock Independence | `100%` local hardware enforcement | Justified by forecourt dispenser & EVSE safety isolation principle: cloud/mobile layers must never override certified physical emergency cutoffs *(applicable safety standard to be verified by Research)* | Safety boundary diagram review & Red-Team fault-injection analysis | *Proposed — Pending Team Approval* | Conceptual System Design |
+| **NFR-07a** | Accessible Visual Contrast | WCAG Level AA (`>= 4.5:1` normal text; `>= 3:1` large text / UI components) | Justified by **W3C WCAG** Success Criteria 1.4.3 & 1.4.11 *(exact WCAG edition 2.1 vs. 2.2 to be verified by Research)* | Contrast-ratio calculation & wireframe / PDF visual inspection | *Proposed — Pending Team Approval* | Conceptual Design & Report QA |
+| **NFR-07b** | Mobile Session-Start Interaction Complexity (Step/Tap Count) | `TBD — requires rationale and team approval` | Must be justified from wireframe task-flow walkthroughs rather than an arbitrary tap cap | Wireframe task-flow walkthrough & usability heuristic audit | Pending wireframe & team approval | Conceptual System Design |
 
-### 9.3 Candidate Technologies (Conceptual System vs. Implemented Report Toolchain)
+### 9.3 Candidate Technologies (Separated by Artifact Type & Honest Completion Status)
 
-| Layer / Domain | Candidate Technology | Rationale / Source | Verification Method | Approval Status | Design Maturity |
-| --- | --- | --- | --- | --- | --- |
-| **Mobile App (Fuel&Go)** | Flutter or React Native (cross-platform iOS/Android) | Single codebase for iOS/Android with native QR/NFC/location support *(Trade-off matrix to be cited)* | Comparative trade-off analysis in Sec. 4 | *Proposed — Pending Team Approval* | Conceptual Design |
-| **API & Backend Services** | Modular REST + WebSocket APIs (e.g., Node.js/TypeScript, Go, or Python/FastAPI) behind API Gateway | Clear domain separation between Station Discovery, Session Orchestrator, Payment, and Adapters | Interface contract & state-machine review | *Proposed — Pending Team Approval* | Conceptual Design |
-| **Data Storage** | PostgreSQL + PostGIS (transactional ledger & geospatial queries) + Redis (live pump/charger status cache) | ACID guarantees for payment/session ledger + low-latency geospatial & status lookups | Conceptual ERD & query-path analysis | *Proposed — Pending Team Approval* | Conceptual Design |
-| **Messaging / Telemetry** | Event broker (e.g., RabbitMQ or Kafka) + WebSockets/SSE to client | Decouples high-frequency fueling/EV telemetry from billing settlement | Architecture & fault-recovery analysis | *Proposed — Pending Team Approval* | Conceptual Design |
-| **Station & EV Integration** | Dedicated Adapter Layer: Forecourt Gateway (IFSF / vendor POS API) + EV CPMS Adapter (OCPP / ISO 15118) | Isolates vendor protocol heterogeneity and enforces safety boundaries *(Protocol versions to be verified)* | Protocol mapping & Red-Team review | *Proposed — Pending Team Approval* | Conceptual Design |
-| **Payment Processing** | Tokenized PSP (e.g., Stripe / Adyen / local PCI-compliant gateway) | Eliminates raw cardholder data from Fuel&Go backend, reducing PCI DSS scope | Threat model & tokenization flow audit | *Proposed — Pending Team Approval* | Conceptual Design |
-| **Report Typesetting** | LuaLaTeX + Biber (`biblatex`, IEEE) + custom `nextmind-pdr.cls` | Deterministic Unicode/font handling, vector layout, automated IEEE citations | Executed clean build + exact 25-page check | **Confirmed Team Decision** | **Implemented / Tested (in EX02)** |
-| **Analytical Plotting** | Python 3 + `matplotlib` / `numpy` / `pandas` (pinned in `requirements.txt`) | Reproducible, script-driven vector figures with auditable data provenance | Executed script regeneration + visual inspection | **Confirmed Team Decision** | **Implemented / Tested (in EX02)** |
+| Layer / Domain | Candidate Technology | Rationale / Source | Verification Method | Approval Status | Artifact Type | Completion Status |
+| --- | --- | --- | --- | --- | --- | --- |
+| **Mobile App (Fuel&Go)** | Flutter or React Native (cross-platform iOS/Android) | Single codebase for iOS/Android with native QR/NFC/location support *(Trade-off matrix to be cited by Research)* | Comparative trade-off analysis in Sec. 4 | *Proposed — Pending Team Approval* | Conceptual System Design | `Planned — verification pending` |
+| **API & Backend Services** | Modular REST + WebSocket APIs (e.g., Node.js/TypeScript, Go, or Python/FastAPI) behind API Gateway | Clear domain separation between Station Discovery, Session Orchestrator, Payment, and Adapters | Interface contract & state-machine review | *Proposed — Pending Team Approval* | Conceptual System Design | `Planned — verification pending` |
+| **Data Storage** | PostgreSQL + PostGIS (transactional ledger & geospatial queries) + Redis (live pump/charger status cache) | ACID guarantees for payment/session ledger + low-latency geospatial & status lookups | Conceptual ERD & query-path analysis | *Proposed — Pending Team Approval* | Conceptual System Design | `Planned — verification pending` |
+| **Messaging / Telemetry** | Event broker (e.g., RabbitMQ or Kafka) + WebSockets/SSE to client | Decouples live fueling/EV telemetry from billing settlement | Architecture & fault-recovery analysis | *Proposed — Pending Team Approval* | Conceptual System Design | `Planned — verification pending` |
+| **Station & EV Integration** | Dedicated Adapter Layer: Forecourt Gateway (IFSF / vendor POS API) + EV CPMS Adapter (OCPP / ISO 15118) | Isolates vendor protocol heterogeneity and enforces safety boundaries *(Protocol versions to be verified)* | Protocol mapping & Red-Team review | *Proposed — Pending Team Approval* | Conceptual System Design | `Planned — verification pending` |
+| **Payment Processing** | Tokenized PSP (e.g., Stripe / Adyen / PCI-compliant gateway) | Eliminates raw cardholder data from Fuel&Go backend, reducing PCI DSS scope | Threat model & tokenization flow audit | *Proposed — Pending Team Approval* | Conceptual System Design | `Planned — verification pending` |
+| **Report Typesetting** | LuaLaTeX + Biber (`biblatex`, IEEE) + custom `nextmind-pdr.cls` | Deterministic Unicode/font handling, vector layout, automated IEEE citations | Clean compilation + exact 25-page check + visual PDF inspection | **Confirmed Team Decision** | Report / Pipeline Artifact | `Planned — verification pending` |
+| **Analytical Plotting** | Python 3 + `matplotlib` / `numpy` / `pandas` (pinned in `requirements.txt`) | Reproducible, script-driven vector figures with auditable data provenance | Clean-environment script regeneration + visual inspection | **Confirmed Team Decision** | Report / Pipeline Artifact | `Planned — verification pending` |
 
 ---
 
 ## 10. Deliverables & Repository Governance Rules
 
-### 10.1 Complete Assignment 02 Deliverables Checklist
-| Deliverable | Expected Location / Channel | Maturity Type | Tracking Status |
-| --- | --- | --- | --- |
-| Authoritative `PRD.md` (reviewed & approved by Maria & Basmala) | `PRD.md` (with original backup in `backups/PRD.original.md`) | Governance Doc | Draft — Pending Review |
-| Compiled 25-Page English PDF Report | `main.pdf` (or agreed release path, strictly 25 pages) | Implemented / Tested | Not Started |
-| Full LaTeX Source & Custom Class | `main.tex`, `nextmind-pdr.cls`, `sections/*.tex`, `bib/references.bib`, `figures/*.tex` | Implemented / Tested | Not Started |
-| Reproducible Python Graph Suite | `scripts/plots/*.py`, `data/*`, `requirements.txt`, reproduction instructions | Implemented / Tested | Not Started |
-| 5 Role-Specific Agent Skill Files | `agents/{master,research,design,detector,fixer}/SKILL.md` | Governance / Process | Not Started |
-| Preserved Real Prompts | `prompts/prompt_01_revise_prd.md`, subsequent real prompts | Evidence Artifact | In Progress (`01` saved) |
-| Real Cross-Session Agent Messages & Handoffs | `agents/messages/*` | Evidence Artifact | Not Started |
-| Detector/Fixer 5-Part Incident Records & Red-Team Audit | `qa/incidents/*`, `qa/redteam/*`, `qa/reports/*` | QA Evidence | Not Started |
-| **Separate Moodle Submission Form** | **Course Moodle Portal (External to GitHub)** | Submission Gate | **Tracked Separately — Pending** |
+### 10.1 Complete Assignment 02 Deliverables Checklist (Separated by Artifact Type & Honest Completion Status)
 
-### 10.2 Mandatory Repository & Collaboration Rules
+| Deliverable | Owner | Required Scope / Contents | Expected Location / Channel | Artifact Type | Completion Status |
+| --- | --- | --- | --- | --- | --- |
+| **`PRD.md`** | **Basmala Jamal** | Authoritative requirements specification, scope governance, and acceptance criteria | `PRD.md` | Governance Doc | **Draft — Pending Team Review** |
+| **`PLAN.md`** | **Maria Mnasra** | Execution phases, dependencies, owners, and quality gates | `PLAN.md` | Governance / Planning Doc | `Planned — verification pending` |
+| **`TODO.md`** | **Maria Mnasra** | Actionable tasks, owners, status, and linked evidence | `TODO.md` | Governance / Tracking Doc | `Planned — verification pending` |
+| **`README.md`** | **Joint (Maria Mnasra & Basmala Jamal)** | Project overview, both authors, build/reproduction steps, screenshots, figures, and real agent evidence | `README.md` | Repository Documentation | `Planned — verification pending` |
+| **Compiled 25-Page English PDF Report** | Joint (Design build -> Detector QA -> Partner sign-off) | Strictly 25 English pages per confirmed `Q-01` boundary | `main.pdf` (or agreed release path) | Report Deliverable | `Planned — verification pending` |
+| **Full LaTeX Source & Custom `.cls`** | Research (drafts) -> Design (LaTeX/layout/TikZ) | `main.tex`, `nextmind-pdr.cls`, `sections/*.tex`, `bib/references.bib`, `figures/*.tex` | Root / `sections/` / `bib/` / `figures/` | Report Source / Styling | `Planned — verification pending` |
+| **Reproducible Python Graph Suite** | Research (data provenance) -> Design (scripts/plots) | Plot scripts, input data/sources, pinned dependencies (`requirements.txt`), and reproduction steps | `scripts/plots/`, `data/`, `requirements.txt` | Analytical Plot Pipeline | `Planned — verification pending` |
+| **5 Role-Specific Agent Skill Files** | Joint / Master coordination | `SKILL.md` for Master, Research, Design, Detector, Fixer | `agents/{master,research,design,detector,fixer}/SKILL.md` | Team Workflow Governance | `Planned — verification pending` |
+| **Preserved Real Prompts** | Joint | Verbatim real prompts saved sequentially | `prompts/prompt_01_revise_prd.md`, `prompts/prompt_02_targeted_prd_corrections.md`, ... | Evidence Artifact | In Progress (`01`–`02` saved) |
+| **Baseline Draft Backups** | Basmala Jamal | Preserved pre-edit snapshots of `PRD.md` | `backups/PRD.original.md`, `backups/PRD.v1.1.0-draft.bak.md` | Archive / Evidence Artifact | In Progress (`v1.0.0` & `v1.1.0-draft` archived) |
+| **Real Cross-Session Agent Messages & Handoffs** | Master & all roles | Authentic logged cross-session messages and lock handoffs | `agents/messages/` | Evidence Artifact | `Planned — verification pending` |
+| **Detector/Fixer 5-Part Incident Records & Red-Team Audit** | Detector (audit/retest) & Fixer (remediation) | 5-part incident tickets, QA reports, and dual-track Red-Team audit | `qa/incidents/`, `qa/redteam/`, `qa/reports/` | QA Evidence Artifact | `Planned — verification pending` |
+| **Separate Moodle Submission Form** | **Joint (Maria Mnasra & Basmala Jamal)** | External course Moodle portal form, required fields, uploads, and deadline verification | Course Moodle Portal (External to GitHub) | External Submission Gate | `Planned — tracked separately` |
+
+### 10.2 Mandatory Repository & External Utility Rules
 1. **Git Configuration**: Repository initialized in project root (`NextMind-ex02`), default branch strictly `main`, connected to `https://github.com/jamalbasmala907-ship-it/NextMind_02.git`.
-2. **Keep Nested Utility Repositories Separate**: Do **not** embed or nest third-party or utility Git repositories (`.git` directories or vendored helper repos) inside `NextMind-ex02`. Any external utility tools must remain outside this repository to keep commit history, licensing, and project boundaries clean.
+2. **External Local Utility Setup (`agy-multi-agent-mesh/`)**:
+   - The local utility directory `agy-multi-agent-mesh/` **may remain locally** inside `NextMind-ex02` if used by team members for multi-agent orchestration—**do not move or modify it**.
+   - `agy-multi-agent-mesh/` **must be excluded via `.gitignore`** so it is never tracked, staged, or committed into `NextMind_02`.
+   - **External Dependency Documentation**: `agy-multi-agent-mesh/` is documented strictly as an external local utility dependency (not authored project source). Any other nested utility repositories must similarly remain untracked/separate. Reproducing the 25-page PDF via LuaLaTeX + Biber and regenerating the Python graphs must remain independent of committing `agy-multi-agent-mesh/`.
 3. **Permissions & Licensing Check for Provided Materials**: Before committing any lecturer-provided template, dataset, logo, image, or third-party asset into GitHub (especially if public), Maria and Basmala must verify distribution permissions and copyright/course rules. Restricted course materials must not be redistributed without explicit permission.
 4. **Instructor Access**: Repository visibility and/or collaborator permissions must be verified so the course lecturer and graders have required access by the submission deadline (`Q-07`).
-5. **Genuine Contributions from Both Partners**: Both **Maria Mnasra** and **Basmala Jamal** must make genuine, substantive, attributable contributions (reflected in Git commit authorship, section/role responsibilities, reviews, and sign-offs).
+5. **Genuine Contributions from Both Partners**: Both **Maria Mnasra** and **Basmala Jamal** must make genuine, substantive, attributable contributions (reflected in Git commit authorship, deliverable ownership across `PRD.md`, `PLAN.md`, `TODO.md`, `README.md`, report production, reviews, and sign-offs).
 6. **Separate Moodle Form Tracking**: Pushing to GitHub does **not** complete course submission. The **Moodle submission form** (required fields, partner names, links, PDF upload, declarations, and submission timestamp) must be tracked as a separate mandatory checklist item and verified before the deadline (`Q-08`).
-7. **Clean Build Hygiene**: Once LaTeX compilation begins, exclude transient LaTeX auxiliary files (`*.aux`, `*.bbl`, `*.bcf`, `*.blg`, `*.out`, `*.run.xml`, `*.toc`, `*.lof`, `*.lot`) via `.gitignore`, while preserving required build/QA logs intentionally placed in `qa/`.
+7. **Clean Build Hygiene**: `.gitignore` excludes `agy-multi-agent-mesh/`, transient LaTeX auxiliary files (`*.aux`, `*.bbl`, `*.bcf`, `*.blg`, `*.out`, `*.run.xml`, `*.toc`, `*.lof`, `*.lot`, `build/`), and Python caches/venvs, while keeping curated QA/build evidence under `qa/`.
 
 ---
 
 ## 11. Governance & Provenance Separation Matrix
 
-To prevent conflating course rules with team preferences or unverified assumptions, all project directives are strictly partitioned into five categories:
+To prevent conflating verified course rules with team workflow choices, proposals, or unverified assumptions, all project directives are strictly partitioned into five categories:
 
-### 11.1 Explicit Lecturer Requirements (Source File & Page Number Required)
-> **File-Reading Limitation Note**: As of v1.1.0-draft, **no official Assignment 02 lecturer instruction PDF or document is present inside** `C:\Users\jamal\OneDrive - Bar-Ilan University - Students\Desktop\NextMind-ex02`. In strict adherence to the **Zero-Fabrication Policy**, no filenames or page numbers have been guessed or invented. Maria and Basmala must verify each row below against the official lecturer brief and fill in the exact source filename and page number(s).
+### 11.1 Explicit Lecturer Requirements (Actual Source Filenames & Page Numbers Only)
+> **Source Availability & Zero-Fabrication Notice**: As of `v1.2.0-draft`, **no official Assignment 02 lecturer instruction files exist inside** `C:\Users\jamal\OneDrive - Bar-Ilan University - Students\Desktop\NextMind-ex02`, and unrelated personal folders were intentionally **not** scanned. Accordingly, no requirement is promoted to "verified explicit lecturer requirement" with guessed filenames or page numbers. Only requirements backed by actual lecturer filenames and page numbers read directly by the team may be populated here (`Q-06`).
 
-| Req. ID | Requirement Description | Source Filename | Page Number(s) | Verification Status |
+| Req. ID | Candidate Requirement to Verify Against Lecturer Files | Actual Source Filename | Page Number(s) | Verification Status |
 | --- | --- | --- | :---: | --- |
-| **LR-01** | Assignment 02 report exact length: **strictly 25 pages** (verify whether cover/ToC/refs/appendices are included) | `[Pending — lecturer brief not in project folder]` | `[Pending]` | Needs Source Verification |
-| **LR-02** | Report language: English PDF compiled with LuaLaTeX + Biber + custom `.cls` | `[Pending — lecturer brief not in project folder]` | `[Pending]` | Needs Source Verification |
-| **LR-03** | Required document framing/title (verify whether "Preliminary Design Report" is mandated) | `[Pending — lecturer brief not in project folder]` | `[Pending]` | Needs Source Verification |
-| **LR-04** | Multi-agent workflow requirements (5 roles: Master, Research, Design, Detector, Fixer; `SKILL.md` files; real cross-session messages; preserved real prompts; 5-part incident records; red-team; zero fabrication) | `[Pending — lecturer brief not in project folder]` | `[Pending]` | Needs Source Verification |
-| **LR-05** | Reproducible Python graphs + TikZ/vector diagrams + IEEE citation style | `[Pending — lecturer brief not in project folder]` | `[Pending]` | Needs Source Verification |
-| **LR-06** | Repository access for instructors, genuine contributions from both partners, and separate Moodle submission form | `[Pending — lecturer brief not in project folder]` | `[Pending]` | Needs Source Verification |
+| **LR-01** | Assignment 02 report length (`25 English pages`) and whether cover/ToC/references/appendices are included or additional | `Unverified — lecturer file not present in project folder` | `Unverified` | Pending Source Review |
+| **LR-02** | Typesetting & citation requirements (English PDF, LuaLaTeX + Biber, custom `.cls`, IEEE citation style, reproducible Python graphs / TikZ) | `Unverified — lecturer file not present in project folder` | `Unverified` | Pending Source Review |
+| **LR-03** | Required document framing/title (verify whether `"Preliminary Design Report"` is mandated) | `Unverified — lecturer file not present in project folder` | `Unverified` | Pending Source Review |
+| **LR-04** | Multi-agent / evidence expectations (verify which agent roles, prompts, logs, or incident formats are explicitly mandated vs. team workflow choices) | `Unverified — lecturer file not present in project folder` | `Unverified` | Pending Source Review |
+| **LR-05** | Repository deliverables (`PRD.md`, `PLAN.md`, `TODO.md`, `README.md`), instructor access, genuine contributions from both partners, and separate Moodle submission form | `Unverified — lecturer file not present in project folder` | `Unverified` | Pending Source Review |
 
-### 11.2 Confirmed Team Decisions (Team NextMind)
+### 11.2 Confirmed Team Decisions & Team Workflow Choices (Team NextMind)
 - **TD-01**: Team name is **NextMind**; partners are **Maria Mnasra** and **Basmala Jamal**.
-- **TD-02**: Project domain is **Fuel&Go**, with **core capabilities focused on fueling and EV charging**.
-- **TD-03**: Target and acceptance criterion is **strictly 25 pages** (exact).
-- **TD-04**: Technical stack for report production is **LuaLaTeX + Biber + custom `.cls`** with **IEEE citation style only** (APA removed).
-- **TD-05**: Analytical charts will be generated via **reproducible Python scripts** with explicit 4-category data provenance labeling, complemented by **TikZ/vector diagrams**.
-- **TD-06**: Multi-agent governance uses the **5 roles** (Master, Research, Design, Detector, Fixer), strict Detector/Fixer separation, **5-part incident records**, red-teaming, real cross-session messages, preserved real prompts, and **zero fabrication**.
-- **TD-07**: GitHub remote is `https://github.com/jamalbasmala907-ship-it/NextMind_02.git` on branch `main`, keeping nested utility repos separate and tracking the Moodle submission form independently.
+- **TD-02**: Core partner deliverable ownership: **Basmala Jamal** owns `PRD.md`; **Maria Mnasra** owns `PLAN.md` and `TODO.md`; both jointly own `README.md` and jointly approve all major decisions.
+- **TD-03**: Project domain is **Fuel&Go**, with **core capabilities focused on fueling and EV charging**.
+- **TD-04**: Target and acceptance criterion is **strictly 25 English pages** (exact, subject to `Q-01` boundary clarification; excluded front/back matter are additional if 25 body pages are required).
+- **TD-05**: Report production toolchain is **LuaLaTeX + Biber + custom `.cls`** with **IEEE citation style only** (APA removed), plus **reproducible Python graphs** (with 4-category data provenance labeling) and **TikZ/vector diagrams**.
+- **TD-06 (Team Workflow Choice)**: Unless explicitly mandated by verified lecturer files in Section 11.1, the **5-role multi-agent setup** (`Master`, `Research`, `Design`, `Detector`, `Fixer`), role-specific `SKILL.md` files, single-writer handoff locks, strict Detector/Fixer review & independent retesting, **5-part incident record format**, dual-track red-teaming, real cross-session messages, preserved real prompts, and **zero fabrication** are adopted as **Team NextMind Workflow Choices**.
+- **TD-07**: GitHub remote is `https://github.com/jamalbasmala907-ship-it/NextMind_02.git` on branch `main`; `agy-multi-agent-mesh/` may exist locally untouched and is excluded via `.gitignore`; the Moodle submission form is tracked separately.
 
 ### 11.3 Proposed Choices (Pending Maria Mnasra & Basmala Jamal's Approval)
-- **PC-01**: Section-by-section 25-page budget in Section 3.3.
+- **PC-01**: Rebalanceable section-by-section page budget in Section 3.3 (Option A vs. Option B depending on `Q-01`).
 - **PC-02**: Visual design proposal in Section 8.2 (palette, font pairing, cover page style, callout styling, working class filename `nextmind-pdr.cls`).
-- **PC-03**: Proposed reference count (`15–20` verified IEEE entries) in Section 7.2.
-- **PC-04**: Proposed conceptual numerical targets (`NFR-01a` through `NFR-07`) in Section 9.2.
+- **PC-03**: Reference count target (currently `TBD — requires rationale and team approval`, Section 7.2).
+- **PC-04**: Unbacked conceptual numerical targets (`NFR-01a`, `NFR-01b`, `NFR-02`, `NFR-03`, `NFR-04`, `NFR-07b` — all currently `TBD — requires rationale and team approval`, Section 9.2) and standards-backed security/safety/contrast targets (`NFR-05`, `NFR-06`, `NFR-07a` pending exact standard-version verification).
 - **PC-05**: Candidate Fuel&Go runtime technology stack in Section 9.3.
-- **PC-06**: Proposed Extensions / Future Scope list (`EXT-01` through `EXT-05` — convenience store, loyalty, fleet, VAT invoicing, operator dashboard) kept out of core scope.
+- **PC-06**: Disputed scope extras (`EXT-01` through `EXT-05` — currently `Unverified — pending source review` against original Fuel&Go slides/prior PRD and kept out of core scope).
 
 ### 11.4 Assumptions
 - **A-01**: Fuel stations expose a certified local forecourt controller and EV charging networks expose a standard CPMS interface (e.g., OCPP-capable) reachable via secure adapters while keeping physical safety interlocks strictly local.
-- **A-02**: Both partners' build environments can install/run TeX Live or MiKTeX (`lualatex` + `biber`) and Python 3 with the pinned packages in `requirements.txt` (without modifying unauthorized global policies).
-- **A-03**: Until `Q-01` is resolved, the working page budget assumes cover, front matter, references, and appendices are counted inside the 25-page PDF total.
+- **A-02**: Both partners' build environments can run TeX Live or MiKTeX (`lualatex` + `biber`) and Python 3 with the pinned packages in `requirements.txt` (without modifying unauthorized global policies).
+- **A-03**: Until `Q-01` is resolved, Option A in Section 3.3 serves only as an indicative working layout; if 25 body pages are required, excluded front/back matter will be additional (Option B).
 
 ### 11.5 Unresolved Questions Requiring Decision by Maria Mnasra & Basmala Jamal
 | ID | Open Question | Impact if Unresolved | Owner(s) |
 | --- | --- | --- | --- |
-| **Q-01** | Do **cover page, table of contents/front matter, references, and appendices** count inside the strict 25 pages, or are they excluded? | Directly changes body page budget by ~3–4 pages. | Maria & Basmala (verify lecturer brief) |
-| **Q-02** | Is **"Preliminary Design Report"** the exact intended framing/title for Assignment 02? | Determines cover title, headers, abstract, and tone. | Maria & Basmala (verify lecturer brief) |
+| **Q-01** | Do **cover page, table of contents/front matter, references, and appendices** count inside the strict 25 English pages (Option A), or are 25 body pages required with those excluded parts **additional** (Option B)? | Determines final body vs. total PDF page count and rebalancing plan. | Maria & Basmala (verify lecturer files) |
+| **Q-02** | Is **"Preliminary Design Report"** the exact intended framing/title for Assignment 02? | Determines cover title, running headers, abstract, and tone. | Maria & Basmala (verify lecturer files) |
 | **Q-03** | Beyond course lecturer/graders, which optional secondary **report readers** (e.g., engineering review board, investors) should the report address, if any? | Shapes Executive Summary and level of business vs. engineering framing. | Maria & Basmala |
 | **Q-04** | Which **visual design** (color palette, font pairing, cover layout, class filename) do Maria and Basmala approve? | Blocks finalizing `nextmind-pdr.cls`. | Maria & Basmala |
-| **Q-05** | Should all five **Proposed Extensions** (`EXT-01..05`) remain strictly Future Scope, or should any single extension be promoted to Core? | Impacts requirements, diagrams, and 25-page budget. | Maria & Basmala |
-| **Q-06** | Where is the official **Assignment 02 lecturer brief** (filename & page numbers) so Section 11.1 (`LR-01..06`) can be verified and completed without fabrication? | Needed to lock down explicit lecturer requirements and permissions check. | Maria & Basmala |
-| **Q-07** | Should the GitHub repository be **public or private with instructor collaborators**, and what permissions apply to any lecturer-provided materials? | Required for instructor access and academic/copyright compliance. | Maria & Basmala |
-| **Q-08** | What are the exact fields, files, and deadline for the **separate Moodle submission form**? | Required to build the final external submission checklist. | Maria & Basmala |
-| **Q-09** | What is the exact **division of ownership** between **Maria Mnasra** and **Basmala Jamal** across sections, Python plots, LaTeX class, and QA/red-team reviews? | Ensures balanced, genuine, attributable partner contributions. | Maria & Basmala |
-| **Q-10** | Do Maria and Basmala approve the proposed **conceptual numerical targets** (Section 9.2), **candidate technologies** (Section 9.3), and **proposed reference count** (`15–20` IEEE entries)? | Required before Research & Design agents begin execution. | Maria & Basmala |
+| **Q-05** | After checking the original **Fuel&Go slides / prior PRD**, should each disputed feature (`EXT-01..05`) remain Future Scope or be cited and promoted to Core? | Determines final scope provenance and prevents unbacked scope creep. | Maria & Basmala |
+| **Q-06** | What are the exact **lecturer instruction filenames and page numbers** to populate Section 11.1 (`LR-01..05`) and confirm which workflow items are lecturer mandates vs. team choices? | Required for complete, zero-fabrication requirement traceability. | Maria & Basmala |
+| **Q-07** | Should the GitHub repository be **public or private with instructor collaborators**, and what permissions/licenses apply to any lecturer-provided materials? | Required for instructor access and academic/copyright compliance. | Maria & Basmala |
+| **Q-08** | What are the exact fields, uploads, and deadline for the **separate Moodle submission form**? | Required to complete external course submission. | Maria & Basmala |
+| **Q-09** | Beyond confirmed ownership (`PRD.md` -> Basmala; `PLAN.md`/`TODO.md` -> Maria; `README.md` -> Joint), how will **report chapters, Python graphs, `.cls`/TikZ, and QA/Red-Team reviews** be split between Maria Mnasra and Basmala Jamal? | Ensures balanced, genuine, attributable partner contributions. | Maria & Basmala |
+| **Q-10** | What justified rationale/sources should replace each **`TBD — requires rationale and team approval`** target in Section 9.2 and Section 7.2, and which candidate technologies in Section 9.3 are approved? | Required before Research & Design finalize specifications and charts. | Maria & Basmala (with Research input) |
