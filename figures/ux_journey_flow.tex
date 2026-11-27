@@ -1,0 +1,114 @@
+% ==============================================================================
+% figures/ux_journey_flow.tex
+% TikZ Vector Diagram #5 (Figure 6.1): Compact Four-Stage Conceptual Mobile
+% Screen-State Mockup + Error Prevention + Fault Recovery + WCAG 2.2 AA Strip
+% Strictly <= 16.5cm wide; all labels >= 9.5pt; ZERO nested tikzpictures
+% ==============================================================================
+\begin{tikzpicture}[
+  x=1cm, y=1cm,
+  >=Stealth,
+  phone/.style={
+    rectangle, rounded corners=6pt,
+    draw=#1, line width=1.15pt, fill=fgWhite,
+    minimum width=3.65cm, minimum height=3.85cm,
+    align=left, inner sep=0pt
+  },
+  guardbox/.style={
+    rectangle, rounded corners=4pt,
+    draw=#1, dashed, line width=1.1pt, fill=#1!8,
+    minimum width=7.95cm, minimum height=1.82cm,
+    align=left, inner sep=5pt,
+    font=\fontsize{9.5pt}{10.8pt}\selectfont, text=fgEspresso
+  },
+  flowarrow/.style={draw=fgTeal, line width=1.2pt, ->}
+]
+
+% ------------------------------------------------------------------------------
+% Top Conceptual Mockup Header Banner
+% ------------------------------------------------------------------------------
+\draw[fgAmber, line width=1.0pt, rounded corners=3pt, fill=fgCream]
+  (0.0, 6.95) rectangle (16.30, 7.62);
+\node[anchor=west, font=\fontsize{9.5pt}{10.8pt}\selectfont\bfseries, text=fgEspresso]
+  at (0.22, 7.28) {Dual-Energy Mobile Screen-State Flow (ICE/Hybrid \& EV)};
+\node[anchor=east, rectangle, rounded corners=2pt, fill=fgTeal, inner xsep=5pt, inner ysep=2pt,
+      font=\fontsize{9.5pt}{10.5pt}\selectfont\bfseries, text=fgWhite]
+  at (16.12, 7.28) {CONCEPTUAL MOCKUP};
+
+% ------------------------------------------------------------------------------
+% Row 1: Four-Stage Mobile Screen-State Mockup Cards
+% ------------------------------------------------------------------------------
+% Stage 1: Discover
+\node[phone=fgTeal] (p1) at (1.85, 4.78) {};
+\fill[fgTeal, rounded corners=4pt] (0.04, 6.16) rectangle (3.66, 6.68);
+\node[font=\fontsize{9.5pt}{10.5pt}\selectfont\bfseries, text=fgWhite] at (1.85, 6.42) {1. Discover};
+\node[anchor=north west, text width=3.35cm, font=\fontsize{9.5pt}{10.6pt}\selectfont, text=fgEspresso]
+  at (0.14, 6.08) {%
+  $\bullet$ Saved \texttt{VehicleProfile}\\
+  $\bullet$ Map/list by fuel/plug\\
+  $\bullet$ Live bay availability\\
+  $\bullet$ Tariff preview (\texttt{FR-02})};
+
+% Stage 2: Verify Bay
+\node[phone=fgTerracotta] (p2) at (6.05, 4.78) {};
+\fill[fgTerracotta, rounded corners=4pt] (4.24, 6.16) rectangle (7.86, 6.68);
+\node[font=\fontsize{9.5pt}{10.5pt}\selectfont\bfseries, text=fgWhite] at (6.05, 6.42) {2. Verify Bay};
+\node[anchor=north west, text width=3.35cm, font=\fontsize{9.5pt}{10.6pt}\selectfont, text=fgEspresso]
+  at (4.34, 6.08) {%
+  $\bullet$ QR / NFC bay scan\\
+  $\bullet$ Geofence match\\
+  $\bullet$ Pre-auth summary\\
+  $\bullet$ \textbf{Slide 50} grade lock};
+
+% Stage 3: Monitor Live
+\node[phone=fgEcoGreen] (p3) at (10.25, 4.78) {};
+\fill[fgEcoGreen, rounded corners=4pt] (8.44, 6.16) rectangle (12.06, 6.68);
+\node[font=\fontsize{9.5pt}{10.5pt}\selectfont\bfseries, text=fgWhite] at (10.25, 6.42) {3. Monitor Live};
+\node[anchor=north west, text width=3.35cm, font=\fontsize{9.5pt}{10.6pt}\selectfont, text=fgEspresso]
+  at (8.54, 6.08) {%
+  $\bullet$ Live L or kWh / kW\\
+  $\bullet$ Running cost counter\\
+  $\bullet$ EV SoC \& Remote Stop\\
+  $\bullet$ Progress indicator};
+
+% Stage 4: Digital Receipt
+\node[phone=fgOlive] (p4) at (14.45, 4.78) {};
+\fill[fgOlive, rounded corners=4pt] (12.64, 6.16) rectangle (16.26, 6.68);
+\node[font=\fontsize{9.5pt}{10.5pt}\selectfont\bfseries, text=fgWhite] at (14.45, 6.42) {4. Digital Receipt};
+\node[anchor=north west, text width=3.35cm, font=\fontsize{9.5pt}{10.6pt}\selectfont, text=fgEspresso]
+  at (12.74, 6.08) {%
+  $\bullet$ Metered total (\texttt{FR-05})\\
+  $\bullet$ Exact PSP capture\\
+  $\bullet$ Hold-release notice\\
+  $\bullet$ 1-tap issue report};
+
+% Connecting Arrows
+\draw[flowarrow] (p1.east) -- (p2.west);
+\draw[flowarrow] (p2.east) -- (p3.west);
+\draw[flowarrow] (p3.east) -- (p4.west);
+
+% ------------------------------------------------------------------------------
+% Row 2: Error Prevention (Slide 50) & Fault Recovery (FR-06a/b)
+% ------------------------------------------------------------------------------
+\node[guardbox=fgTerracotta, text width=7.60cm] (err) at (4.00, 1.62) {%
+  \textbf{\textcolor{fgTerracotta}{Error Prevention (Slide 50 Guardrail)}}\\
+  Incompatible fuel grades (e.g., Diesel vs.\ Gasoline) or EV connectors (CHAdeMO vs.\ CCS2) are disabled/hidden per active vehicle profile; explicit confirmation modal required before dispatch.};
+
+\node[guardbox=fgTextAmber, text width=7.60cm] (rec) at (12.30, 1.62) {%
+  \textbf{\textcolor{fgTextAmber}{Fault Recovery (\texttt{FR-06a} / \texttt{FR-06b})}}\\
+  Persistent \emph{Timeout / Reconciling} banner + disabled duplicate start tap + automated PSP hold-release notice + session-linked 1-tap issue report.};
+
+% Subtle links from Verify/Monitor to Guardrails
+\draw[fgTerracotta, dashed, line width=0.9pt, ->] (p2.south) -- (6.05, 2.55);
+\draw[fgTextAmber, dashed, line width=0.9pt, ->] (p3.south) -- (10.25, 2.55);
+
+% ------------------------------------------------------------------------------
+% Row 3: WCAG 2.2 Level AA Accessibility Strip
+% ------------------------------------------------------------------------------
+\draw[fgTeal, line width=1.0pt, rounded corners=3pt, fill=fgTealTint!70]
+  (0.0, -0.48) rectangle (16.30, 0.42);
+\node[anchor=center, align=center, text width=15.6cm, font=\fontsize{9.5pt}{10.8pt}\selectfont, text=fgEspresso]
+  at (8.15, -0.03) {%
+  \textbf{\textcolor{fgTeal}{WCAG 2.2 Level AA Accessibility Strip:}} $\ge 4.5{:}1$ Normal Text Contrast (SC 1.4.3)\\
+  $\ge 24\times 24$ CSS px Pointer Targets (SC 2.5.8) $\;\cdot\;$ Non-Color Icons \& $\ge 3{:}1$ UI Contrast (SC 1.4.11)};
+
+\end{tikzpicture}

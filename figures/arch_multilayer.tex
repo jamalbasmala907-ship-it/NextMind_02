@@ -1,0 +1,133 @@
+% ==============================================================================
+% figures/arch_multilayer.tex
+% TikZ Vector Diagram #2 (Figure 4.1): Six-Tier Conceptual System Architecture
+% and Autonomous Local Hardware Safety Boundary (NFR-06)
+% Strictly <= 16.5cm wide; all labels >= 9.5pt; ZERO nested tikzpictures
+% ==============================================================================
+\begin{tikzpicture}[
+  x=1cm, y=1cm,
+  >=Stealth,
+  tierbox/.style={
+    rectangle, rounded corners=4pt,
+    draw=#1, line width=1.1pt, fill=#1!10,
+    align=center, inner sep=4pt,
+    font=\fontsize{9.5pt}{10.8pt}\selectfont, text=fgEspresso
+  },
+  svcbox/.style={
+    rectangle, rounded corners=3pt,
+    draw=fgTeal, line width=0.95pt, fill=fgWhite,
+    minimum width=3.62cm, minimum height=1.10cm,
+    align=center, inner sep=3pt,
+    font=\fontsize{9.5pt}{10.6pt}\selectfont, text=fgEspresso
+  },
+  adpbox/.style={
+    rectangle, rounded corners=3pt,
+    draw=#1, line width=1.0pt, fill=#1!10,
+    minimum width=4.95cm, minimum height=0.92cm,
+    align=center, inner sep=3pt,
+    font=\fontsize{9.5pt}{10.6pt}\selectfont, text=fgEspresso
+  },
+  extbox/.style={
+    rectangle, rounded corners=3pt,
+    draw=#1, dashed, line width=1.1pt, fill=#1!8,
+    minimum width=4.95cm, minimum height=1.02cm,
+    align=center, inner sep=3pt,
+    font=\fontsize{9.5pt}{10.6pt}\selectfont, text=fgEspresso
+  },
+  corearrow/.style={draw=fgTeal, line width=1.0pt, <->},
+  extarrow/.style={draw=fgEspresso!85, dashed, line width=1.0pt, <->}
+]
+
+% ------------------------------------------------------------------------------
+% Tier 1: Mobile Client Layer
+% ------------------------------------------------------------------------------
+\node[tierbox=fgTeal, minimum width=16.30cm, minimum height=0.95cm] (t1) at (8.15, 9.20) {%
+  \textbf{Tier 1: Mobile Client Layer} (\texttt{FR-01}--\texttt{FR-06b})\\
+  iOS / Android App (Flutter Candidate) $\cdot$ QR/NFC Scan $\cdot$ Live Telemetry $\cdot$ PSP Client SDK (Zero PAN in Backend)};
+
+% ------------------------------------------------------------------------------
+% Tier 2: API Gateway & Edge Security
+% ------------------------------------------------------------------------------
+\node[tierbox=fgOlive, minimum width=16.30cm, minimum height=0.88cm] (t2) at (8.15, 7.80) {%
+  \textbf{Tier 2: API Gateway \& Edge Security} (\texttt{NFR-05})\\
+  TLS Termination $\cdot$ OAuth 2.0 / OIDC $\cdot$ Rate Limiting $\cdot$ REST + WebSocket Routing (OWASP API Top 10)};
+
+% ------------------------------------------------------------------------------
+% Tier 3: Core Backend Services (4 Bounded Services)
+% ------------------------------------------------------------------------------
+\draw[fgTeal, line width=1.2pt, rounded corners=5pt, fill=fgTealTint!50]
+  (0.0, 5.10) rectangle (16.30, 6.92);
+\node[anchor=north west, font=\fontsize{9.5pt}{10.8pt}\selectfont\bfseries, text=fgTeal]
+  at (0.20, 6.84) {Tier 3: Proposed Core Backend Services (Conceptual System Design)};
+
+\node[svcbox] (s1) at (2.05, 5.72) {\textbf{Identity \& Profile}\\(\texttt{FR-01})};
+\node[svcbox] (s2) at (6.12, 5.72) {\textbf{Discovery Service}\\Redis + PostGIS (\texttt{FR-02})};
+\node[svcbox] (s3) at (10.18, 5.72) {\textbf{Unified Session}\\Orchestrator (\texttt{FR-03/04/06a})};
+\node[svcbox] (s4) at (14.25, 5.72) {\textbf{Settlement, Ledger}\\\& Support (\texttt{FR-05/06b})};
+
+% ------------------------------------------------------------------------------
+% Tier 4: External Integration Adapter Layer (3 Adapters)
+% ------------------------------------------------------------------------------
+\node[adpbox=fgOlive] (a1) at (2.60, 4.10) {%
+  \textbf{PSP Adapter}\\Tokenized Holds \& Captures};
+\node[adpbox=fgEcoGreen] (a2) at (8.15, 4.10) {%
+  \textbf{EV Roaming / CPMS Adapter}\\OCPI Commands, Sessions, CDRs};
+\node[adpbox=fgTerracotta] (a3) at (13.70, 4.10) {%
+  \textbf{Forecourt / POS Adapter}\\IFSF / Vendor POS Translation};
+
+% ------------------------------------------------------------------------------
+% Tier 5: External Systems (External System Context)
+% ------------------------------------------------------------------------------
+\node[extbox=fgOlive] (e1) at (2.60, 2.48) {%
+  \textbf{Payment Service Provider (PSP)}\\{\itshape External Context} $\cdot$ PCI DSS v4.0.1};
+\node[extbox=fgEcoGreen] (e2) at (8.15, 2.48) {%
+  \textbf{EV Operator / CPMS}\\{\itshape External Context} $\cdot$ OCPP / ISO 15118};
+\node[extbox=fgTerracotta] (e3) at (13.70, 2.48) {%
+  \textbf{Forecourt / POS Gateway}\\{\itshape External Context} $\cdot$ Local FCC};
+
+% ------------------------------------------------------------------------------
+% Tier 6: Autonomous Local Hardware Safety Boundary (NFR-06)
+% ------------------------------------------------------------------------------
+\draw[fgTerracotta, dashed, line width=1.4pt, rounded corners=5pt, fill=fgTerraTint!75]
+  (0.0, 0.25) rectangle (16.30, 1.48);
+\node[anchor=center, align=center, font=\fontsize{9.5pt}{11pt}\selectfont, text=fgEspresso]
+  at (8.15, 0.86) {%
+  \textbf{\textcolor{fgTerracotta}{Tier 6: Autonomous Local Hardware Safety Boundary (\texttt{NFR-06}) --- Outside Cloud Control}}\\
+  100\% Local Hardware Interlocks: E-Stop $\cdot$ Nozzle Overfill/Vapor Cutoffs $\cdot$ Ground-Fault \& HV EVSE Isolation};
+
+% ------------------------------------------------------------------------------
+% Vertical Connections
+% ------------------------------------------------------------------------------
+\draw[corearrow] (t1.south) -- (t2.north);
+\draw[corearrow] (t2.south) -- (8.15, 6.92);
+
+\draw[corearrow] (2.60, 5.10) -- (a1.north);
+\draw[corearrow] (8.15, 5.10) -- (a2.north);
+\draw[corearrow] (13.70, 5.10) -- (a3.north);
+
+\draw[extarrow] (a1.south) -- (e1.north);
+\draw[extarrow] (a2.south) -- (e2.north);
+\draw[extarrow] (a3.south) -- (e3.north);
+
+\draw[extarrow, fgTerracotta] (e2.south) -- (8.15, 1.48);
+\draw[extarrow, fgTerracotta] (e3.south) -- (13.70, 1.48);
+
+% ------------------------------------------------------------------------------
+% Bottom Legend Bar (Grayscale-Safe)
+% ------------------------------------------------------------------------------
+\draw[fgRuleGray, line width=0.7pt, rounded corners=3pt, fill=fgSoftCream]
+  (0.0, -0.58) rectangle (16.30, 0.02);
+
+\draw[corearrow] (0.25, -0.28) -- (1.05, -0.28);
+\node[anchor=west, font=\fontsize{9.5pt}{10.5pt}\selectfont\bfseries, text=fgTeal]
+  at (1.12, -0.28) {Proposed Core Interface};
+
+\draw[extarrow] (5.55, -0.28) -- (6.35, -0.28);
+\node[anchor=west, font=\fontsize{9.5pt}{10.5pt}\selectfont\bfseries, text=fgEspresso]
+  at (6.42, -0.28) {External System Context};
+
+\draw[fgTerracotta, dashed, line width=1.4pt] (10.95, -0.28) -- (11.75, -0.28);
+\node[anchor=west, font=\fontsize{9.5pt}{10.5pt}\selectfont\bfseries, text=fgTerracotta]
+  at (11.82, -0.28) {Safety Boundary (\texttt{NFR-06})};
+
+\end{tikzpicture}

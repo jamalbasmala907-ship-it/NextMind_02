@@ -1,0 +1,140 @@
+% ==============================================================================
+% figures/use_case_diagram.tex
+% TikZ Vector Diagram #1 (Figure 3.1): Proposed Core Use-Case & Actor Interaction
+% Boundary for Fuel&Go (Conceptual System Design)
+% Compacted vertical height for clean flow near Sec. 3.2 (no empty float page)
+% Strictly <= 16.5cm wide; all labels >= 9.5pt; ZERO nested tikzpictures
+% ==============================================================================
+\begin{tikzpicture}[
+  x=1cm, y=1cm,
+  >=Stealth,
+  actorbox/.style={
+    rectangle, rounded corners=4pt,
+    draw=#1, line width=1.1pt, fill=#1!10,
+    minimum width=3.05cm, minimum height=1.18cm,
+    align=center, inner sep=3.5pt,
+    font=\fontsize{9.5pt}{10.8pt}\selectfont\bfseries, text=fgEspresso
+  },
+  extbox/.style={
+    rectangle, rounded corners=4pt,
+    draw=#1, dashed, line width=1.1pt, fill=#1!8,
+    minimum width=3.35cm, minimum height=1.15cm,
+    align=center, inner sep=3.5pt,
+    font=\fontsize{9.5pt}{10.8pt}\selectfont\bfseries, text=fgEspresso
+  },
+  uc/.style={
+    rectangle, rounded corners=6pt,
+    draw=fgTeal, line width=0.95pt, fill=fgWhite,
+    minimum width=6.85cm, minimum height=0.58cm,
+    align=left, inner xsep=6pt, inner ysep=1.5pt,
+    font=\fontsize{9.5pt}{10.5pt}\selectfont, text=fgEspresso
+  },
+  corelink/.style={draw=fgTeal, line width=0.95pt, ->},
+  evlink/.style={draw=fgEcoGreen, line width=0.95pt, ->},
+  fuellink/.style={draw=fgTerracotta, line width=0.95pt, ->},
+  extlink/.style={draw=fgEspresso!80, dashed, line width=0.95pt, <->}
+]
+
+% ------------------------------------------------------------------------------
+% Center: Proposed Fuel&Go Core Boundary (Compact Height)
+% ------------------------------------------------------------------------------
+\draw[fgTeal, line width=1.3pt, rounded corners=6pt, fill=fgTealTint!55]
+  (4.15, 0.05) rectangle (11.75, 6.18);
+
+\node[anchor=north, font=\fontsize{10pt}{11pt}\selectfont\bfseries, text=fgTeal]
+  at (7.95, 6.10) {Proposed Fuel\&Go Core Boundary};
+\node[anchor=north, font=\fontsize{9.5pt}{10.5pt}\selectfont\itshape, text=fgOliveDark]
+  at (7.95, 5.70) {Conceptual Design (FR-01 to FR-06b)};
+
+% Seven Core Use Cases (0.72cm vertical pitch)
+\node[uc] (fr1)  at (7.95, 4.98) {\textbf{\texttt{FR-01}} Account, Auth \& Vehicle Profile};
+\node[uc] (fr2)  at (7.95, 4.26) {\textbf{\texttt{FR-02}} Unified Station \& Charger Discovery};
+\node[uc] (fr3)  at (7.95, 3.54) {\textbf{\texttt{FR-03}} Pump / Charger Selection \& Auth};
+\node[uc] (fr4)  at (7.95, 2.82) {\textbf{\texttt{FR-04}} Real-Time Fueling \& EV Telemetry};
+\node[uc] (fr5)  at (7.95, 2.10) {\textbf{\texttt{FR-05}} Contactless Settlement \& Receipt};
+\node[uc] (fr6a) at (7.95, 1.38) {\textbf{\texttt{FR-06a}} Critical Fault Recovery (Must)};
+\node[uc] (fr6b) at (7.95, 0.66) {\textbf{\texttt{FR-06b}} Basic User Support (Should)};
+
+% ------------------------------------------------------------------------------
+% Left: Human Actors (Drivers) — Native TikZ icons in outer tikzpicture
+% ------------------------------------------------------------------------------
+\node[actorbox=fgTerracotta, minimum height=1.38cm] (ice) at (1.55, 4.15) {%
+  \rule{0pt}{11pt}\\[1.5pt]
+  ICE / Hybrid\\Driver};
+\begin{scope}[shift={($(ice.north)+(-0.18cm,-0.44cm)$)}, scale=0.21]
+  \draw[fgTerracotta, line width=0.9pt, rounded corners=0.6pt] (0,0) rectangle (1.1,1.55);
+  \draw[fgTerracotta, line width=0.7pt] (0.2,0.9) rectangle (0.9,1.35);
+  \draw[fgTerracotta, line width=0.8pt] (1.1,1.25) -- (1.45,1.25) -- (1.45,0.45) arc (180:360:0.16) -- (1.77,1.05) -- (1.6,1.35);
+  \draw[fgTerracotta, line width=0.9pt] (-0.15,0) -- (1.25,0);
+\end{scope}
+
+\node[actorbox=fgEcoGreen, minimum height=1.32cm] (ev) at (1.55, 1.65) {%
+  \rule{0pt}{11pt}\\[1.5pt]
+  EV Driver};
+\begin{scope}[shift={($(ev.north)+(-0.18cm,-0.44cm)$)}, scale=0.21]
+  \draw[fgEcoGreen, line width=0.9pt] (0.95,1.6) -- (0.15,0.75) -- (0.72,0.75) -- (0.55,0.0) -- (1.45,0.92) -- (0.85,0.92) -- cycle;
+\end{scope}
+
+% ------------------------------------------------------------------------------
+% Right: External Operational Systems
+% ------------------------------------------------------------------------------
+\node[extbox=fgTerracotta] (pos) at (14.68, 4.65) {%
+  Forecourt / POS\\Gateway\\{\fontsize{9.5pt}{10.5pt}\selectfont\normalfont\itshape (External Context)}};
+
+\node[extbox=fgEcoGreen] (cpms) at (14.68, 2.95) {%
+  EV CPMS /\\Roaming Backend\\{\fontsize{9.5pt}{10.5pt}\selectfont\normalfont\itshape (External Context)}};
+
+\node[extbox=fgOlive] (psp) at (14.68, 1.25) {%
+  Payment Service\\Provider (PSP)\\{\fontsize{9.5pt}{10.5pt}\selectfont\normalfont\itshape (External Context)}};
+
+% ------------------------------------------------------------------------------
+% Driver -> Core Links (Proposed Core Interface — Solid, Staggered Non-Overlapping)
+% ------------------------------------------------------------------------------
+\draw[fuellink] (ice.east) -- ++(0.38,0) |- ([yshift=2pt]fr1.west);
+\draw[fuellink] (ice.east) -- ++(0.38,0) |- ([yshift=2pt]fr2.west);
+\draw[fuellink] (ice.east) -- ++(0.38,0) |- ([yshift=2pt]fr3.west);
+\draw[fuellink] (ice.east) -- ++(0.38,0) |- ([yshift=2pt]fr4.west);
+\draw[fuellink] (ice.east) -- ++(0.38,0) |- ([yshift=2pt]fr5.west);
+\draw[fuellink] (ice.east) -- ++(0.38,0) |- ([yshift=2pt]fr6a.west);
+\draw[fuellink] (ice.east) -- ++(0.38,0) |- ([yshift=2pt]fr6b.west);
+
+\draw[evlink] (ev.east) -- ++(0.68,0) |- ([yshift=-2pt]fr1.west);
+\draw[evlink] (ev.east) -- ++(0.68,0) |- ([yshift=-2pt]fr2.west);
+\draw[evlink] (ev.east) -- ++(0.68,0) |- ([yshift=-2pt]fr3.west);
+\draw[evlink] (ev.east) -- ++(0.68,0) |- ([yshift=-2pt]fr4.west);
+\draw[evlink] (ev.east) -- ++(0.68,0) |- ([yshift=-2pt]fr5.west);
+\draw[evlink] (ev.east) -- ++(0.68,0) |- ([yshift=-2pt]fr6a.west);
+\draw[evlink] (ev.east) -- ++(0.68,0) |- ([yshift=-2pt]fr6b.west);
+
+% ------------------------------------------------------------------------------
+% Core <-> External Systems Links (External System Context — Dashed, Staggered)
+% ------------------------------------------------------------------------------
+\draw[extlink] ([yshift=2pt]fr2.east)  -- ++(0.36,0) |- ([yshift=6pt]pos.west);
+\draw[extlink] ([yshift=2pt]fr3.east)  -- ++(0.36,0) |- ([yshift=2pt]pos.west);
+\draw[extlink] ([yshift=2pt]fr4.east)  -- ++(0.36,0) |- ([yshift=-2pt]pos.west);
+\draw[extlink] ([yshift=2pt]fr6a.east) -- ++(0.36,0) |- ([yshift=-6pt]pos.west);
+
+\draw[extlink] ([yshift=-2pt]fr2.east)  -- ++(0.62,0) |- ([yshift=6pt]cpms.west);
+\draw[extlink] ([yshift=-2pt]fr3.east)  -- ++(0.62,0) |- ([yshift=2pt]cpms.west);
+\draw[extlink] ([yshift=-2pt]fr4.east)  -- ++(0.62,0) |- ([yshift=-2pt]cpms.west);
+\draw[extlink] (fr6a.east)              -- ++(0.62,0) |- ([yshift=-6pt]cpms.west);
+
+\draw[extlink] ([yshift=-4pt]fr3.east)  -- ++(0.88,0) |- ([yshift=4pt]psp.west);
+\draw[extlink] (fr5.east)               -- ++(0.88,0) |- (psp.west);
+\draw[extlink] ([yshift=-2pt]fr6a.east) -- ++(0.88,0) |- ([yshift=-4pt]psp.west);
+
+% ------------------------------------------------------------------------------
+% Bottom Legend Bar (Grayscale-Safe Solid vs. Dashed)
+% ------------------------------------------------------------------------------
+\draw[fgRuleGray, line width=0.7pt, rounded corners=3pt, fill=fgSoftCream]
+  (0.0, -0.78) rectangle (16.38, -0.14);
+
+\draw[corelink] (0.35, -0.46) -- (1.35, -0.46);
+\node[anchor=west, font=\fontsize{9.5pt}{10.5pt}\selectfont\bfseries, text=fgTeal]
+  at (1.45, -0.46) {Proposed Core Interface (Solid)};
+
+\draw[extlink] (8.15, -0.46) -- (9.15, -0.46);
+\node[anchor=west, font=\fontsize{9.5pt}{10.5pt}\selectfont\bfseries, text=fgEspresso]
+  at (9.25, -0.46) {External System Context (Dashed)};
+
+\end{tikzpicture}

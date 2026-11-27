@@ -1,0 +1,60 @@
+Proceed with Fuel&Go Assignment 02: evidence gathering and a rendered visual sample.
+
+Save this prompt verbatim in prompts/ using the next available numbered filename. Read PRD.md, PLAN.md, TODO.md, docs/REPORT_OUTLINE.md, and docs/REQUIREMENTS_CHECKLIST.md.
+
+First correct the Chapter 5 inconsistency in docs/REPORT_OUTLINE.md: use consistent integration-boundary labels in the explanatory list, proposed diagram, and table. Show these six interfaces/domains explicitly:
+1. Mobile application ↔ Fuel&Go backend.
+2. Fuel&Go backend ↔ charging operator/roaming backend.
+3. Charging station ↔ charging-management system.
+4. Vehicle ↔ charging station.
+5. Fuel&Go backend ↔ forecourt/POS gateway.
+6. Fuel&Go backend ↔ payment service provider.
+Distinguish interfaces implemented by Fuel&Go from external domains shown only for context. Treat protocols and versions as candidates requiring source verification.
+
+Use the documented five-agent workflow: Master, Research, Design, Detector, and Fixer. Inspect the current mesh status first. Reuse existing sessions and launch only missing required sessions; do not create duplicates or bypass permission checks. Each agent must read its assigned SKILL.md. Preserve actual inter-agent messages and outputs; never simulate delegation or replies. If the workflow cannot operate, report the blocker rather than claiming agent work occurred.
+
+Master: coordinate these bounded work packages.
+
+Research:
+- Gather and verify primary sources needed by the outline, prioritizing market context, business-model evidence, integration boundaries, and technical standards.
+- Inspect the original assignment sources where requirements remain unresolved.
+- Create or update docs/RESEARCH_NOTES.md with source titles, URLs, publication dates/versions, relevant pages or sections, supported claims, intended report chapters, and reading limitations.
+- Maintain bib/references.bib with verified bibliographic metadata and stable citation keys.
+- Distinguish sourced facts, proposed product choices, calculations, and assumptions.
+- If selecting numerical data for a future Python graph, preserve the data, units, coverage period, source, and transformation notes using the project's documented paths.
+- Do not invent figures, citations, costs, profitability, savings, or product test results.
+- Do not write report chapters.
+
+Design:
+- Create a one-page English visual_sample.pdf with editable LaTeX source using the project's documented structure.
+- Derive its logo, palette, and visual identity from the actual Fuel&Go presentation.
+- Include a heading, short sample paragraph, executive callout, readable table, running header/footer, and a small diagram or palette sample.
+- Clearly label illustrative content; do not imply it is verified research or a completed report chapter.
+- Use a provisional custom class consistent with the planned report structure; keep final styling pending human review.
+- Verify font availability, compile the sample, and inspect the rendered page for clipping, spacing, contrast, and readability.
+- Record the build command, dependencies, and actual checks performed.
+
+Detector:
+- Independently review source-to-claim mapping and the rendered visual sample.
+- Document actual findings with evidence and acceptance criteria.
+- Do not edit the files being reviewed.
+- Distinguish inaccessible/unverified sources from verified sources.
+
+Fixer:
+- Correct documented defects only.
+- Preserve the required incident records and return changes to Detector for independent retesting.
+- Do not mark your own fixes independently verified.
+
+Keep the provisional target of exactly 25 pages and the unresolved page-counting rule visible. Do not claim lecturer clarification or partner approval that has not occurred. Unresolved scope choices may remain open while independent research and sample design proceed.
+
+Update TODO.md only for work actually completed, linking the evidence. Update PLAN.md only if needed to reflect the actual workflow. Keep PRD.md unchanged.
+
+Do not generate the full report, write report chapters, delete files, commit, or push. Do not modify the lecturer's utility installation or expose credentials.
+
+Finish briefly in Hebrew with:
+- Created or updated file paths.
+- Actual agent work and checks performed.
+- Outstanding defects, limitations, and decisions.
+- The exact path to visual_sample.pdf for our review.
+
+Do not print entire files.

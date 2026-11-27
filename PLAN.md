@@ -7,7 +7,7 @@
 | **Team** | NextMind |
 | **Partners** | Maria Mnasra, Basmala Jamal |
 | **PLAN Owner** | Maria Mnasra (Planning & Task Governance Owner; Joint Major-Decision Approval with Basmala Jamal) |
-| **Specification Reference** | [PRD](<PRD (1).md>) (v1.2.0-draft — File/version verified; content approval pending) |
+| **Specification Reference** | [PRD.md](PRD.md) (v1.2.0-draft — File/version verified; content approval pending) |
 | **Target Document Length** | Strictly 25 English Pages (Exact; boundary subject to `Q-01` resolution) |
 | **Document Status** | Working Baseline — Active Execution Plan |
 | **Version** | 1.1.0 |
@@ -17,7 +17,7 @@
 ## 1. Report Objective & Scope Linkage
 
 ### 1.1 Objective
-This Project Execution Plan (`PLAN.md`) governs the end-to-end execution, multi-agent collaboration, verification, and submission of the **Assignment 02 Engineering Report** for team **NextMind**. The plan is anchored directly to the working specification defined in [PRD](<PRD (1).md>) (v1.2.0-draft).
+This Project Execution Plan (`PLAN.md`) governs the end-to-end execution, multi-agent collaboration, verification, and submission of the **Assignment 02 Engineering Report** for team **NextMind**. The plan is anchored directly to the working specification defined in [PRD.md](PRD.md) (v1.2.0-draft).
 
 ### 1.2 Scope Boundaries
 - **Core Product Scope (In-Scope)**: Architecture and conceptual preliminary design of the core Fuel&Go dual-energy platform:
@@ -37,18 +37,18 @@ This Project Execution Plan (`PLAN.md`) governs the end-to-end execution, multi-
 
 | Domain / Artifact | Current Status | State Classification | Evidence / Verification Location |
 | --- | --- | --- | --- |
-| **PRD Specification** | `v1.2.0-draft` anchored at root; partner review and approval pending | **File/version verified; content approval pending** | [PRD](<PRD (1).md>) at project root |
-| **Team Setup Prompts** | `001-team-setup.txt`, `002-setup-review.txt`, `003-prepare-plan.txt` saved verbatim | **Verified Completed** | `prompts/` |
+| **PRD Specification** | `v1.2.0-draft` tracked at root (`PRD.md`, unchanged); partner review and content approval pending | **File/version verified; content approval pending** | [PRD.md](PRD.md) at project root |
+| **Team Setup Prompts** | `001-team-setup.txt` through `017-complete-report.txt` saved verbatim | **Verified Completed (Ongoing)** | `prompts/` |
 | **Agent Skill Profiles** | 5 role-specific `SKILL.md` files created and verified non-empty | **Verified Completed** | `agents/{master,research,design,detector,fixer}/SKILL.md` |
-| **Multi-Agent Infrastructure** | Hub running (port 9877), junctions active, 5 real sessions active | **Verified Completed** | Local hub process (PID 12872), background task logs |
-| **Mesh Health & Inter-Session Comms** | Genuine `ping-all` round completed; all 4 workers replied `PONG` | **Verified Completed** | Master session `ping-all` output log (all 4 peers answered) |
-| **Assignment Source Review** | Initial scan completed; PDF guidelines and textbook available | **Verified Completed (with noted reading limits)** | `docs/REQUIREMENTS_CHECKLIST.md` |
-| **Report Outline & Budget Sign-Off** | Rebalanceable 25-page budget drafted; boundary open (`Q-01`) | **Planned — Verification Pending** | Pending team decision on `Q-01` |
-| **Visual Design System** | Palette and font proposals formulated; class unfinalized (`Q-04`) | **Planned — Pending Approval** | Pending visual sample approval by Maria & Basmala |
-| **Content Drafting & Research** | IEEE bibliography, literature matrix, and LaTeX chapter drafting | **Planned — Verification Pending** | `bib/`, `evidence/`, `sections/` |
-| **Python Plot Pipeline** | Reproducible plotting scripts and data provenance tracking | **Planned — Verification Pending** | `scripts/plots/`, `data/` |
-| **Independent QA & Incidents** | Red-team audits, defect register, 5-part incident records | **Planned — Verification Pending** | `qa/` |
-| **Git Setup & Collaboration Checkpoints** | Scheduled early; target identified; operations not yet executed | **Planned — Verification Pending** | Target: `https://github.com/jamalbasmala907-ship-it/NextMind_02` |
+| **Multi-Agent Infrastructure** | Local `agymesh` hub (port 9877) and worker sessions verified across full Ch. 1–9 production and independent QA rounds | **Verified Completed** | `.mesh/journal.jsonl`, `.mesh/results/*.md` |
+| **Mesh Health & Inter-Session Comms** | Genuine `ping-all` and end-to-end `dispatch` rounds completed through full 25-page `main.pdf` build, Defect Remediation, and Detector Retest | **Verified Completed** | `.mesh/journal.jsonl`, `.mesh/results/*.md` |
+| **Assignment Source Review** | Full audit of assignment brief, lecture PDFs, and 78-slide original Fuel&Go presentation completed | **Verified Completed (with noted reading limits)** | `docs/REQUIREMENTS_CHECKLIST.md`, `docs/RESEARCH_NOTES.md` |
+| **Report Outline & Budget Sign-Off** | Proposed outline & provisional 25-page Option A allocation executed; lecturer counting boundary (`Q-01`) remains unresolved | **Executed (Provisional Option A); `Q-01` & Partner Review Pending** | [docs/REPORT_OUTLINE.md](docs/REPORT_OUTLINE.md) |
+| **Visual Design System** | `nextmind-pdr.cls` Working v0.3.3 (`\FloatBarrier` + `\needspace` in `\fgchapter`, LuaTeX BiDi Hebrew support, WCAG AA hardened Fuel&Go palette; prior previews preserved untouched); **Maria accepted working design; Basmala review/approval pending (`Q-04`)** | **Working Design Active (Maria); Basmala Review Pending** | `nextmind-pdr.cls`, `visual_preview.pdf`, `visual_sample.pdf`, `backups/` |
+| **Content Drafting & Research** | Complete 25-page report assembled in `main.tex` -> `main.pdf` (`838,144` bytes; exact 25 pages; Front Matter + Ch. 1–9 + 27/27 IEEE references incl. RTL Hebrew + Appendices A–B; prior partial drafts `draft_ch1_3.*` and `draft_ch1_6.*` preserved untouched). All Ch. 1–6 fixes (A1–A6) applied; Israel CBS stats excluded; `EXT-01..05` & AI Assistant outside Core; **Basmala partner review & `README.md` pending** | **Full 25-Page Report Compiled & QA Passed; Partner Review Pending** | `main.pdf`, `main.tex`, `front/*.tex`, `sections/sec01..09*.tex`, `back/appendices.tex`, `bib/references.bib`, `docs/RESEARCH_NOTES.md` |
+| **Python Plot & TikZ Pipeline** | Both reproducible Python vector plots (`fig2_1_market_context.py` -> `fig2_1_market_context.pdf`, `fig5_2_telemetry_sizing.py` -> `fig5_2_telemetry_sizing.pdf` via `scripts/generate_figures.py`, exit 0) and all 6 TikZ vector diagrams (`use_case_diagram`, `arch_multilayer`, `session_fsm`, `sequence_auth_settlement`, `ux_journey_flow`, `safety_trust_boundary`) generated and verified `PASS` | **Verified Completed** | `scripts/generate_figures.py`, `scripts/plots/`, `requirements.txt`, `figures/` |
+| **Independent QA & Incidents** | Consolidated independent Detector full-report audit + Fixer/Design remediation + Detector retest completed on `main.pdf` (25 pages, 0 LaTeX/Biber/Missing-char errors, max overfull `1.60pt`): **`DEF-001`–`DEF-015` all `PASS`/`CLOSED`; 0 open defects** (`INC-DEF-001..015.md`) | **Phase 6 Full-Report QA Verified PASS (0 Open Defects)** | `qa/defects.json`, `qa/DEFECTS.md`, `qa/redteam/redteam_audit_main.md`, `qa/incidents/INC-DEF-001..015.md` |
+| **Git Setup & Collaboration Checkpoints** | Baseline Git setup completed on `main`, `.gitignore` active, remote connected, initial commits from both partners synced with `origin/main` (`4b1d1f9`); repo visibility/permissions (`Q-07`) still open | **Baseline Setup Verified Completed; Checkpoints 2–6 Pending** | Remote: `https://github.com/jamalbasmala907-ship-it/NextMind_02` |
 
 ---
 
@@ -76,21 +76,22 @@ Human partners hold ultimate project ownership, governance authority, and decisi
 +--------------------------------------+                 +--------------------------------------+
 ```
 
-### Detailed Partner Allocations
+### Detailed Partner Allocations (Updated Human Work Agreement — 2026-11-27)
+> **Active Sharing & Review Agreement**: To maintain authentic two-partner authorship and clear accountability, **Maria Mnasra** leads report production and prepares verified drafts for sharing through GitHub; **Basmala Jamal** will pull the shared work from GitHub, review and revise it, and prepare `README.md`. Previous genuine contributions and Basmala's authoritative ownership of `PRD.md` are fully preserved. **No newly produced chapter draft or working visual selection is claimed as reviewed or approved by Basmala prior to her pull/review pass.**
+
 - **Basmala Jamal**:
-  - Authoritative owner of `PRD.md` (requirements definitions, scope boundaries, acceptance criteria, user personas).
-  - Approves requirements changes, scope promotions/demotions, and conceptual feature baselines.
-  - Jointly reviews major architectural trade-offs, visual design, and the final deliverable.
+  - Authoritative owner of `PRD.md` (requirements definitions, scope boundaries, acceptance criteria, user personas — preserved intact).
+  - Pulls Maria's shared report production work from GitHub, performs independent partner review and revisions across chapters/scope/visual design, and prepares `README.md` (for joint sign-off).
+  - Approves requirements changes, scope promotions/demotions, and final deliverable sign-off jointly with Maria.
   - Submits individual Moodle submission form.
 - **Maria Mnasra**:
   - Authoritative owner of `PLAN.md` and `TODO.md` (execution workflow, milestones, task dependencies, delivery schedule).
-  - Manages task board gating, handoff pacing, and progress tracking across phases.
-  - Jointly reviews major architectural trade-offs, visual design, and the final deliverable.
-  - Submits individual Moodle submission form.
+  - Leads active report production (coordinating `Research`, `Design`, `Detector`, and `Fixer` sessions) and prepares verified report artifacts for GitHub sharing.
+  - Accepted the redesigned `visual_preview.pdf` direction as the **working report design** (`nextmind-pdr.cls` Working v0.3.1), pending Basmala's review/approval.
+  - Jointly signs off on final deliverable and submits individual Moodle submission form.
 - **Joint Responsibilities (Maria Mnasra & Basmala Jamal)**:
-  - Jointly own `README.md` (team attribution, reproduction guide, evidence summary).
-  - Jointly approve open decisions (`Q-01` through `Q-10`).
-  - Jointly inspect and sign off on the final compiled 25-page PDF report prior to any external publication or submission.
+  - Jointly approve open decisions (`Q-01` through `Q-10`) and final `README.md` release.
+  - Jointly inspect and sign off on the final compiled 25-page PDF report prior to final release or Moodle submission.
 
 ---
 
@@ -156,7 +157,7 @@ To maintain momentum and avoid artificial blocking, independent preparatory work
 ```
 +----------------------------------------------------------------------------------------------------+
 | Phase 1: Source Verification & Scope Alignment                                                     |
-| Inputs: materials/, PRD (1).md | Outputs: Scope clarification note, updated Q-01..10 log          |
+| Inputs: materials/, PRD.md | Outputs: Scope clarification note, updated Q-01..10 log          |
 +-------------------------------------------------+--------------------------------------------------+
                                                   |
 +-------------------------------------------------v--------------------------------------------------+
@@ -306,8 +307,8 @@ Team NextMind enforces strict academic transparency and a non-negotiable **Zero 
 ### 8.1 Remote Repository & Early Setup Scheduling
 - **Remote URL**: `https://github.com/jamalbasmala907-ship-it/NextMind_02.git`
 - **Default Branch**: `main`
-- **Early Scheduling**: Git repository initialization, `.gitignore` setup, and remote connection are scheduled early in the project lifecycle to enable continuous version control and establish meaningful collaboration checkpoints throughout drafting, layout, and review.
-- **Operational Constraint**: **Do not execute Git operations now.** Git commands (`git init`, `git commit`, `git push`) will only be run when explicitly authorized by Maria and Basmala.
+- **Early Setup Status**: Baseline Git initialization, `.gitignore` configuration (excluding `agy-multi-agent-mesh/`, `.mesh/`, and `PRD (1).md`), remote `origin` connection on `main`, and Checkpoint 1 baseline commits from both partners are **verified completed** (synced at `4b1d1f9`). Repository visibility/grader access and material redistribution permissions (`Q-07`) remain pending confirmation.
+- **Operational Constraint**: Subsequent commits and pushes (`git commit`, `git push`) are executed only when explicitly authorized by Maria and Basmala.
 
 ### 8.2 Strict Exclusion of Lecturer Utility Repository
 - **Directory**: `agy-multi-agent-mesh/`
@@ -342,12 +343,12 @@ Team NextMind enforces strict academic transparency and a non-negotiable **Zero 
 | **Q-01** | **25-Page Boundary Interpretation** | **Option A**: 25 Total PDF Pages (including front/back matter).<br>**Option B**: 25 Body Pages (front matter, references, appendices are additional). | Governs section budget allocations and rebalancing targets. | Maria Mnasra & Basmala Jamal |
 | **Q-02** | **Report Framing / Title Verification** | Working title: *"Preliminary Design Report"*. Verify if lecturer mandates an alternate course title. | Affects cover title, headers, and document tone. | Maria Mnasra & Basmala Jamal |
 | **Q-03** | **Intended Report Audience** | Determine whether optional secondary readers (e.g., simulated engineering review panel, technical investors) are addressed beyond course grader/lecturer. | Shapes Executive Summary depth and level of business vs. technical framing. | Maria Mnasra & Basmala Jamal |
-| **Q-04** | **Visual Design System Sign-Off** | Proposed Deep Navy / Fuel Amber / EV Emerald palette; font pairings (sans headings + serif body); custom cover. | Blocks finalizing `nextmind-pdr.cls`. | Maria Mnasra & Basmala Jamal |
-| **Q-05** | **Disputed Scope Extras (`EXT-01..05`)** | C-store, loyalty, fleet, corporate invoicing, operator portal.<br>Verify against original Fuel&Go slides. | Prevents unbacked scope creep; determines roadmap inclusion. | Maria Mnasra & Basmala Jamal |
+| **Q-04** | **Visual Design System Sign-Off** | **Working design accepted by Maria** (`visual_preview.pdf` direction -> `nextmind-pdr.cls` Working v0.3.2 with enlarged labels, conceptual-interface wording, LuaTeX BiDi Hebrew support, and float barriers; prior previews preserved). **Separate Basmala review & approval still pending.** | Required before locking final production `nextmind-pdr.cls`. | Maria Mnasra (accepted working design) & Basmala Jamal (review pending) |
+| **Q-05** | **Disputed Scope Extras (`EXT-01..05`) & `FR-06` Split** | Slide audit completed: `EXT-02`, `EXT-03`, partial `EXT-04`/`EXT-05` supported on slides; `EXT-01`, VAT invoicing, standalone operator dashboard unverified; AI Digital Assistant conflict (Slides 3 & 40 vs. `PRD.md`) quarantined. Proposed Ch. 3 engineering split of `FR-06` into `FR-06a` (`Must`: critical transaction fault recovery) and `FR-06b` (`Should`: basic user support) flagged vs. untouched `PRD.md` for partner ruling. | Prevents unbacked scope creep; aligns `PRD.md` priorities and roadmap inclusion. | Maria Mnasra & Basmala Jamal |
 | **Q-06** | **Lecturer Instruction Provenance** | Identify exact lecturer instruction filenames and page numbers for requirements checklist. | Necessary for zero-fabrication traceability. | Maria Mnasra & Basmala Jamal |
 | **Q-07** | **GitHub Access & Material Permissions** | Public vs. Private repo with instructor invite; verify copyright/distribution permissions for course materials. | Affects grading access and compliance. | Maria Mnasra & Basmala Jamal |
 | **Q-08** | **Moodle Submission Requirements** | Identify specific portal upload formats, file naming, and deadline. | Critical for course grade completion. | Maria Mnasra & Basmala Jamal |
-| **Q-09** | **Partner Work Breakdown** | Distribution of chapters, plotting scripts, and review roles between Maria and Basmala. | Ensures balanced attribution and accountability. | Maria Mnasra & Basmala Jamal |
+| **Q-09** | **Partner Work Breakdown** | **Updated Human Work Agreement (2026-11-27)**: Maria leads report production and prepares work for GitHub sharing; Basmala pulls shared work, reviews/revises it, and prepares `README.md` (preserving prior contributions and `PRD.md` ownership). | Ensures balanced, authentic attribution and review accountability. | Maria Mnasra & Basmala Jamal |
 | **Q-10** | **Numerical Target Rationales** | Provide justified rationale/sources for `NFR-01a..04` currently marked `TBD`. | Required before finalizing requirements table. | Maria & Basmala (with Research) |
 
 ### 9.2 Technical Risk Management
@@ -391,4 +392,4 @@ Submission to GitHub does **not** complete the course requirement. The course Mo
 
 ---
 *Document author: Maria Mnasra (Plan Owner) & Team NextMind.*  
-*Anchored specification: `PRD (1).md` (v1.2.0-draft — File/version verified; content approval pending).*
+*Anchored specification: `PRD.md` (v1.2.0-draft — File/version verified; content approval pending).*

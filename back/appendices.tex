@@ -1,0 +1,82 @@
+% ==============================================================================
+% back/appendices.tex
+% Back B — Appendices (Reproducibility Guide, Data Provenance Legend & Acronyms)
+% Indicative Budget: ~1.0 page
+% ==============================================================================
+\FloatBarrier
+\vspace{12pt}
+\appendix
+
+{\headingfont\Large\bfseries\color{fgEspresso} Appendices}\par
+\vspace{-2pt}\noindent\textcolor{fgAmber}{\rule{\linewidth}{1.1pt}}
+\vspace{4pt}
+
+\section*{Appendix A: Deterministic Report Reproduction Guide}
+\addcontentsline{toc}{section}{Appendix A: Deterministic Report Reproduction Guide}
+
+This Assignment~02 report is engineered as a deterministic, reproducible software artifact compiled with \textbf{LuaHBTeX} (MiKTeX) and \textbf{Biber} using the custom class \texttt{nextmind-pdr.cls} and verified IEEE bibliography \texttt{bib/references.bib}. All Python figures are regenerated from versioned CSV/script inputs using pinned dependencies in \texttt{requirements.txt}.
+
+\noindent
+\begin{tcolorbox}[
+  enhanced,
+  breakable=false,
+  colback=fgSoftCream,
+  colframe=fgRuleGray,
+  borderline west={3.5pt}{0pt}{fgTeal},
+  boxrule=0.5pt,
+  arc=2pt,
+  left=8pt, right=8pt, top=5pt, bottom=5pt
+]
+{\footnotesize\ttfamily
+\# 1. Regenerate reproducible Python figures (from repository root in Windows PowerShell)\\
+.\textbackslash.venv\textbackslash Scripts\textbackslash python.exe scripts/generate\_figures.py\\[3pt]
+\# 2. Execute 4-pass deterministic LuaLaTeX + Biber build\\
+lualatex -interaction=nonstopmode main.tex\\
+biber main\\
+lualatex -interaction=nonstopmode main.tex\\
+lualatex -interaction=nonstopmode main.tex
+}
+\end{tcolorbox}
+
+\textbf{Multi-Agent Governance \& Evidence Index:} Repository artifacts documenting research verification, defect remediation, and project tracking are maintained at \texttt{docs/RESEARCH\_NOTES.md} (source verification log), \texttt{qa/defects.json} and \texttt{qa/DEFECTS.md} (Detector defect register), \texttt{qa/incidents/INC-DEF-*.md} (Fixer 5-part incident records), and \texttt{PLAN.md} / \texttt{TODO.md} (execution baselines).
+
+\vspace{6pt}
+
+\section*{Appendix B: Data Provenance Legend \& Domain Acronym Glossary}
+\addcontentsline{toc}{section}{Appendix B: Data Provenance Legend \& Domain Acronym Glossary}
+
+Every quantitative figure, engineering target, and analytical model in this report adheres to a four-category epistemic classification:
+\begin{itemize}[leftmargin=12pt, itemsep=1.5pt, topsep=2pt]
+  \item \textbf{\texttt{[Sourced Measurement]} / \texttt{[Sourced Fact]}:} Directly verified from an official specification, statutory text, or primary agency report (e.g., IEA~\cite{iea2025gev}, W3C~\cite{w3c2023wcag22}, PCI~SSC~\cite{pcissc2024pcidss401}).
+  \item \textbf{\texttt{[Calculation]}:} Deterministic mathematical derivation from stated inputs (e.g., WCAG contrast ratios, weighted decision scores, telemetry bandwidth formulas).
+  \item \textbf{\texttt{[Assumption]}:} Preliminary sizing, risk score ($R = P \times I$), or delivery duration chosen without empirical field measurement.
+  \item \textbf{\texttt{[Illustrative / Simulated Data]}:} Synthetic scenario profiles used solely to illustrate architectural scaling or UX flows, never presented as empirical benchmarks.
+\end{itemize}
+
+\vspace{3pt}
+\noindent
+{\footnotesize
+\begin{tabularx}{\linewidth}{@{}P{18mm} L P{18mm} L@{}}
+  \toprule
+  \rowcolor{fgOlive}
+  \fgtableheader{Acronym} & \fgtableheader{Definition} & \fgtableheader{Acronym} & \fgtableheader{Definition} \\
+  \midrule
+  \textbf{BEV / PHEV} & Battery / Plug-in Hybrid Electric Vehicle & \textbf{MASVS} & OWASP Mobile App Security Verification Std. \\
+  \rowcolor{fgSoftCream}
+  \textbf{BOLA} & Broken Object Level Authorization & \textbf{NFR / FR} & Non-Functional / Functional Requirement \\
+  \textbf{CDE} & Cardholder Data Environment (PCI~DSS) & \textbf{OCPI} & Open Charge Point Interface (eMSP$\leftrightarrow$CPO) \\
+  \rowcolor{fgSoftCream}
+  \textbf{CDR} & Charge Detail Record (OCPI settlement) & \textbf{OCPP} & Open Charge Point Protocol (EVSE$\leftrightarrow$CSMS) \\
+  \textbf{CPO / CSMS} & Charge Point Operator / Management Sys. & \textbf{PAN} & Primary Account Number (payment card) \\
+  \rowcolor{fgSoftCream}
+  \textbf{eMSP} & e-Mobility Service Provider & \textbf{PCI DSS} & Payment Card Industry Data Security Std. \\
+  \textbf{EVSE} & Electric Vehicle Supply Equipment & \textbf{PDR} & Preliminary Design Report \\
+  \rowcolor{fgSoftCream}
+  \textbf{FCC / POS} & Forecourt Controller / Point of Sale & \textbf{PPA / PPL} & Israel Privacy Protection Authority / Law \\
+  \textbf{HIL} & Hardware-in-the-Loop (safety testing) & \textbf{PSP} & Payment Service Provider \\
+  \rowcolor{fgSoftCream}
+  \textbf{ICE} & Internal Combustion Engine & \textbf{SoC} & State of Charge (EV battery \%) \\
+  \textbf{IFSF} & International Forecourt Standards Forum & \textbf{WCAG} & Web Content Accessibility Guidelines \\
+  \bottomrule
+\end{tabularx}
+}

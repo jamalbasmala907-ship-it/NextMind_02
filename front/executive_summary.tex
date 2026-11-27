@@ -1,0 +1,61 @@
+% ==============================================================================
+% front/executive_summary.tex
+% Front B — Document Control, Executive Summary & Audience Framing (1.0 page)
+% ==============================================================================
+{\headingfont\Large\bfseries\color{fgEspresso} Document Control \& Executive Summary}\par
+\vspace{-2pt}\noindent\textcolor{fgAmber}{\rule{\linewidth}{1.1pt}}
+\vspace{4pt}
+
+\noindent
+{\footnotesize
+\begin{tabularx}{\linewidth}{@{}P{32mm} L P{30mm} L@{}}
+  \toprule
+  \rowcolor{fgOlive}
+  \fgtableheader{Attribute} & \fgtableheader{Value} & \fgtableheader{Attribute} & \fgtableheader{Value} \\
+  \midrule
+  \textbf{Document Title} & Fuel\&Go Preliminary Design Report & \textbf{Team / Authors} & Team NextMind (Maria Mnasra, Basmala Jamal) \\
+  \rowcolor{fgSoftCream}
+  \textbf{Design Status} & Conceptual System Design (Partner Review Pending) & \textbf{Course / Deliverable} & Assignment 02 (25-Page Technical Report) \\
+  \textbf{Core Scope} & Unified ICE Fueling \& EV Charging (\texttt{FR-01}--\texttt{FR-06b}) & \textbf{Visual Direction} & Fuel\&Go Presentation Palette (WCAG AA Hardened) \\
+  \rowcolor{fgSoftCream}
+  \textbf{Build Toolchain} & LuaLaTeX + Biber (IEEE Style) + Python 3 & \textbf{Date / Revision} & November 2026 \quad|\quad Working Release v1.0 \\
+  \bottomrule
+\end{tabularx}
+}
+
+\vspace{3pt}
+
+\subsection*{Executive Summary}
+\vspace{-2pt}
+Drivers across internal-combustion (ICE), plug-in hybrid (PHEV), and battery-electric (BEV) fleets face a fragmented refueling experience split across brand-locked fuel apps, incompatible EV charging networks, and manual payment counters. Global electric car sales exceeded 17~million in 2024---over 20\% of new car sales worldwide~\cite{iea2025gev}---accelerating the transition toward mixed-energy mobility where drivers and households increasingly operate both liquid-fuel and electric vehicles. \textbf{Fuel\&Go} is proposed as a unified, driver-first mobile platform that consolidates station discovery, remote bay authorization, real-time dispensing/charging telemetry, tokenized contactless payment, and fault recovery into a single cross-operator workflow.
+
+\begin{insightcard}[Core Scope, Architecture \& Safety Highlights]
+  \begin{itemize}[leftmargin=12pt, itemsep=1pt, topsep=1pt]
+    \item \textbf{Disciplined Core Scope:} Chapters~1--8 specify six core functional domains (\texttt{FR-01}--\texttt{FR-06b}) and seven non-functional requirement families (\texttt{NFR-01a}--\texttt{NFR-07b}). Source-supported extensions (\texttt{EXT-02}--\texttt{EXT-05}) are deferred to Phase~3; unsupported/unapproved items (\texttt{EXT-01}, corporate VAT invoicing, standalone operator dashboard, AI Guidance Assistant) remain excluded from Core scope.
+    \item \textbf{Decoupled Integration Architecture:} Fuel\&Go implements four interfaces---Mobile$\leftrightarrow$Backend (REST + WebSocket~\cite{rfc9110,rfc6455}), Backend$\leftrightarrow$EV Operator/Roaming (candidate OCPI~\cite{evroaming2025ocpi}), Backend$\leftrightarrow$Forecourt/POS (candidate IFSF~\cite{ifsf_specs}), and Backend$\leftrightarrow$PSP (tokenized APIs under PCI~DSS~v4.0.1~\cite{pcissc2024pcidss401})---while treating OCPP~\cite{oca2020ocpp201,oca2025ocpp21} and ISO~15118~\cite{iso15118_2_2014,iso15118_20_2022} as external context domains.
+    \item \textbf{Cyber-Physical Safety \& Payment Boundaries:} Under \texttt{NFR-06}, physical emergency stops, overfill/vapor cutoffs, and high-voltage EVSE ground-fault relays remain strictly autonomous at the station hardware layer. PSP tokenization narrows the CDE without by itself establishing PCI~DSS compliance.
+  \end{itemize}
+\end{insightcard}
+
+\textbf{Top Residual Risks \& Go/No-Go Gates:} Four high-priority risks govern progression to implementation: (1)~multi-operator onboarding and proprietary forecourt gateway variability; (2)~ambiguous authorization-timeout states requiring durable reconciliation rather than blind hold voids; (3)~physical QR-sticker tampering; and (4)~jurisdiction-dependent privacy compliance (Israel PPL Amendment~13~\cite{israel1981ppl} vs.\ conditional EU~GDPR~\cite{eu2016gdpr}). Advancement to MVP requires partner scope sign-off, sandbox agreements with at least one forecourt gateway and one EV CPO, and HIL safety/reconciliation gates.
+
+\vspace{2pt}
+\subsection*{Audience Framing}
+\vspace{-2pt}
+This report serves two distinct reader groups while modeling ICE/hybrid and EV drivers strictly as system actors rather than report readers:
+
+\noindent
+{\footnotesize
+\begin{tabularx}{\linewidth}{@{}P{42mm} L@{}}
+  \toprule
+  \rowcolor{fgTeal}
+  \fgtableheader{Reader Audience} & \fgtableheader{Primary Information Needs Addressed in This Report} \\
+  \midrule
+  \textbf{Executive Management \& Product/Engineering Decision-Makers} & Commercial framing (business model, revenue mechanisms, cost drivers, feasibility constraints), disciplined scope governance, weighted architectural trade-offs, residual cyber-physical risk visibility, and a phased product delivery roadmap with explicit go/no-go gates. \\
+  \rowcolor{fgSoftCream}
+  \textbf{Course Lecturer \& Academic Evaluators} & Compliance with Assignment~02 engineering and typesetting mandates: custom \texttt{nextmind-pdr.cls} template, deterministic LuaLaTeX + Biber IEEE bibliography, reproducible Python figures, zero-fabrication epistemic tagging, and transparent separation of conceptual product verification from actual report QA. \\
+  \bottomrule
+\end{tabularx}
+}
+
+\clearpage

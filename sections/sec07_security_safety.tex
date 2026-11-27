@@ -1,0 +1,57 @@
+% ==============================================================================
+% sections/sec07_security_safety.tex
+% Chapter 7 — Security, Physical Safety, Privacy & Regulatory Compliance (~2.0 pp)
+% ==============================================================================
+\fgchapter{07}{Cyber-Physical Risk Posture}{Security, Physical Safety, Privacy \& Regulatory Compliance}{Trust boundaries, STRIDE threat controls, payment-scope limits, hardware safety isolation, and jurisdiction-dependent privacy}{sec:security-safety}
+
+Operating a unified mobile platform that authorizes physical liquid-fuel dispensing and high-voltage EV charging introduces cyber-physical, financial, and privacy risks that extend beyond conventional consumer apps. Because Fuel\&Go is a \emph{Conceptual System Design}, all security controls, safety assumptions, and compliance architectures below represent proposed engineering baselines requiring independent penetration testing, hardware-in-the-loop (HIL) validation, and formal legal review before pilot deployment.
+
+\subsection{Trust Boundaries, Payment Tokenization Scope \& Hardware Safety Isolation}
+Figure~\ref{fig:safety-trust-boundary} partitions Fuel\&Go into four explicit trust zones: (Z1)~the untrusted driver mobile device and physical bay environment; (Z2)~the Fuel\&Go cloud orchestration platform; (Z3)~the external Payment Service Provider (PSP) vault; and (Z4)~the station operator's local forecourt/EVSE hardware safety domain.
+
+\begin{figure}[htbp]
+  \centering
+  \input{figures/safety_trust_boundary.tex}
+  \caption{Fuel\&Go Trust Boundaries, PSP Tokenization Scope (\texttt{PCI~DSS~v4.0.1}~\cite{pcissc2024pcidss401}), Mobile/API Security (\texttt{OWASP MASVS~v2.1.0}~\cite{owasp2024masvs}, \texttt{OWASP API Top~10~2023}~\cite{owasp2023apitop10}), and Autonomous Local Hardware Safety Interlock Isolation (\texttt{NFR-06}). \emph{[Proposed Architecture]}}
+  \label{fig:safety-trust-boundary}
+\end{figure}
+
+\textbf{Payment Card Scope Reduction Limits (PCI DSS v4.0.1):} Under PCI~DSS~v4.0.1~\cite{pcissc2024pcidss401}, Fuel\&Go delegates raw Primary Account Number (PAN) capture and storage to a certified PSP client SDK and external vault (Z3), returning only non-sensitive surrogate tokens to the Fuel\&Go backend (Z2). While tokenization concentrates cardholder data at the PSP and narrows the Cardholder Data Environment (CDE), \emph{tokenization alone does not establish PCI~DSS compliance}. Compliant mobile SDK integration, TLS transport protection, operational access controls, vulnerability management, and formal merchant self-assessment or QSA audit remain mandatory.
+
+\textbf{Mobile \& API Security Baselines:} Mobile clients target OWASP~MASVS~v2.1.0~\cite{owasp2024masvs} controls (secure keystore credential storage, TLS~1.3 certificate pinning, tamper/root detection, and \texttt{MASVS-PRIVACY} data minimization). Backend endpoints enforce OWASP~API Security Top~10 (2023)~\cite{owasp2023apitop10} defenses, prioritizing object-level authorization checks against Broken Object Level Authorization (API1: BOLA), short-lived OAuth~2.0/OIDC tokens (API2), rate limiting (API4), and strict schema validation when consuming third-party operator APIs (API10).
+
+\textbf{Autonomous Local Hardware Safety Isolation (\texttt{NFR-06}):} Fuel\&Go \emph{never} assumes responsibility for physical safety interlocks. Certified local forecourt emergency-stop (E-stop) switches, nozzle overfill and vapor-recovery shutoffs, and EVSE ground-fault (RCD), thermal, and high-voltage contactor cutoffs operate autonomously within Z4. A cloud outage, mobile battery failure, or network partition cannot disable local safety cutoffs or force uncontrolled energy delivery.
+
+\subsection{Condensed STRIDE Threat Model \& Residual Risk Posture}
+Table~\ref{tab:stride-threats} summarizes six priority threats across the STRIDE taxonomy, mapping proposed controls, residual risks, key design assumptions, and required future validation.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Condensed STRIDE Threat Model, Proposed Controls, Residual Risks, Assumptions \& Required Validation. \emph{[Conceptual Design]}}
+  \label{tab:stride-threats}
+  {\footnotesize
+  \begin{tabularx}{\linewidth}{@{}P{24mm} P{36mm} P{32mm} P{30mm} L@{}}
+    \toprule
+    \rowcolor{fgOlive}
+    \fgtableheader{Threat (STRIDE)} & \fgtableheader{Proposed Controls} & \fgtableheader{Residual Risks} & \fgtableheader{Key Assumptions} & \fgtableheader{Required Future Validation} \\
+    \midrule
+    \textbf{QR Sticker Replacement} (Spoofing) & Signed station/bay payloads; geofence proximity check; in-app bay-number confirmation; operator bay-status cross-check. & Social-engineered driver ignores bay mismatch or approves wrong pump in adjacent lane. & Operator API exposes real-time bay ID and station coordinates. & Field usability testing and red-team physical spoofing drills at pilot stations. \\
+    \rowcolor{fgSoftCream}
+    \textbf{GPS Spoofing} (Spoofing / Tampering) & Server-side plausibility checks (velocity/jump); combine GPS with QR/NFC scan; OS integrity attestation (MASVS~\cite{owasp2024masvs}). & Rooted/jailbroken devices may bypass client attestation and trigger remote bay unlock. & Local bay presence is reinforced by physical nozzle lift or EV cable plug-in. & Mobile penetration testing against mock-location and instrumentation frameworks. \\
+    \textbf{Session Hijacking / BOLA} (Info Disc. / EoP) & Short-lived bearer tokens; strict per-object ownership checks (OWASP API1~\cite{owasp2023apitop10}); device-bound refresh tokens. & Compromised unlocked phone allows unauthorized session start within active token window. & Biometric or OS PIN re-authentication protects payment/session confirmation. & Automated API authorization fuzzing and independent OWASP API Top~10 pentest. \\
+    \rowcolor{fgSoftCream}
+    \textbf{Replay / Duplicate Settlement} (Tampering / Repud.) & Client-generated idempotency keys reused on retries; durable ledger deduplication; PSP webhook signature verification. & Downstream operator/FCC lacking native idempotency may double-authorize if timeout occurs. & Authoritative operator/CDR reconciliation resolves ambiguous timeouts before capture. & Fault-injection testing (network drop, duplicate webhook, timeout) in sandbox/HIL. \\
+    \textbf{API Abuse / Resource Exhaustion} (DoS) & API gateway rate limiting (OWASP API4~\cite{owasp2023apitop10}); per-user concurrent session caps; circuit breakers on operator adapters. & Coordinated botnet could degrade discovery APIs or exhaust operator rate quotas. & Cloud WAF and autoscaling absorb volumetric traffic spikes. & Load and stress testing against rate-limit and circuit-breaker thresholds. \\
+    \rowcolor{fgSoftCream}
+    \textbf{Unsafe Operator API Consumption} (Tampering) & Strict JSON schema validation; mTLS/signed webhooks (OWASP API10~\cite{owasp2023apitop10}); anomaly bounds on meter values. & Compromised partner CPMS/FCC could inject falsified meter totals or malicious payloads. & Partner operators maintain isolated, patched CPMS/FCC infrastructure. & Contract testing with malformed/adversarial partner payloads in staging. \\
+    \bottomrule
+  \end{tabularx}
+  }
+\end{table}
+
+\subsection{Jurisdiction-Dependent Privacy \& Regulatory Compliance}
+Privacy and data-protection obligations depend strictly on the confirmed deployment jurisdiction rather than assuming a single global regime:
+\begin{itemize}[leftmargin=12pt, itemsep=2pt, topsep=2pt]
+  \item \textbf{Israel Protection of Privacy Law, 5741--1981 (Amendment~13)~\cite{israel1981ppl}:} Under the working territorial launch assumption in Israel (pending formal partner confirmation), Fuel\&Go falls under Israeli statutory privacy governance enforced by the Privacy Protection Authority (PPA). Amendment~13 (enacted 2024, effective 2025) introduces direct administrative monetary sanctions and mandatory Data Protection Officer (DPO) obligations for qualifying databases, requiring strict data minimization for location trails, vehicle profiles, and transaction logs.
+  \item \textbf{EU General Data Protection Regulation (GDPR)~\cite{eu2016gdpr} (Conditional):} GDPR applies extraterritorially under Article~3 \emph{only} if Fuel\&Go establishes an EU entity, offers services to data subjects in the EU, or monitors their behavior within the EU. It does \emph{not} apply automatically to an Israel-only deployment, though adopting privacy-by-design (purpose limitation, retention caps, and user export/deletion controls) lowers future EU expansion friction.
+\end{itemize}

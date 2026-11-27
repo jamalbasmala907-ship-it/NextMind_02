@@ -1,0 +1,63 @@
+Continue Fuel&Go Assignment 02 by drafting and integrating Chapters 4–6.
+
+First read the current project instructions, PRD.md, PLAN.md, TODO.md, docs/REPORT_OUTLINE.md, docs/RESEARCH_NOTES.md, the corrected Chapters 1–3 sources, and qa/redteam/audit_draft_ch1_3_v2.md.
+
+Save this prompt under the next available numbered filename in prompts/.
+
+Use the existing Research, Design, Detector, and Fixer sessions. Verify availability before dispatching; do not create duplicate sessions. Report communication failures accurately and preserve completed work.
+
+Scope:
+1. Follow the exact Chapter 4–6 titles, subjects, and page allocations in docs/REPORT_OUTLINE.md. Do not invent a different outline.
+2. Produce substantive English content suitable for management and engineering readers.
+3. Integrate Chapters 1–6 into a new partial compilation: draft_ch1_6.tex and draft_ch1_6.pdf. Preserve the previous partial draft.
+4. Fix the remaining layout issue: Figure 2 currently occupies an otherwise mostly empty Page 9. Place it near its explanation and use page space efficiently without reducing readability.
+5. Preserve the approved Fuel&Go visual identity.
+
+Content quality:
+- Treat Fuel&Go as a proposed conceptual system. Do not claim implementation, field testing, certification, partnerships, or measured results.
+- Maintain traceability to FR-01–FR-05 and the proposed FR-06a/FR-06b split, and to relevant NFRs.
+- Explain architecture and design choices, alternatives, trade-offs, dependencies, and limitations rather than merely listing technologies.
+- Keep physical station safety under local certified hardware control.
+- Make fuel and EV flows technically distinct where necessary, while explaining their shared application workflow.
+- Cover transaction consistency, duplicate-command prevention, authorization timeouts, interrupted sessions, reconciliation, and payment-hold release requests wherever relevant to the approved chapters.
+- Distinguish OCPP, OCPI, forecourt interfaces, and payment-provider responsibilities accurately. Do not imply these protocols are interchangeable or universally supported.
+- Keep disputed extensions and the AI assistant outside the core pending the recorded scope decision.
+- Where user flows or wireframes belong in these chapters, show normal, error, recovery, and accessible interaction states. Label mockups as conceptual.
+- Use meaningful, readable diagrams with explicit system boundaries and labeled relationships. Every diagram must agree with the prose.
+- Use Python charts only where genuine data or an explicitly stated analytical model adds value. Do not invent empirical data or decorate the report with unsupported charts.
+
+Evidence:
+- Inspect original primary sources for material external technical claims.
+- Cite exact supporting pages/documents and verify editions and dates.
+- Clearly distinguish sourced facts, proposed design choices, assumptions, calculations, and planned validation.
+- Do not reuse Israeli figures marked UNVERIFIED_EXCLUDED.
+- Do not derive detailed normative requirements from inaccessible standards.
+- Keep unapproved numerical targets provisional. If using illustrative sizing assumptions, label them and explain their implications.
+- Record unresolved evidence gaps in research/planning records without filling the report with internal workflow notes.
+
+Length:
+- Respect the existing full-report plan for exactly 25 pages.
+- Record the current page allocation and a realistic remaining allowance for Chapters 7–9, references, and other required material.
+- Preserve the unresolved front/back-matter counting question unless authoritative instructions resolve it.
+- Reduce duplication and unnecessary whitespace rather than shrinking fonts or omitting essential reasoning.
+- The partial draft itself does not need to be 25 pages.
+
+Review:
+- Research prepares the content and verifies supporting evidence.
+- Design integrates the LaTeX, diagrams, and any justified Python outputs.
+- Detector independently checks factual support, technical consistency, requirement traceability, diagram correctness, and every rendered PDF page.
+- Fixer corrects confirmed defects; Detector retests them.
+- Record actual findings and remaining limitations. Do not claim an independent review if it did not occur.
+- Check compilation, citations, cross-references, clipping, overlaps, text size, contrast, and excessive blank space.
+- Update PLAN.md, TODO.md, research notes, and QA records to reflect work actually completed.
+
+Do not write Chapters 7–9, modify PRD.md, overwrite README.md, delete existing work, commit, or push.
+
+Finish briefly in Hebrew with:
+1. The integrated PDF path.
+2. Chapters and artifacts completed.
+3. Actual review results and open defects.
+4. Remaining evidence gaps and decisions.
+5. Current page count and remaining page budget.
+
+Do not print entire files.

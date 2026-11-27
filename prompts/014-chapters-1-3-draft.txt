@@ -1,0 +1,58 @@
+Begin rigorous content production for Fuel&Go Assignment 02.
+
+Save this prompt verbatim in prompts/ using the next available numbered filename.
+
+Read the current PRD.md, PLAN.md, TODO.md, docs/REPORT_OUTLINE.md, docs/RESEARCH_NOTES.md, requirements checklist, bibliography, and existing QA records.
+
+Record the updated human work agreement:
+- Maria leads report production and prepares the work for sharing through GitHub.
+- Basmala will pull the shared work, review and revise it, and prepare README.md.
+- Preserve previous genuine contributions and PRD ownership. Do not claim Basmala has reviewed or approved new content.
+
+Maria accepts the current visual direction as the working report design. Do not claim separate Basmala approval. Apply the two outstanding visual corrections when integrating content:
+- Enlarge small technical table/diagram labels.
+- Replace “Implemented” / “Fuel&Go-Implemented” with wording that clearly identifies proposed interfaces and conceptual architecture.
+
+Use the existing Master, Research, Design, Detector, and Fixer sessions. Inspect status first; do not launch duplicates. Preserve permission checks and authentic delegation/review evidence.
+
+Produce a substantive English draft of Chapters 1–3 using the existing project structure:
+1. Introduction, business motivation, and scope boundaries.
+2. Market context, business model, users, and stakeholders.
+3. Functional and non-functional requirements.
+
+ACCURACY RULES
+- Verify factual claims against sources actually opened and read.
+- Prioritize original Fuel&Go materials for product background and authoritative primary sources for external facts.
+- Trace important product claims to specific slides/sections. Separate original product features from new design proposals.
+- Use the PRD as the current specification; flag conflicts with the presentation instead of silently changing scope.
+- Distinguish facts, engineering proposals, calculations, assumptions, and future roadmap items.
+- Every numerical claim needs a source or an explicit, justified assumption. Preserve units, geography, observation period, and publication date.
+- Do not use entries marked PENDING_PRIMARY_SOURCE_URL as factual evidence.
+- Do not infer detailed standard requirements from abstracts, search snippets, or paywalled metadata. State access limitations.
+- Verify competitor claims against current official product sources.
+- For business-model options, distinguish proposals from established commercial arrangements. Do not invent revenue, fees, partnerships, savings, or profitability.
+- For NFRs, use justified proposed targets with planned acceptance methods. Leave unresolved targets visibly pending; do not present them as measured results.
+- Use valid bibliography keys and verify that each citation supports the associated claim.
+- Do not claim the product is implemented, tested, certified, or compliant.
+- Preserve unresolved scope decisions and the page-counting question. Draft unaffected content without inventing approvals.
+
+WORKFLOW
+- Research prepares the evidence-backed draft and updates research notes/bibliography as necessary.
+- Design integrates it into the existing LaTeX structure and produces a clearly labeled partial-draft PDF using the chosen visual direction. Preserve the design previews.
+- Detector independently checks source support, numerical accuracy, scope consistency, citations, readability, and unsupported assertions.
+- Fixer corrects documented findings; Detector independently retests.
+- Do not mark checks complete unless actually performed. If a blocker remains, report it precisely.
+
+Keep content proportionate to the provisional 25-page outline. Do not pad pages or shrink typography to force pagination. This is a partial draft, not the final 25-page deliverable.
+
+Update PLAN.md and TODO.md to reflect the human agreement and actual completed work. Keep PRD.md unchanged.
+
+Do not write Chapters 4–9 yet, create README.md, delete files, commit, or push. We will review this draft before sharing it.
+
+Finish briefly in Hebrew with:
+- Draft source and PDF paths.
+- Chapters completed.
+- Actual independent review results.
+- Remaining evidence gaps and decisions.
+
+Do not print entire files.

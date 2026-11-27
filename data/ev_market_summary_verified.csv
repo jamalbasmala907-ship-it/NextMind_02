@@ -1,0 +1,8 @@
+region,year,metric,value,unit,qualifier,source_key,provenance_tag
+Global,2024,electric_car_sales,17.0,million_vehicles,more_than,iea2025gev,Sourced Measurement
+Global,2024,electric_car_sales_share_of_new_cars,20.0,percent,more_than,iea2025gev,Sourced Measurement
+Global,2024,electric_car_sales_yoy_growth,25.0,percent,more_than,iea2025gev,Sourced Measurement
+China,2024,public_chargers_per_10_electric_cars,1.0,chargers_per_10_evs,more_than,iea2025gev,Sourced Measurement
+European Union,2024,electric_cars_per_public_charger,13.0,evs_per_charger,average_approx,iea2025gev,Sourced Measurement
+Israel,2024,bev_share_of_new_car_sales,25.0,percent,unverified_secondary,UNVERIFIED_EXCLUDED,Unverified Secondary Summary - Excluded from Report and Charts
+Israel,2025,bev_share_of_new_car_sales,20.0,percent,unverified_secondary,UNVERIFIED_EXCLUDED,Unverified Secondary Summary - Excluded from Report and Charts

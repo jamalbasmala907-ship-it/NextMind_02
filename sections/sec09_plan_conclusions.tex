@@ -1,0 +1,63 @@
+% ==============================================================================
+% sections/sec09_plan_conclusions.tex
+% Chapter 9 — Product Delivery Plan, Risk Register, Roadmap & Conclusions (~1.5 pp)
+% ==============================================================================
+\fgchapterflow{09}{Execution Strategy}{Product Delivery Plan, Risk Register, Roadmap \& Conclusions}{Prioritized product risks, phased delivery milestones, extension boundaries, and go/no-go readiness criteria}{sec:plan-conclusions}
+
+This chapter outlines the conceptual \textbf{Fuel\&Go Product Delivery Plan}—explicitly distinct from the academic production of this Assignment~02 report—alongside a prioritized risk register, a phased product roadmap, and executive go/no-go conclusions.
+
+\subsection{Prioritized Product \& Integration Risk Register}
+Following standard engineering risk-scoring practice, each risk in Table~\ref{tab:risk-register} is evaluated via $R = P \times I$ on a 1--5 scale for Probability ($P$) and Impact ($I$). \emph{All $P$, $I$, and $R$ values are explicitly tagged \texttt{[Assumption]} as subjective engineering judgments rather than empirical actuarial rates.}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Prioritized Fuel\&Go Product \& Integration Risk Register ($R = P \times I$, 1--5 Scale, \emph{[Assumption]}).}
+  \label{tab:risk-register}
+  {\footnotesize
+  \begin{tabularx}{\linewidth}{@{}P{11mm} P{34mm} P{16mm} P{48mm} L@{}}
+    \toprule
+    \rowcolor{fgOlive}
+    \fgtableheader{ID} & \fgtableheader{Risk Description} & \fgtableheader{$P \times I = R$} & \fgtableheader{Proposed Mitigation Strategy} & \fgtableheader{Residual Exposure} \\
+    \midrule
+    \texttt{RSK-01} & \textbf{Partner Onboarding Delay:} Fuel chains or EV CPOs decline or delay API/sandbox access. & $4 \times 5 = 20$ & Target one anchor fuel partner and one OCPI-compliant EV CPO for Phase~2 pilot; decouple via adapter pattern. & High commercial dependency; may delay pilot launch. \\
+    \rowcolor{fgSoftCream}
+    \texttt{RSK-02} & \textbf{Proprietary Forecourt Variance:} Legacy FCC/POS gateways deviate from IFSF~\cite{ifsf_specs}. & $4 \times 4 = 16$ & Isolate vendor-specific dialects inside per-operator forecourt adapters; validate in vendor HIL lab. & Adapter maintenance overhead per fuel chain. \\
+    \texttt{RSK-03} & \textbf{Ambiguous Timeout / Orphaned Holds:} Network drop during remote unlock causes double-charge or stuck hold. & $3 \times 5 = 15$ & Enforce reusable idempotency keys, durable reconciliation state, and automated hold-release jobs. & Temporary driver frustration during manual dispute resolution. \\
+    \rowcolor{fgSoftCream}
+    \texttt{RSK-04} & \textbf{Physical QR Tampering:} Attacker overlays fraudulent QR sticker on unattended bay. & $3 \times 4 = 12$ & Require geofence match, signed QR payloads, and explicit bay-number confirmation in UI. & Social-engineering risk if driver ignores bay mismatch. \\
+    \texttt{RSK-05} & \textbf{Privacy / PCI Scope Drift:} Accidental logging of PANs or excessive location retention~\cite{pcissc2024pcidss401,israel1981ppl}. & $2 \times 5 = 10$ & Strict PSP SDK tokenization, automated log scrubbing, data-retention TTLs, and pre-pilot compliance audit. & Ongoing audit and DPO governance cost. \\
+    \bottomrule
+  \end{tabularx}
+  }
+\end{table}
+
+\subsection{Phased Fuel\&Go Product Delivery Roadmap}
+Table~\ref{tab:product-roadmap} sequences Fuel\&Go from Core MVP to commercial rollout and source-supported extensions. All phase durations are preliminary planning estimates (\texttt{[Assumption]}). Unsupported or unapproved features—\texttt{EXT-01} (convenience-store food/coffee pre-ordering), consolidated corporate VAT invoicing, a standalone station-operator web dashboard, and the AI Guidance Assistant—remain \emph{excluded/quarantined} outside this roadmap unless formally approved in future scope governance.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Phased Fuel\&Go Product Delivery Roadmap (\emph{Conceptual Product Plan; Durations [Assumption]}).}
+  \label{tab:product-roadmap}
+  {\footnotesize
+  \begin{tabularx}{\linewidth}{@{}P{24mm} P{22mm} P{54mm} L@{}}
+    \toprule
+    \rowcolor{fgTeal}
+    \fgtableheader{Delivery Phase} & \fgtableheader{Est. Window} & \fgtableheader{Core Deliverables \& Scope} & \fgtableheader{Phase Exit / Readiness Gate} \\
+    \midrule
+    \textbf{Phase 1: Core MVP Build} & Months 1--4 \emph{[Assumption]} & Mobile app (\texttt{FR-01}--\texttt{FR-06b}), session orchestrator, PostGIS discovery, PSP sandbox tokenization, and mock OCPI/IFSF simulators. & 100\% core simulator E2E tests pass; WCAG~2.2~AA contrast/target audit passes~\cite{w3c2023wcag22}. \\
+    \rowcolor{fgSoftCream}
+    \textbf{Phase 2: Sandbox \& Controlled Pilot} & Months 5--8 \emph{[Assumption]} & Live integration with $\ge 1$ fuel forecourt gateway and $\ge 1$ EV CPO; HIL safety validation (\texttt{NFR-06}); closed pilot at 3--5 dual-energy sites. & Zero unresolved critical security/safety defects; payment reconciliation verified under fault injection. \\
+    \textbf{Phase 3: Commercial Rollout \& Extensions} & Months 9--15 \emph{[Assumption]} & Multi-operator onboarding; source-supported extensions: \texttt{EXT-02} (promotions/loyalty), \texttt{EXT-03} (fleet/subscriptions), partial \texttt{EXT-04} (monthly AI usage summaries), partial \texttt{EXT-05} (B2B partner APIs). & Sustained pilot session completion stability; formal PCI~DSS~\cite{pcissc2024pcidss401} and Israeli PPL~Amendment~13~\cite{israel1981ppl} sign-off. \\
+    \bottomrule
+  \end{tabularx}
+  }
+\end{table}
+
+\subsection{Conclusions \& Go/No-Go Readiness Criteria}
+This Preliminary Design Report establishes a coherent, modular architecture for uniting ICE fueling and EV charging under a single mobile workflow while respecting physical safety boundaries, payment-scope realities, and jurisdiction-specific privacy law. Because the system remains a \emph{Conceptual System Design} without production code, partner contracts, or field telemetry, executive management should treat progression to Phase~1 MVP development as contingent on four \textbf{Go/No-Go Readiness Gates}:
+\begin{enumerate}[leftmargin=14pt, itemsep=2pt, topsep=2pt]
+  \item \textbf{Formal Scope \& Jurisdiction Sign-Off:} Partner confirmation of Core scope (\texttt{FR-01}--\texttt{FR-06b}), exclusion of quarantined features, and territorial launch jurisdiction (Israel vs.\ multi-region).
+  \item \textbf{Anchor Partner Sandbox Access:} Signed technical sandbox agreements with at least one fuel forecourt gateway vendor and one OCPI-capable EV CPO.
+  \item \textbf{Validated NFR \& Commercial Baselines:} Engineering approval of provisional P95 latency targets and commercial validation of PSP processing fees and operator commission structures.
+  \item \textbf{Independent Security \& HIL Safety Plan:} Commitment to pre-pilot OWASP~MASVS/API penetration testing, PCI~DSS~v4.0.1 assessment, and certified station HIL safety verification (\texttt{NFR-06}).
+\end{enumerate}

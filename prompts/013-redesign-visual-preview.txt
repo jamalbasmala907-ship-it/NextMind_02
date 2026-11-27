@@ -1,0 +1,52 @@
+Redesign the Fuel&Go visual sample. The current sample is readable but too plain. Maria requests a distinctive, polished, visually engaging report inspired by the original Fuel&Go presentation, with richer colors and purposeful illustrations.
+
+Save this prompt verbatim in prompts/ using the next numbered filename.
+
+Read the existing visual brief, original presentation, visual_sample.tex, and nextmind-pdr.cls. Preserve the current sample and class as a clearly named baseline before editing.
+
+Use the existing Master/Design/Detector/Fixer workflow. Check current sessions first; do not launch duplicates. Preserve actual delegation and review evidence.
+
+Create a three-page English design preview, visual_preview.pdf, with editable LaTeX sources and reusable assets:
+
+PAGE 1 — COVER
+- A strong editorial composition with a prominent title, original Fuel&Go logo, Team NextMind, Maria Mnasra, and Basmala Jamal.
+- A custom vector illustration combining a fuel forecourt, EV charging point, and a road connecting both energy journeys.
+- Use curved road/path motifs, subtle energy-flow lines, and layered cream/green color fields.
+- Make it feel specific to Fuel&Go, not a generic academic template.
+
+PAGE 2 — EXECUTIVE / CHAPTER OPENING
+- A clear heading hierarchy, realistic-length illustrative prose, an executive insight card, and a compact illustrated process.
+- Include restrained fuel/EV icons and a distinctive chapter-number treatment.
+- Demonstrate how visual storytelling supports management-level reading.
+- Use labeled illustrative decision cards rather than invented statistics.
+
+PAGE 3 — TECHNICAL CONTENT
+- Demonstrate a readable table, a vector architecture/integration diagram, a caption, and a short analytical explanation.
+- Show how the same design language works on a content-dense page.
+- Keep diagram and table labels comfortably readable at normal viewing size.
+
+VISUAL DIRECTION
+- Retain the presentation's warm cream, espresso, olive, amber, and Fuel&Go logo.
+- Enrich the palette with coordinated deep teal, fresh sage/green, and restrained terracotta accents. Define consistent semantic roles for colors.
+- Combine expressive cover/chapter-opening compositions with calm, readable body pages.
+- Add original vector illustrations and cohesive line icons using TikZ or another reproducible vector workflow.
+- Use road markings, charging cables, energy paths, or the logo's droplet geometry as subtle recurring motifs.
+- Avoid decorative clutter, excessive boxes, heavy backgrounds on every page, stock-template styling, and tiny text.
+- Do not split words in headings. Fix the current “Fram-ing” break.
+- Use available, portable fonts with documented fallbacks.
+- Keep essential meaning understandable without color; verify text contrast and grayscale readability.
+- Keep styling reusable through the provisional custom class. Scope any changes so existing source files remain usable.
+
+CONTENT AND VERIFICATION
+- This is a three-page design preview, separate from the final 25-page report.
+- Clearly identify it as illustrative and pending team approval using a discreet note; do not let technical warnings dominate the design.
+- Do not invent research results, financial figures, product performance, or completed tests.
+- Do not copy the old sample's technical typography/color explanations as the main page content; use clearly labeled illustrative Fuel&Go content instead.
+- Compile the actual PDF and inspect all three rendered pages.
+- Detector must independently review clipping, overlaps, hierarchy, text size, contrast, and consistency.
+- Fixer corrects documented defects; Detector retests.
+- Report actual checks and limitations honestly.
+
+Do not write final report chapters, modify PRD.md, change the final page-count requirement, delete existing work, commit, or push.
+
+Finish briefly in Hebrew with the preview PDF path, a short explanation of the design changes, and actual review results. Do not print entire files.

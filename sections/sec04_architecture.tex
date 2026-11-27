@@ -1,0 +1,82 @@
+% ==============================================================================
+% Chapter 4: Preliminary System Architecture & Technology Trade-Offs
+% Indicative Space Budget: ~3.0 pages
+% Status: Draft — Prepared by Research; Pending Partner Review
+% ==============================================================================
+
+\fgchapter{04}{Chapter 04 --- System Architecture}{Preliminary System Architecture \& Technology Trade-Offs}{Multi-layer conceptual architecture, unified session state machine, and weighted technology trade-offs}{sec:architecture}
+
+\subsection{Conceptual Multi-Layer Architecture and Safety Boundary}
+\label{sec:arch-layers}
+
+Following the architectural description principles of ISO/IEC/IEEE~42010:2022~\cite{iso42010_2022} (referenced at the verified catalog-scope level; full normative clauses are paywalled and not cited), Fuel\&Go is structured as a decoupled, six-tier \emph{Conceptual System Design}. The architecture isolates driver-facing mobile workflows from heterogeneous liquid-fuel forecourt controllers, EV roaming backends, and payment processors, while preserving strict traceability to \texttt{FR-01}--\texttt{FR-05}, the proposed \texttt{FR-06a}/\texttt{FR-06b} split, and security/safety requirements (\texttt{NFR-05}, \texttt{NFR-06}):
+
+\begin{enumerate}[leftmargin=1.4em, itemsep=2pt]
+  \item \textbf{Mobile Client Layer} (\texttt{FR-01}--\texttt{FR-06b}): Cross-platform iOS/Android application managing vehicle energy profiles, map/list discovery, QR/NFC bay scanning, live telemetry rendering, digital receipts, and fault notifications. Raw payment card Primary Account Numbers (PANs) are collected exclusively through a Payment Service Provider (PSP) client SDK and never traverse Fuel\&Go backend services (\texttt{NFR-05})~\cite{pcissc2024pcidss401}.
+  \item \textbf{API Gateway \& Edge Security Layer} (\texttt{NFR-05}): Terminates TLS, validates OAuth~2.0/OIDC tokens, enforces per-user rate limits, and routes REST requests~\cite{rfc9110} and full-duplex WebSocket telemetry streams~\cite{rfc6455} to internal services, mitigating OWASP API Top~10 risks such as Broken Object Level Authorization and Unrestricted Resource Consumption~\cite{owasp2023apitop10}.
+  \item \textbf{Core Backend Services}: Four bounded services---(a)~\emph{Identity \& Vehicle Profile Service} (\texttt{FR-01}), (b)~\emph{Station \& Tariff Discovery Service} (\texttt{FR-02}) backed by geospatial indexing and low-latency status caching, (c)~\emph{Unified Session Orchestrator} (\texttt{FR-03}, \texttt{FR-04}, \texttt{FR-06a}) executing the finite state machine, and (d)~\emph{Settlement, Ledger \& Support Service} (\texttt{FR-05}, \texttt{FR-06b}) maintaining an append-only financial ledger.
+  \item \textbf{External Integration Adapter Layer}: Three isolated adapters---the \emph{PSP Adapter}, the \emph{EV Roaming/CPMS Adapter}, and the \emph{Forecourt/POS Adapter}---translate internal canonical commands into operator-specific protocols without leaking vendor heterogeneity into core business logic.
+\end{enumerate}
+
+\textbf{Physical Safety Boundary (\texttt{NFR-06})}: Cloud services and mobile clients operate strictly as \emph{logical authorization and telemetry layers}. All physical safety interlocks---including emergency stop (E-stop) buttons, nozzle overfill/vapor cutoffs, ground-fault protection, and high-voltage EVSE isolation---remain 100\% autonomous within certified local forecourt and EVSE hardware under applicable electrical and hazardous-location safety codes. A cloud outage or mobile disconnect must never inhibit a local hardware cutoff.
+
+% ------------------------------------------------------------------------------
+% FIGURE 4.1 HOOK FOR DESIGN AGENT (TikZ Vector Diagram #2)
+% Layers: Mobile Client -> API Gateway -> Core Backend Services (Identity/Profile,
+%         Discovery, Session Orchestrator, Settlement/Ledger) -> 3 Adapters
+%         (PSP Adapter, EV Roaming/CPMS Adapter, Forecourt/POS Adapter) ->
+%         External Systems with explicit Local Hardware Safety Boundary.
+% ------------------------------------------------------------------------------
+\begin{figure}[!htbp]
+  \centering
+  \input{figures/arch_multilayer.tex}
+  \caption{Proposed Fuel\&Go Multi-Layer System Architecture and Local Hardware Safety Boundary (\emph{Conceptual System Design}).}
+  \label{fig:arch-multilayer}
+\end{figure}
+
+\subsection{Unified Fueling and EV Charging Session Finite State Machine}
+\label{sec:arch-fsm}
+
+Although liquid-fuel dispensing and EV charging share a common commercial spine (discovery $\rightarrow$ pre-authorization $\rightarrow$ delivery $\rightarrow$ settlement), their operational dynamics diverge sharply: liquid-fuel sessions are brief and require continuous physical nozzle attendance, whereas EV sessions span longer durations with intermittent power ramping and remote stop capability. To prevent duplicate charges and orphaned holds (\texttt{FR-06a}), the Session Orchestrator governs both flows through a single deterministic Finite State Machine (FSM) using durable \textbf{idempotency keys}: retries of the same logical operation reuse the same \texttt{idempotency\_key} (validated against a stored DB key, request hash, and recorded outcome), whereas new operations receive new keys. Crucially, a local database unique constraint alone does not guarantee exactly-once physical pump or charger activation if a remote-start request times out after reaching an operator whose downstream API lacks native idempotency.
+
+\begin{itemize}[leftmargin=1.4em, itemsep=2pt]
+  \item \textbf{Shared Pre-Delivery Spine}: \texttt{IDLE} $\rightarrow$ \texttt{BAY\_SELECTED} (QR/NFC + geofence check, \texttt{FR-03}) $\rightarrow$ \texttt{PREAUTH\_PENDING} (PSP hold requested) $\rightarrow$ \texttt{AUTH\_DISPATCHED} (remote start sent to forecourt gateway or EV CPMS). An \emph{explicit} PSP decline or \emph{explicit} operator rejection transitions to \texttt{ABORTED\_VOID\_REQUESTED}, logging an automated PSP hold-release/void request. Conversely, an \emph{ambiguous remote-start outcome or operator timeout} MUST transition to \texttt{RECONCILING} (keeping the bay locked)---never assuming zero delivery, never blindly voiding the hold, and never blindly retrying activation.
+  \item \textbf{Diverging Active Branches}: Upon hardware confirmation, the FSM branches into \texttt{FUELING\_ACTIVE} (high-frequency volume/cost telemetry until nozzle hang-up) or \texttt{EV\_CHARGING\_ACTIVE} (periodic kWh/kW/SoC telemetry until target SoC, cable unlock, or remote user stop).
+  \item \textbf{Settlement, Cancellation \& Reconciliation}: Normal completion transitions to \texttt{SETTLING} (exact metered capture + automated PSP hold-release request for any unused hold balance; final release on the cardholder statement remains governed by the card-issuing bank, \texttt{FR-05}) $\rightarrow$ \texttt{COMPLETED}. Connectivity drops, ambiguous acknowledgments, or remote-start timeouts enter \texttt{RECONCILING}, where background polling against operator Charge Detail Records (CDRs) or forecourt receipts resolves final metered totals without issuing duplicate captures (\texttt{FR-06a}). The single-active-session bay lock is held across \texttt{PREAUTH\_PENDING}, \texttt{AUTH\_DISPATCHED}, \texttt{FUELING\_ACTIVE}, \texttt{EV\_CHARGING\_ACTIVE}, and \texttt{RECONCILING}, and is released from \texttt{RECONCILING} only upon authoritative operator evidence (confirmed CDR, forecourt receipt, or verified idle/non-activated hardware status).
+\end{itemize}
+
+% ------------------------------------------------------------------------------
+% FIGURE 4.2 HOOK FOR DESIGN AGENT (TikZ Vector Diagram #3)
+% States: IDLE -> BAY_SELECTED -> PREAUTH_PENDING -> AUTH_DISPATCHED ->
+%         [FUELING_ACTIVE | EV_CHARGING_ACTIVE] -> SETTLING -> COMPLETED;
+%         Fault/Recovery branches: ABORTED_VOID_REQUESTED, RECONCILING.
+% ------------------------------------------------------------------------------
+\begin{figure}[!htbp]
+  \centering
+  \input{figures/session_fsm.tex}
+  \caption{Unified Fueling and EV Charging Session Finite State Machine (\emph{Conceptual System Design}).}
+  \label{fig:session-fsm}
+\end{figure}
+
+\subsection{Candidate Technology Trade-Off Analysis (Weighted Decision Matrix)}
+\label{sec:arch-tradeoffs}
+
+Candidate technologies are evaluated using a transparent \textbf{Weighted Decision Matrix} (not a datum-based Pugh matrix) defined by $S_j = \sum_{i=1}^{4} w_i c_{ij} = 0.35 c_{1j} + 0.25 c_{2j} + 0.20 c_{3j} + 0.20 c_{4j}$, where $w_i$ is the normalized criterion weight ($\sum w_i = 1.0$) and $c_{ij} \in \{1,\dots,5\}$ is the integer engineering suitability score (\texttt{[Assumption]} subjective engineering design judgments pending partner sign-off). Four criteria govern selection: \emph{Operational Fit \& Consistency} ($w_1 = 0.35$), \emph{Cross-Platform / Integration Maturity} ($w_2 = 0.25$), \emph{Latency \& Scalability} ($w_3 = 0.20$), and \emph{Maintainability \& Team Complexity} ($w_4 = 0.20$). Table~\ref{tab:tech-tradeoffs} reports explicit $(c_1, c_2, c_3, c_4)$ scores and exact reproducible sums $S_j$ for both candidate and alternative across core layers.
+
+\begin{table}[!htbp]
+  \centering
+  \caption{Candidate Technology Stack and Weighted Decision Matrix ($S_j = 0.35 c_1 + 0.25 c_2 + 0.20 c_3 + 0.20 c_4$; \texttt{[Assumption]} Subjective Engineering Judgments).}
+  \label{tab:tech-tradeoffs}
+  \small
+  \begin{tabularx}{\linewidth}{@{}P{21mm} P{27mm} P{21mm} L P{29mm}@{}}
+    \toprule
+    \rowcolor{fgOlive}
+    \fgtableheader{Layer} & \fgtableheader{Candidate (vs.\ Alt.)} & \fgtableheader{$(c_1..c_4) = S_j$} & \fgtableheader{Key Trade-Offs \& Rationale} & \fgtableheader{Dependencies / Limits} \\
+    \midrule
+    \textbf{Mobile Client} & \textbf{Flutter}~\cite{flutter2025docs} \newline \emph{(vs.\ Native iOS/And.)} & \textbf{(4,5,4,4)=4.25} \newline \emph{(4,4,5,2)=3.80} & Single codebase for iOS/Android reduces maintenance overhead while supporting native QR, NFC, and GPS plugins. & Relies on platform-channel maintenance for PSP/NFC SDK updates. \\
+    \textbf{Transactional \& Geospatial DB} & \textbf{PostgreSQL + PostGIS}~\cite{postgis2025docs} \newline \emph{(vs.\ NoSQL Store)} & \textbf{(5,5,4,4)=4.60} \newline \emph{(3,4,4,3)=3.45} & ACID transactions enforce idempotent payment ledgers and single-active-session locks; PostGIS natively indexes station geofences. & Vertical write scaling requires read replicas and partitioning at high load. \\
+    \textbf{Live Status Cache} & \textbf{Redis}~\cite{redis2025docs} \newline \emph{(vs.\ DB-Only Poll)} & \textbf{(4,5,5,4)=4.45} \newline \emph{(3,4,2,4)=3.25} & Sub-millisecond reads for live pump/charger occupancy and distributed session locks reduce primary DB contention. & Volatile memory requires TTL discipline and authoritative DB fallback. \\
+    \textbf{Event Broker} & \textbf{RabbitMQ}~\cite{rabbitmq2025docs} \newline \emph{(vs.\ Apache Kafka)} & \textbf{(4,4,4,5)=4.20} \newline \emph{(4,4,5,3)=4.00} & Lower operational overhead for MVP command queues, dead-letter retries, and decoupled settlement workflows. & Lower raw log-replay throughput than Kafka if high-volume analytics grow later. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}

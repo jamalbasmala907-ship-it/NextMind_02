@@ -1,0 +1,28 @@
+Continue Fuel&Go Assignment 02 planning.
+
+Save this prompt verbatim using the next numbered filename in prompts/.
+
+Confirmed team decision: use the original Fuel&Go presentation as the visual reference for the report. Inspect the actual slides, including visual rendering—not only extracted text—to identify its logo, colors, typography, and visual style. If visual inspection is unavailable, report that limitation; do not invent the presentation's appearance.
+
+Read the current PRD.md, PLAN.md, TODO.md, and requirements checklist.
+
+Create docs/REPORT_OUTLINE.md in English containing:
+- A proposed report title and chapter outline mapped to verified assignment requirements and the PRD.
+- Management and decision-makers as the proposed audience, with the lecturer as academic evaluator.
+- Unified fueling and EV charging as the proposed core scope, subject to source verification and team approval.
+- Source-supported extensions in the roadmap; clearly flag unsupported or disputed features.
+- A provisional allocation totaling exactly 25 PDF pages, explicitly stating the assumed treatment of cover, contents, references, and appendices. Keep the counting rule pending verification.
+- Each chapter's purpose, key questions, evidence needs, proposed figures, and human review owner. Preserve existing ownership; mark unassigned responsibilities as pending.
+- A concise visual brief derived from the actual presentation, adapted for a readable professional report. Distinguish observed design elements from proposed improvements.
+
+Update PLAN.md and TODO.md minimally:
+- Record the confirmed presentation-based design direction; visual sample approval remains pending.
+- Correct active specification links to the tracked PRD.md.
+- Mark only verified Git setup work complete.
+- Add review of the proposed outline and a representative visual sample as next tasks.
+
+Keep PRD.md unchanged. Preserve historical prompts, backups, and both Skill locations. Do not delete files, write report chapters, generate the full report, launch agents, commit, or push.
+
+Also clarify whether the earlier git fetch succeeded. If it failed, state that remote freshness is unverified.
+
+Finish briefly in Hebrew with created/updated paths and at most three decisions requiring our review. Do not print entire files.

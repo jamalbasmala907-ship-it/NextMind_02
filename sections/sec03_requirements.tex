@@ -1,0 +1,83 @@
+% ==============================================================================
+% Chapter 3: Functional & Non-Functional Requirements
+% Indicative Space Budget: ~2.5 pages
+% Status: Draft — Prepared by Research; Pending Partner Review
+% ==============================================================================
+
+\fgchapter{03}{Chapter 03 --- System Requirements}{System Requirements Specification (FR \& NFR)}{Traceable functional capabilities, non-functional targets, and conceptual actor boundaries}{sec:requirements}
+
+\subsection{Requirements Engineering Approach and Traceability}
+\label{sec:req-approach}
+
+Fuel\&Go's requirements are structured as unambiguous, verifiable, and traceable statements aligned with the general requirements-engineering principles of ISO/IEC/IEEE~29148:2018~\cite{iso29148_2018}. \emph{Access Limitation Disclosure}: Because the full normative text of ISO/IEC/IEEE~29148:2018 is paywalled, only its verified catalog metadata and high-level scope are referenced here; no internal clause numbers are cited.
+
+All functional and non-functional requirements below describe a \emph{Conceptual System Design}. No runtime component has been implemented or tested; accordingly, every verification column specifies a \emph{Planned Verification} method rather than an executed test result. Prioritization follows the MoSCoW scheme (\emph{Must}, \emph{Should}, \emph{Could}, \emph{Won't} for core MVP). Consistent with \texttt{PRD.md} (v1.2.0-draft), disputed extensions (\texttt{EXT-01}--\texttt{EXT-05}) and the presentation's AI Guidance Assistant (Slides~3 and 40) are excluded from core \texttt{FR-01}--\texttt{FR-06} pending formal scope resolution.
+
+\subsection{Core Functional Requirements (\texttt{FR-01}--\texttt{FR-06b})}
+\label{sec:fr}
+
+Figure~\ref{fig:use-case} illustrates the proposed actor interactions across the Fuel\&Go system boundary, distinguishing human actors (ICE/Hybrid and EV drivers) from external operational systems (PSP, Forecourt/POS Gateway, and EV Charging Operator/CPMS). Table~\ref{tab:fr-matrix} defines the core functional requirements and their planned acceptance criteria, incorporating safety-oriented user-story constraints from the original presentation (e.g., fuel-grade restriction on Slide~50).
+
+\textbf{Proposed Engineering Refinement on \texttt{FR-06}}: In \texttt{PRD.md} (v1.2.0-draft), transaction fault handling and basic user support are grouped together under \texttt{FR-06} without assigned MoSCoW priorities. Because preventing duplicate charges, reconciling interrupted sessions, and handling authorization or connectivity failures are mission-critical and must not depend on an optional support workflow, Table~\ref{tab:fr-matrix} proposes splitting \texttt{FR-06} into \texttt{FR-06a} (\emph{Critical Transaction Fault Recovery}, \textbf{Must}) and \texttt{FR-06b} (\emph{Basic User Support \& Issue Reporting}, \textbf{Should}). This split is documented explicitly as a \emph{proposed engineering refinement pending partner review} and does not alter \texttt{PRD.md}.
+
+% ------------------------------------------------------------------------------
+% FIGURE 3.1 HOOK FOR DESIGN AGENT (TikZ Vector Diagram #1)
+% Actors: ICE/Hybrid Driver, EV Driver, Payment Service Provider (PSP),
+%         Forecourt/POS Gateway, EV Charging Operator / CPMS.
+% Use Cases: FR-01 through FR-06a/FR-06b inside Fuel&Go Core System Boundary.
+% ------------------------------------------------------------------------------
+\begin{figure}[!htbp]
+  \centering
+  \input{figures/use_case_diagram.tex}
+  \caption{Proposed Core Use-Case and Actor Interaction Boundary for Fuel\&Go (\emph{Conceptual System Design}).}
+  \label{fig:use-case}
+\end{figure}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Core Functional Requirements (\texttt{FR-01}--\texttt{FR-06b}) with MoSCoW Priority and Planned Acceptance Criteria.}
+  \label{tab:fr-matrix}
+  \small
+  \begin{tabularx}{\linewidth}{@{}P{15mm} P{28mm} P{14mm} L P{35mm}@{}}
+    \toprule
+    \rowcolor{fgOlive}
+    \fgtableheader{Req.\ ID} & \fgtableheader{Capability} & \fgtableheader{MoSCoW} & \fgtableheader{Proposed Core Specification} & \fgtableheader{Planned Acceptance Criteria} \\
+    \midrule
+    \texttt{FR-01} & Account, Auth \& Vehicle Energy Profile & Must & Register/authenticate drivers (OAuth~2.0 / OIDC) and store vehicle profiles (fuel grade(s) and/or EV connector types such as CCS2, Type~2, CHAdeMO, plus charging power preferences). & Profile persists across sessions; incompatible fuel grades or connectors are filtered or disabled during selection (Slide~50). \\
+    \texttt{FR-02} & Unified Station \& Charger Discovery & Must & Map and list search displaying nearby fuel stations and EV charging hubs with live fuel prices per liter, EV tariffs (per kWh/min), connector compatibility, live bay availability, and distance filtering. & Search returns filtered ICE/EV results matching active vehicle profile with explicit timestamped availability status. \\
+    \texttt{FR-03} & Pump/Charger Selection \& Authorization & Must & Select bay via QR code, NFC, or station/bay ID; verify geofence proximity; execute PSP payment pre-authorization hold; dispatch remote start/authorize command to forecourt gateway or EV CPMS. & Dispenser/charger authorizes only after valid proximity check, explicit user confirmation, and confirmed PSP hold. \\
+    \texttt{FR-04} & Real-Time Fueling \& EV Telemetry & Must & Stream live session metrics: dispensed volume (liters) or delivered energy (kWh), charging power (kW) and estimated SoC where supported, elapsed time, running cost, and safe stop/completion detection. & Live session view updates continuously until hardware completion or user-initiated safe stop is acknowledged. \\
+    \texttt{FR-05} & Contactless Settlement \& Basic Receipt & Must & Capture exact final dispensed/charged amount via tokenized PSP, submit an automated PSP void/release request for any unused pre-authorization hold, and store an itemized digital receipt in session history. & Final captured amount equals metered delivery; Fuel\&Go submits and logs the PSP hold-release request upon settlement (final card-statement release timing depends on the card-issuing bank); receipt is stored. \\
+    \texttt{FR-06a} & Critical Transaction Fault Recovery \emph{(Proposed split)} & Must & Detect and recover from authorization timeout, nozzle/cable disconnect failure, payment decline, or station connectivity loss; enforce idempotent settlement and automatic reconciliation of interrupted sessions. & Every fault transitions the session to a defined terminal or reconciliation state with zero duplicate captures and a logged PSP hold-release/void request on aborted sessions. \\
+    \texttt{FR-06b} & Basic User Support \& Issue Reporting \emph{(Proposed split)} & Should & Present transparent fault status notifications to drivers and provide in-app submission of basic session or receipt issue reports linked to the session ID. & User receives clear status guidance during faults and can submit a traceable issue ticket referencing the affected session. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Non-Functional Requirements (\texttt{NFR-01a}--\texttt{NFR-07b})}
+\label{sec:nfr}
+
+In accordance with \texttt{PRD.md} (Sec.~9.2), arbitrary numerical targets without verified rationale or engineering sign-off are prohibited. Standards-backed requirements (\texttt{NFR-05}, \texttt{NFR-06}, \texttt{NFR-07a}) state their governing standards or physical safety principles explicitly, while quantitative performance, availability, capacity, and interaction-complexity targets (\texttt{NFR-01a}--\texttt{NFR-04}, \texttt{NFR-07b}) remain visibly marked \textbf{Provisional --- Pending Engineering Sign-Off}. For \texttt{NFR-01a} and \texttt{NFR-01b}, Nielsen Norman Group's 0.1\,s/1.0\,s/10\,s interaction-design thresholds~\cite{nielsen1993responsetimes} are cited strictly as \emph{UX responsiveness guidance} rather than approved engineering service-level targets.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Non-Functional Requirements (\texttt{NFR-01a}--\texttt{NFR-07b}): Proposed Targets, Rationale, and Planned Verification.}
+  \label{tab:nfr-matrix}
+  \small
+  \begin{tabularx}{\linewidth}{@{}P{17mm} P{26mm} P{27mm} L P{27mm}@{}}
+    \toprule
+    \rowcolor{fgOlive}
+    \fgtableheader{Req.\ ID} & \fgtableheader{Property} & \fgtableheader{Proposed Target / Status} & \fgtableheader{Verified Rationale / Standard Basis} & \fgtableheader{Planned Verification} \\
+    \midrule
+    \texttt{NFR-01a} & Station \& Charger Discovery Latency (P95) & \textbf{Provisional --- Pending Engineering Sign-Off} & Informed by NN/g UX guidance (1.0\,s preserves unbroken flow of thought)~\cite{nielsen1993responsetimes}; UX guidance is distinct from an approved engineering P95 target. & Conceptual latency budget; future API load test. \\
+    \texttt{NFR-01b} & Pump / EV Charger Authorization Round-Trip (P95) & \textbf{Provisional --- Pending Engineering Sign-Off} & Spans PSP pre-authorization plus OCPI/forecourt handshake; NN/g UX guidance (10\,s attention limit)~\cite{nielsen1993responsetimes} motivates progress feedback, not a finalized SLA. & Sequence timing breakdown; future simulator/HIL test. \\
+    \texttt{NFR-02} & Live Telemetry Refresh Cadence & \textbf{Provisional --- Pending Engineering Sign-Off} & Liquid-fuel dispensing is typically brief compared with longer EV charging sessions (duration varies by charger power and battery state); cadences must align with IFSF~\cite{ifsf_specs} and OCPI/OCPP~\cite{evroaming2025ocpi,oca2020ocpp201} payloads. & Analytical bandwidth calculation; future simulator test. \\
+    \texttt{NFR-03} & Core Session Service Availability & \textbf{Provisional --- Pending Engineering Sign-Off} & Availability tier must balance redundancy cost against forecourt/EV session continuity. & Conceptual FMEA \& redundancy review. \\
+    \texttt{NFR-04} & Peak Concurrent Active Sessions & \textbf{Provisional --- Pending Engineering Sign-Off} & Concurrency sizing must be derived explicitly from stated station-count assumptions in a reproducible Python sizing model. & Reproducible Python capacity calculation (\texttt{[Assumption]}). \\
+    \texttt{NFR-05} & Payment, Mobile \& API Security & \textbf{Proposed}: 0 raw PANs on Fuel\&Go servers; TLS encryption & Guided by PCI DSS v4.0.1~\cite{pcissc2024pcidss401} (tokenization shrinks CDE scope without alone establishing compliance), OWASP MASVS v2.1.0~\cite{owasp2024masvs}, and OWASP API Top~10 (2023)~\cite{owasp2023apitop10}. & Conceptual STRIDE threat model \& Red-Team audit. \\
+    \texttt{NFR-06} & Physical Safety Interlock Independence & \textbf{Proposed}: 100\% local hardware enforcement & Local emergency cutoffs, overfill/vapor safeguards, and electrical protection depend on certified forecourt/EVSE hardware and applicable electrical/hazardous-location safety codes---strictly independent of cloud or communication protocols. & Safety boundary review; future HIL/certified station test. \\
+    \texttt{NFR-07a} & Accessible Visual Contrast & \textbf{Proposed}: WCAG 2.2 Level~AA (\mbox{$\ge 4.5{:}1$} text; \mbox{$\ge 3{:}1$} large/UI) & Directly anchored to W3C WCAG~2.2 Success Criteria~1.4.3 and 1.4.11~\cite{w3c2023wcag22}; applies to both Conceptual UI and Report QA. & Deterministic contrast calculation \& visual inspection. \\
+    \texttt{NFR-07b} & Session-Start Interaction Complexity & \textbf{Provisional --- Pending Engineering Sign-Off} & Tap/step count must be derived from Ch.~6 wireframe task-flow walkthroughs rather than an arbitrary cap. & Wireframe walkthrough \& usability heuristic audit. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}

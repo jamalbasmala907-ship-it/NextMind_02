@@ -1,0 +1,63 @@
+Complete the existing Fuel&Go Assignment 02 report efficiently. Token budget is limited: work from saved artifacts, avoid repeated research, repeated file dumps, polling loops, and unnecessary status messages.
+
+Read project instructions, PRD.md, docs/REPORT_OUTLINE.md, PLAN.md, TODO.md, current research notes, Chapters 1–6, and the latest QA records. Save this prompt once under the next numbered filename.
+
+Use existing connected workers; do not restart a healthy hub or create duplicate sessions. Coordinate sequential ownership of shared files to avoid conflicting edits.
+
+Complete the following in one continuous workflow:
+
+A. Fix confirmed Chapters 1–6 issues
+1. Eliminate excessive whitespace, especially the isolated Figure 2 on Page 9 and sparsely occupied Pages 16 and 18. Place figures/tables near their discussion without shrinking readable text.
+2. Technology decision matrix: provide the underlying criterion scores and reproducible weighted calculations, clearly labeled subjective design judgments. If unavailable, replace unsupported precise totals with an honest qualitative comparison.
+3. Idempotency: retries of the same logical operation must reuse the same key; new operations receive new keys. Explain durable deduplication and downstream/operator limitations. A local unique constraint alone does not guarantee exactly-once physical activation.
+4. Align all state names across prose, diagrams, and constraints. Define which states reserve a bay, including uncertain/reconciliation states, and when authoritative evidence permits release.
+5. Keep the correct bandwidth calculations, explicitly identify excluded overheads, and remove the unsupported comparison with connection-state overhead.
+6. Review the authorization-timeout path: an ambiguous remote-start outcome must enter reconciliation rather than assume no delivery occurred and blindly void the hold or retry activation. Align diagrams and prose.
+
+B. Complete Chapters 7–9 and required front/back matter
+Follow the exact approved outline and assignment requirements. Include substantive security/safety/privacy analysis, planned product verification clearly separated from actual document QA, delivery risks, roadmap, and conclusions where specified by that outline.
+Write a concise executive summary if required.
+Preserve the Fuel&Go presentation-inspired visual identity.
+Keep the system explicitly conceptual. Do not invent implementation results, partnerships, user research, benchmarks, savings, certifications, or approvals.
+Use existing verified evidence wherever sufficient. Inspect additional primary sources only for necessary unsupported claims. Omit or qualify claims that cannot be verified.
+Keep unverified Israeli statistics excluded.
+Treat technology choices and unsupported numerical targets as proposals or assumptions.
+Follow the current PRD core scope; keep disputed extensions and AI assistant outside the core pending scope resolution.
+Do not claim Basmala approval. Preserve her later review and README role.
+
+C. Integrate the complete report
+Create main.tex and main.pdf while preserving earlier partial compilations.
+Target exactly 25 total PDF pages as the documented working interpretation. Keep the lecturer's unresolved counting clarification in project records; do not claim it was resolved.
+Meet formatting requirements from the actual assignment files. Reduce repetition and whitespace rather than shrinking fonts, padding content, or sacrificing essential analysis.
+Use meaningful diagrams, readable tables, accurate citations, and working cross-references. Do not create decorative data charts.
+Do not add blank pages to reach the target.
+
+D. Perform one consolidated independent QA cycle
+Research addresses substantive evidence/content gaps.
+Design integrates and builds.
+Detector independently audits the finished PDF and supporting sources, including:
+- factual support and citation accuracy;
+- calculations and explicitly labeled assumptions;
+- requirements, states, payment recovery, and diagram consistency;
+- assignment compliance and the 25-page working target;
+- every rendered page for clipping, overlaps, tiny labels, excessive whitespace, and readability.
+Fixer corrects confirmed defects; Detector retests affected material and checks for regressions.
+Do not equate a clean build with factual verification.
+Do not claim independent review or PASS unless actually performed.
+If a genuine blocker remains, record it accurately instead of retrying indefinitely or fabricating completion.
+
+E. Finish and checkpoint
+Update PLAN.md, TODO.md, research notes, and QA records with actual outcomes.
+Preserve PRD.md, README.md, lecturer utility installation, existing work, and Git history.
+Do not commit or push yet.
+
+Use English only. Continue through all stages without intermediate approval requests for routine reversible work. Report only a genuine blocker or the final result.
+
+Final response: at most 200 words containing:
+- main.pdf path and exact page count;
+- chapters completed;
+- actual build and independent QA results;
+- remaining evidence gaps or human decisions;
+- final audit file path.
+
+Do not print entire files or repeat the plan.

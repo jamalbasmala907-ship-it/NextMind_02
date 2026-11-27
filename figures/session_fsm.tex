@@ -1,0 +1,129 @@
+% ==============================================================================
+% figures/session_fsm.tex
+% TikZ Vector Diagram #3 (Figure 4.2): Unified Fueling & EV Charging Session FSM
+% Strictly <= 16.5cm wide; all labels >= 9.5pt; ZERO nested tikzpictures
+% Aligned states: IDLE, BAY_SELECTED, PREAUTH_PENDING, AUTH_DISPATCHED,
+%   FUELING_ACTIVE, EV_CHARGING_ACTIVE, SETTLING, RECONCILING,
+%   ABORTED_VOID_REQUESTED, COMPLETED
+% ==============================================================================
+\begin{tikzpicture}[
+  x=1cm, y=1cm,
+  >=Stealth,
+  state/.style={
+    rectangle, rounded corners=5pt,
+    draw=fgTeal, line width=1.05pt, fill=fgTealTint!65,
+    minimum width=3.10cm, minimum height=0.80cm,
+    align=center, inner sep=3pt,
+    font=\fontsize{9.5pt}{10.5pt}\selectfont\bfseries, text=fgEspresso
+  },
+  fuelstate/.style={
+    rectangle, rounded corners=5pt,
+    draw=fgTerracotta, line width=1.15pt, fill=fgTerraTint!80,
+    minimum width=3.85cm, minimum height=0.88cm,
+    align=center, inner sep=3pt,
+    font=\fontsize{9.5pt}{10.5pt}\selectfont\bfseries, text=fgEspresso
+  },
+  evstate/.style={
+    rectangle, rounded corners=5pt,
+    draw=fgEcoGreen, line width=1.15pt, fill=fgEcoTint!80,
+    minimum width=3.95cm, minimum height=0.88cm,
+    align=center, inner sep=3pt,
+    font=\fontsize{9.5pt}{10.5pt}\selectfont\bfseries, text=fgEspresso
+  },
+  faultstate/.style={
+    rectangle, rounded corners=5pt,
+    draw=fgTerracotta, dashed, line width=1.15pt, fill=fgSoftCream,
+    minimum width=4.45cm, minimum height=0.90cm,
+    align=center, inner sep=3pt,
+    font=\fontsize{9.5pt}{10.5pt}\selectfont\bfseries, text=fgEspresso
+  },
+  trans/.style={draw=fgTeal, line width=1.0pt, ->},
+  faulttrans/.style={draw=fgTerracotta, dashed, line width=1.0pt, ->},
+  lbl/.style={font=\fontsize{9.5pt}{10.2pt}\selectfont, text=fgEspresso, fill=fgWhite, inner sep=1.2pt}
+]
+
+% ------------------------------------------------------------------------------
+% Row 1: Shared Pre-Delivery Spine
+% ------------------------------------------------------------------------------
+\node[state, minimum width=2.00cm] (idle) at (1.02, 5.45) {\texttt{IDLE}};
+\node[state, minimum width=3.15cm] (bay)  at (4.50, 5.45) {\texttt{BAY\_SELECTED}\\{\normalfont\itshape QR/NFC + Geofence}};
+\node[state, minimum width=3.55cm] (pre)  at (8.90, 5.45) {\texttt{PREAUTH\_PENDING}\\{\normalfont\itshape PSP Hold (Bay Lock)}};
+\node[state, minimum width=3.55cm] (auth) at (13.65, 5.45) {\texttt{AUTH\_DISPATCHED}\\{\normalfont\itshape Remote Start (Lock)}};
+
+\draw[trans] (idle.east) -- (bay.west);
+\draw[trans] (bay.east) -- (pre.west);
+\draw[trans] (pre.east) -- (auth.west);
+
+% ------------------------------------------------------------------------------
+% Row 2: Diverging Active Branches + Explicit Decline/Reject Abort State
+% ------------------------------------------------------------------------------
+\node[faultstate] (abort) at (2.30, 3.25) {%
+  \texttt{ABORTED\_VOID\_REQUESTED}\\
+  {\normalfont\itshape Explicit decline/reject $\rightarrow$ PSP void}};
+
+\node[fuelstate] (fuel) at (8.10, 3.25) {%
+  \texttt{FUELING\_ACTIVE}\\
+  {\normalfont\itshape High-freq L/cost (Bay Lock)}};
+
+\node[evstate] (ev) at (13.65, 3.25) {%
+  \texttt{EV\_CHARGING\_ACTIVE}\\
+  {\normalfont\itshape kWh/kW/SoC (Bay Lock)}};
+
+% Branching from AUTH_DISPATCHED
+\draw[draw=fgTerracotta, line width=1.05pt, ->]
+  ([xshift=-0.55cm]auth.south) |- (10.55, 4.35) -| (fuel.north);
+\draw[draw=fgEcoGreen, line width=1.05pt, ->]
+  (auth.south) -- (ev.north);
+
+% Explicit PSP Decline or Explicit Operator Reject -> ABORTED_VOID_REQUESTED
+\draw[faulttrans] ([xshift=-0.45cm]pre.south) |- (2.30, 4.42) -- (abort.north)
+  node[lbl, pos=0.22] {Explicit Decline / Reject};
+
+% ------------------------------------------------------------------------------
+% Row 3: Reconciliation (Ambiguous Timeout / Conn Drop), Settlement & Completion
+% ------------------------------------------------------------------------------
+\node[faultstate, draw=fgTextAmber] (recon) at (2.30, 1.25) {%
+  \texttt{RECONCILING} {\normalfont(Bay Lock)}\\
+  {\normalfont\itshape Ambig.\ timeout/drop $\rightarrow$ poll CDR/rcpt}};
+
+\node[state, minimum width=3.95cm] (settle) at (8.65, 1.25) {%
+  \texttt{SETTLING}\\
+  {\normalfont\itshape Exact Capture + Hold Release}};
+
+\node[state, draw=fgOlive, fill=fgPaleSage, minimum width=2.95cm] (done) at (14.15, 1.25) {%
+  \texttt{COMPLETED}\\
+  {\normalfont\itshape Digital Receipt}};
+
+% Active -> SETTLING
+\draw[draw=fgTerracotta, line width=1.05pt, ->] (fuel.south) -- ([xshift=-0.55cm]settle.north);
+\draw[draw=fgEcoGreen, line width=1.05pt, ->] (ev.south) |- (11.55, 2.22) -| ([xshift=0.85cm]settle.north);
+
+% Ambiguous Auth Timeout / Conn Drop -> RECONCILING (never blind void/retry)
+\draw[faulttrans, draw=fgTextAmber] ([xshift=-1.25cm]auth.south) -- ++(0,-0.32) -| (5.45, 2.22) -| ([xshift=1.10cm]recon.north)
+  node[lbl, pos=0.58] {Timeout / Drop};
+\draw[faulttrans, draw=fgTextAmber] ([xshift=-1.10cm]fuel.south) |- (5.45, 2.22);
+\draw[faulttrans, draw=fgTextAmber] (recon.east) -- (settle.west)
+  node[lbl, midway, above] {Verified};
+
+% SETTLING -> COMPLETED
+\draw[trans] (settle.east) -- (done.west);
+
+% ------------------------------------------------------------------------------
+% Bottom Idempotency & Bay Lock Invariant Note (self-sizing node — DEF-012)
+% ------------------------------------------------------------------------------
+\node[
+  anchor=north,
+  align=center,
+  text width=15.9cm,
+  rounded corners=3pt,
+  fill=fgSoftCream,
+  draw=fgOlive!70,
+  line width=0.6pt,
+  inner sep=4.5pt,
+  font=\fontsize{9.5pt}{10.8pt}\selectfont,
+  text=fgEspresso
+] at (8.15, 0.35) {%
+  \textbf{Idempotency \& Lock Invariant (\texttt{FR-06a}):} Retries reuse \texttt{idempotency\_key} (DB key + hash + outcome); local DB locks alone\\
+  cannot guarantee exactly-once physical start. Bay lock held in \texttt{PREAUTH\_PENDING..RECONCILING}; released only on operator evidence.};
+
+\end{tikzpicture}

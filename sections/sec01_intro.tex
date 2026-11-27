@@ -1,0 +1,67 @@
+% ==============================================================================
+% Chapter 1: Introduction, Business Motivation & Scope Boundaries
+% Indicative Space Budget: ~1.5 pages
+% Status: Draft — Prepared by Research; Pending Partner Review
+% ==============================================================================
+
+\fgchapter{01}{Chapter 01 --- Scope \& Framing}{Introduction, Business Motivation \& Scope Boundaries}{Operational pain points, design governance, and core vs.\ roadmap boundaries}{sec:intro}
+
+\subsection{Operational Problem and Business Motivation}
+\label{sec:intro-motivation}
+
+Drivers refueling internal-combustion engine (ICE) or hybrid vehicles and drivers charging battery electric vehicles (BEVs) currently navigate a fragmented digital landscape. As documented in the original Fuel\&Go product presentation (\texttt{Fuel\&Go Whole Tasks.pptx}, Slide~2), everyday station visits suffer from five recurring pain points: physical queuing at forecourts, switching between pumps and indoor payment counters, maintaining separate brand-specific mobile applications for different fuel companies, accidental selection of an incompatible fuel grade, and uncertainty regarding real-time electric vehicle (EV) charger availability.
+
+Global market trajectories reinforce the structural need for dual-energy station interfaces. According to the International Energy Agency (IEA) \emph{Global EV Outlook 2025}~\cite{iea2025gev}, global electric car sales (BEV and plug-in hybrid) exceeded 17~million vehicles in 2024---representing more than 25\% year-over-year growth and more than 20\% of all new cars sold worldwide. As public charging expands alongside legacy liquid-fuel infrastructure, drivers increasingly rely on public chargers for inter-city travel and where residential parking lacks dedicated charging access~\cite{iea2025gev}. In Israel---the target deployment jurisdiction referenced in the original Fuel\&Go presentation (Slides~2, 8, and 30; formal jurisdiction confirmation remains pending partner sign-off)---drivers encounter separate mobile applications for fuel chains (such as Paz \texttt{yellow}~\cite{paz2025yellow}) and dedicated EV charging networks (such as EV-Edge~\cite{evedge2025app} and Afcon EV's \texttt{ON}~\cite{afconev2025on}), while navigation applications such as Waze~\cite{waze2025help,waze2025gas} focus on route discovery and community price reporting rather than end-to-end session activation or payment settlement. \emph{Note on local market data}: Official primary-source datasets from the Israel Central Bureau of Statistics (CBS) for 2024--2025 Israeli EV market share have not been directly inspected; unverified secondary press figures are therefore excluded from empirical claims in this report.
+
+\textbf{Fuel\&Go} is conceptualized as a unified mobile refueling and EV charging platform enabling ICE, hybrid, and EV drivers to discover compatible stations, authorize fuel dispensers or EV chargers remotely, monitor live energy delivery, and complete tokenized contactless payments within a single cohesive workflow (\texttt{PRD.md}, Sec.~2; Presentation Slides~1--3).
+
+\subsection{Report Framing and Unresolved Design Decisions}
+\label{sec:intro-framing}
+
+This document serves as the \emph{Conceptual System Design} and working \emph{Preliminary Design Report (PDR)} for Fuel\&Go. No runtime software, hardware integration, or payment gateway certification has been implemented or field-tested; all architectural and verification descriptions represent \emph{Proposed Core Interfaces} and \emph{Planned Verification} activities.
+
+Several substantive scope and engineering decisions remain open pending formal stakeholder and engineering sign-off:
+\begin{itemize}[leftmargin=1.4em, itemsep=2pt]
+  \item \textbf{Deployment Jurisdiction \& Regulatory Scope}: Israel is adopted as the working launch jurisdiction per the original product presentation, subject to formal partner confirmation before locking statutory privacy and payment compliance obligations.
+  \item \textbf{Report Title \& Decision Audience}: The working PDR framing and optional secondary management audience (executive and product/engineering decision-makers alongside academic evaluators) remain provisional pending final review.
+  \item \textbf{Extension Scope \& Provisional Targets}: Disputed product extensions (\texttt{EXT-01}--\texttt{EXT-05}), the presentation's AI Guidance Assistant, and unbacked numeric non-functional performance targets remain explicitly quarantined or marked provisional pending engineering sign-off.
+\end{itemize}
+
+\subsection{Core Scope vs.\ Roadmap and Flagged Feature Boundaries}
+\label{sec:intro-scope}
+
+The governing product specification (\texttt{PRD.md}, v1.2.0-draft) establishes six core functional capabilities (\texttt{FR-01}--\texttt{FR-06}) as the baseline for this preliminary design. Direct inspection of \texttt{Fuel\&Go Whole Tasks.pptx} (78~slides) surfaced two provenance findings that are documented transparently without silently altering scope:
+\begin{enumerate}[leftmargin=1.4em, itemsep=2pt]
+  \item \textbf{AI Guidance Assistant Conflict}: Slides~3 and 40 list an \emph{AI Digital Assistant} under functional features, whereas \texttt{PRD.md} excludes it from \texttt{FR-01}--\texttt{FR-06}. It is therefore quarantined from core architecture pending formal scope resolution.
+  \item \textbf{Extension Provenance (\texttt{EXT-01}--\texttt{EXT-05})}: Direct slide extraction confirms that \texttt{EXT-02} (discounts/promotions, Slide~40), \texttt{EXT-03} (fleet management and subscriptions, Slides~4, 30, 40), and \texttt{EXT-04} partial (monthly AI usage/financial summaries, Slide~40) appear in the original presentation as additional features, and \texttt{EXT-05} partial appears as B2B API partner integration (Slides~8, 27). Conversely, \texttt{EXT-01} (convenience-store pre-ordering) and consolidated corporate VAT invoicing are \emph{not} found in the reviewed presentation.
+\end{enumerate}
+
+Table~\ref{tab:scope-boundary} summarizes the resulting scope boundary governing Chapters~1--9.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Fuel\&Go Scope Boundary Matrix: Core Specification vs.\ Roadmap and Quarantined Features.}
+  \label{tab:scope-boundary}
+  \small
+  \begin{tabularx}{\linewidth}{@{}P{28mm} L P{36mm} P{28mm}@{}}
+    \toprule
+    \rowcolor{fgOlive}
+    \fgtableheader{Scope Tier} & \fgtableheader{Capabilities / Items} & \fgtableheader{Source Provenance} & \fgtableheader{Report Treatment} \\
+    \midrule
+    \textbf{Core Scope} \newline \emph{(Authoritative Spec)} &
+    \texttt{FR-01} Account, Auth \& Vehicle Profile; \texttt{FR-02} Unified Station \& Charger Discovery; \texttt{FR-03} Pump/Charger Selection \& Authorization; \texttt{FR-04} Real-Time Telemetry; \texttt{FR-05} Contactless Settlement \& Basic Receipt; \texttt{FR-06} Fault Recovery \& Basic Support. &
+    \texttt{PRD.md} Sec.~2.1; Presentation Slides~2--3, 30, 40, 50. &
+    Full specification, conceptual architecture, and planned verification (Ch.~1--8). \\
+    \midrule
+    \textbf{Source-Supported Roadmap} \newline \emph{(Pending Scope Sign-Off)} &
+    \texttt{EXT-02} Discounts, coupons \& referral rewards; \texttt{EXT-03} Fleet management \& subscriptions; \texttt{EXT-04} (partial) Monthly AI usage/financial summaries; \texttt{EXT-05} (partial) B2B API partner ecosystem; multilingual UI, route optimization, queue alerts. &
+    Presentation Slides~4, 8, 27, 30, 40 (\emph{Additional Features}). &
+    Excluded from core architecture depth; staged in Ch.~9 roadmap only. \\
+    \midrule
+    \textbf{Quarantined / Conflict Flagged} \newline \emph{(Pending Scope Sign-Off)} &
+    \textbf{AI Guidance Assistant} (in Slides~3 \& 40, absent from \texttt{PRD.md}); \texttt{EXT-01} C-store food/coffee pre-ordering (not in deck); \texttt{EXT-04} Corporate VAT invoicing (not in deck); \texttt{EXT-05} Standalone operator web dashboard (unverified). &
+    Direct OOXML audit of 78-slide deck vs.\ \texttt{PRD.md} v1.2.0-draft. &
+    Strictly excluded from core requirements unless formally approved for promotion. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}

@@ -1,0 +1,112 @@
+% ==============================================================================
+% figures/safety_trust_boundary.tex
+% Figure 7.1 — Trust Boundaries, PSP Tokenization Scope & Autonomous Local
+%              Hardware Safety Interlock Isolation (NFR-06)
+% Constraints: ZERO nested tikzpicture, <= 16.5cm width, >= 9.5pt labels,
+%              Fuel&Go palette, grayscale-safe (distinct border styles & fills)
+% ==============================================================================
+\begin{tikzpicture}[
+  x=1cm, y=1cm,
+  font=\sffamily,
+  >=Stealth,
+  zonebox/.style={
+    rounded corners=3pt,
+    line width=1.0pt,
+    align=center
+  },
+  comp/.style={
+    rectangle,
+    rounded corners=2.5pt,
+    draw=fgEspresso,
+    fill=fgWhite,
+    line width=0.7pt,
+    align=center,
+    font=\sffamily\fontsize{9.5pt}{11pt}\selectfont,
+    inner sep=4pt
+  },
+  lbl/.style={
+    font=\sffamily\bfseries\fontsize{9.5pt}{11pt}\selectfont,
+    align=center
+  },
+  edge/.style={
+    ->,
+    line width=0.95pt,
+    draw=fgEspresso
+  },
+  edgeBi/.style={
+    <->,
+    line width=0.95pt,
+    draw=fgEspresso
+  },
+  note/.style={
+    font=\sffamily\fontsize{9.5pt}{10.8pt}\selectfont,
+    align=center,
+    fill=fgWhite,
+    inner sep=1.5pt
+  }
+]
+
+% --- ZONE 1: Untrusted Client & Edge (Left) ---
+\draw[zonebox, fill=fgSoftCream, draw=fgAmber, dashed]
+  (0.0, 0.2) rectangle (4.3, 6.9);
+\node[lbl, text=fgTextAmber] at (2.15, 6.55) {Z1: Untrusted Client};
+
+\node[comp, text width=3.5cm, draw=fgTeal, fill=fgTealTint] (mob) at (2.15, 5.15)
+  {\textbf{Fuel\&Go Mobile App}\\OWASP MASVS v2.1.0\\TLS 1.3 + Cert Pinning};
+
+\node[comp, text width=3.5cm, draw=fgOlive, fill=fgPaleSage] (sdk) at (2.15, 3.05)
+  {\textbf{PSP Client SDK}\\Direct PAN Capture\\(No PAN to Backend)};
+
+\node[comp, text width=3.5cm, draw=fgEspresso, fill=fgWhite] (bay) at (2.15, 1.15)
+  {\textbf{Bay Verification}\\QR/NFC + Geofence\\+ Manual Bay ID};
+
+% --- ZONE 2: Fuel&Go Cloud Platform (Center-Left) ---
+\draw[zonebox, fill=fgTealTint!55, draw=fgTeal, solid]
+  (4.9, 2.3) rectangle (10.5, 6.9);
+\node[lbl, text=fgTeal] at (7.7, 6.55) {Z2: Fuel\&Go Cloud (Non-CDE)};
+
+\node[comp, text width=4.8cm, draw=fgTeal, fill=fgWhite] (gw) at (7.7, 5.45)
+  {\textbf{API Gateway \& Auth}\\OWASP API Top 10 (BOLA, Rate Limit)};
+
+\node[comp, text width=4.8cm, draw=fgTeal, fill=fgWhite] (orch) at (7.7, 3.55)
+  {\textbf{Session Orchestrator \& Ledger}\\Idempotency Keys, Hold/Capture\\Reconciliation (Tokens Only)};
+
+% --- ZONE 3: PCI DSS CDE / PSP Vault (Bottom-Center) ---
+\draw[zonebox, fill=fgPaleSage, draw=fgOlive, densely dotted, line width=1.2pt]
+  (4.9, 0.2) rectangle (10.5, 2.05);
+\node[comp, text width=4.8cm, draw=fgOliveDark, fill=fgWhite] (psp) at (7.7, 1.38)
+  {\textbf{Tokenized PSP APIs} (PCI DSS v4.0.1)\\PAN Vault, Pre-Auth Hold, Capture};
+\node[lbl, text=fgOliveDark] at (7.7, 0.45) {Z3: External PSP Vault (PCI DSS CDE)};
+
+% --- ZONE 4: Autonomous Local Hardware Safety Domain (Right) ---
+\draw[zonebox, fill=fgTerraTint, draw=fgTerracotta, line width=1.4pt]
+  (11.2, 0.2) rectangle (16.4, 6.9);
+\node[lbl, text=fgTerracotta] at (13.8, 6.55) {Z4: Local Safety Domain};
+
+\node[comp, text width=4.5cm, draw=fgTerracotta, fill=fgWhite] (fcc) at (13.8, 5.25)
+  {\textbf{Forecourt / EV CPMS}\\IFSF Gateway / OCPI Backend\\(Remote Start/Stop Only)};
+
+\draw[draw=fgTerracotta, line width=1.1pt, dash dot]
+  (11.45, 4.18) -- (16.15, 4.18);
+\node[note, fill=fgTerraTint, text=fgTerracotta, font=\sffamily\bfseries\fontsize{9.5pt}{10.5pt}\selectfont]
+  at (14.25, 4.18) {NFR-06 Hardware Isolation};
+
+\node[comp, text width=4.5cm, draw=fgTerracotta, fill=fgWhite] (hwfuel) at (13.8, 2.72)
+  {\textbf{Fuel Dispenser Interlocks}\\Hardware E-Stop, Overfill\\\& Vapor-Recovery Cutoff};
+
+\node[comp, text width=4.5cm, draw=fgEcoGreen, fill=fgEcoTint] (hwev) at (13.8, 1.02)
+  {\textbf{EVSE Safety Interlocks}\\Ground-Fault (RCD), HV\\Contactor \& Thermal Cutoff};
+
+% --- ARROWS & TRUST BOUNDARY CROSSINGS ---
+\draw[edgeBi, fgTeal] (mob.east) -- (gw.west);
+\draw[edge, fgOliveDark, dashed] (sdk.east) -- (4.6, 3.05) |- (psp.west);
+\draw[edgeBi, fgTeal] (gw.south) -- (orch.north);
+\draw[edgeBi, fgOliveDark] (orch.south) -- (psp.north);
+\draw[edgeBi, fgTerracotta] (orch.east) -- ++(0.35,0) |- (fcc.west);
+\draw[edge, fgEspresso, dotted, line width=0.8pt] (bay.north) -- (sdk.south);
+
+% Autonomous indicator (no cloud dependency; shifted left to avoid label collision)
+\draw[edge, fgTerracotta, line width=0.9pt] ([xshift=-1.65cm]fcc.south) -- ([xshift=-1.65cm]hwfuel.north);
+\node[note, fill=fgTerraTint, text=fgEspresso] at (14.25, 3.68) {No Safety Override};
+
+\end{tikzpicture}

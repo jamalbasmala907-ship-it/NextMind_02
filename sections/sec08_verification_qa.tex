@@ -1,0 +1,69 @@
+% ==============================================================================
+% sections/sec08_verification_qa.tex
+% Chapter 8 — Planned Product Verification vs. Actual Report QA (~2.0 pp)
+% ==============================================================================
+\fgchapter{08}{Dual-Track Verification}{Planned Product Verification vs. Actual Report QA \& Red-Team Summary}{Strict separation of conceptual product test plans from executed Assignment 02 document verification}{sec:verification-qa}
+
+A core engineering governance principle of this report is maintaining a strict boundary between \textbf{Track~1 (Planned Product Verification)}, which defines conceptual, unexecuted tests for the future Fuel\&Go software and station integrations, and \textbf{Track~2 (Actual Report QA \& Red-Team)}, which records verified quality-assurance audits executed on this Assignment~02 LaTeX deliverable. A clean PDF build never validates runtime product behavior, safety interlocks, or payment settlement accuracy.
+
+\subsection{Track 1: Planned Product Verification (Conceptual / Unexecuted)}
+Table~\ref{tab:traceability-matrix} maps core functional requirements (\texttt{FR-01}--\texttt{FR-06b}) and non-functional requirements (\texttt{NFR-01a}--\texttt{NFR-07b}) to conceptual architecture components, proposed future test levels, and acceptance criteria in alignment with ISO/IEC/IEEE 29148:2018~\cite{iso29148_2018} traceability practices. \emph{Status: All product tests below are unexecuted design plans.}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Requirements-to-Architecture-to-Planned-Verification Traceability Matrix (\emph{Track~1: Conceptual / Unexecuted Product Verification}).}
+  \label{tab:traceability-matrix}
+  {\footnotesize
+  \begin{tabularx}{\linewidth}{@{}P{20mm} P{36mm} P{32mm} L@{}}
+    \toprule
+    \rowcolor{fgTeal}
+    \fgtableheader{Req. ID} & \fgtableheader{Architecture Component} & \fgtableheader{Proposed Test Level} & \fgtableheader{Conceptual Acceptance Criteria (Unexecuted)} \\
+    \midrule
+    \texttt{FR-01} & Mobile Client, Auth Service, Vehicle Profile DB & Unit, Integration, Security Test & User registers/authenticates; vehicle energy type (ICE/PHEV/BEV) and compatible fuel/connector constraints persist accurately. \\
+    \rowcolor{fgSoftCream}
+    \texttt{FR-02} & Discovery Service, PostGIS~\cite{postgis2025docs}, OCPI/FCC Adapters & Integration, Geospatial Load Test & Map/list returns stations filtered by fuel grade or EV connector type with live availability status from mock operator feeds. \\
+    \texttt{FR-03} & Session Orchestrator, Bay Verifier, Adapter Layer & Integration, Fault-Injection, HIL & Valid QR/bay match triggers pre-auth hold and remote unlock; mismatched fuel/connector or timeout enters safe reconciliation. \\
+    \rowcolor{fgSoftCream}
+    \texttt{FR-04} & Telemetry Streamer (WebSocket~\cite{rfc6455}), Redis~\cite{redis2025docs} & Integration, Endurance, Simulator & Live liters/cost (ICE) or kWh/kW/SoC (EV) updates stream smoothly; disconnect triggers automatic reconnect and state resync. \\
+    \texttt{FR-05} & Payment Service, Ledger DB, PSP Adapter & Sandbox Payment, Chaos Test & Idempotent capture settles exact delivered amount; unused pre-auth hold releases promptly; digital receipt matches ledger. \\
+    \rowcolor{fgSoftCream}
+    \texttt{FR-06a/b} & Orchestrator, Support/Dispute Module, RabbitMQ~\cite{rabbitmq2025docs} & Fault-Injection, E2E Workflow & Network drops, charger faults, or ambiguous timeouts trigger deterministic reconciliation and structured user dispute logging. \\
+    \texttt{NFR-01a/b} & API Gateway, Orchestrator, Operator Adapters & Load \& Latency Benchmark & Measured P95 discovery and authorization latencies evaluated against provisional UX responsiveness thresholds~\cite{nielsen1993responsetimes}. \\
+    \rowcolor{fgSoftCream}
+    \texttt{NFR-02/03} & Cloud Cluster, Multi-AZ DB, Circuit Breakers & Chaos / Failover Test & Service availability and horizontal scaling verified under simulated regional failover and concurrent session bursts. \\
+    \texttt{NFR-04/05} & Mobile SDK, API Gateway, PSP Vault & OWASP MASVS/API Pentest, PCI Audit & Zero PAN exposure in Fuel\&Go logs/DB~\cite{pcissc2024pcidss401}; zero critical BOLA or auth bypasses~\cite{owasp2024masvs,owasp2023apitop10}. \\
+    \rowcolor{fgSoftCream}
+    \texttt{NFR-06} & Local Forecourt Dispenser \& EVSE Hardware & Certified Station HIL Safety Test & Physical E-stop, overfill/vapor cutoff, and EVSE ground-fault trips halt energy delivery during simulated cloud/mobile outage. \\
+    \texttt{NFR-07a/b} & Mobile UI (Flutter~\cite{flutter2025docs}), Design System & Accessibility Audit (WCAG~2.2~\cite{w3c2023wcag22}) & Text contrast $\ge 4.5{:}1$, non-text $\ge 3{:}1$, touch targets $\ge 24\times 24$~CSS~px, and screen-reader traversal pass AA checks. \\
+    \bottomrule
+  \end{tabularx}
+  }
+\end{table}
+
+\subsection{Track 2: Actual Report QA \& Red-Team Summary (Executed)}
+To ensure academic integrity, deterministic typesetting, and zero fabrication on this Assignment~02 report, an independent read-only \texttt{detector} agent audited deliverables across Phases~0--5, logging defects in \texttt{qa/defects.json} and \texttt{qa/DEFECTS.md}, while \texttt{fixer} remediated root causes and documented mandatory 5-part incident records (\texttt{qa/incidents/INC-DEF-001.md}--\texttt{INC-DEF-010.md}). Per the outline's anti-padding rule, no decorative QA chart is included; Table~\ref{tab:actual-qa-summary} reports the exact recorded audit outcomes.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Actual Report QA \& Incident Remediation Summary (\emph{Track~2: Executed Document Audits, Phases~0--5}).}
+  \label{tab:actual-qa-summary}
+  {\footnotesize
+  \begin{tabularx}{\linewidth}{@{}P{24mm} P{26mm} P{22mm} L@{}}
+    \toprule
+    \rowcolor{fgOlive}
+    \fgtableheader{Audit Phase / Artifact} & \fgtableheader{QA Families Checked} & \fgtableheader{Defects Logged / Closed} & \fgtableheader{Verified Root-Cause Remediations \& Current Status} \\
+    \midrule
+    \textbf{Phase 3 Research} (\texttt{references.bib}, \texttt{RESEARCH\_NOTES.md}) & \texttt{qa-citations}, Zero-Fabrication & \texttt{DEF-001}--\texttt{DEF-004} (4 / 4 Closed) & Removed dangling unverified Israel key; split OCPI facts from assumptions; documented IEA charger density; standardized \texttt{biblatex-ieee} entry types. \\
+    \rowcolor{fgSoftCream}
+    \textbf{Phase 5 Visual Preview} (\texttt{visual\_\-preview.pdf}) & \texttt{qa-typeset}, \texttt{qa-img}, \texttt{qa-cls-version} & \texttt{DEF-005} (1 / 1 Closed) & Eliminated $13.19\text{pt}$ overfull \texttt{\textbackslash hbox} in TikZ architecture preview while preserving $\ge 8.5\text{pt}$ labels and grayscale legibility. \\
+    \textbf{Chapters 1--3 Draft} (\texttt{draft\_ch1\_3.pdf} v1/v2) & \texttt{qa-img}, \texttt{qa-citations}, \texttt{qa-table}, \texttt{qa-typeset} & \texttt{DEF-006}--\texttt{DEF-010} (5 / 5 Closed) & Fixed missing \texttt{FR-06} link and nested-TikZ icon distortion (\texttt{DEF-006/009}); purged unverified Israel percentages and tagged Fig.~2.1 calculation (\texttt{DEF-007}); fixed narrow-column justification (\texttt{DEF-008}); added \texttt{placeins} float barrier to \texttt{nextmind-pdr.cls} v0.3.2 (\texttt{DEF-010}). \\
+    \rowcolor{fgSoftCream}
+    \textbf{Phase 6 Full Report} (\texttt{main.pdf}, 25 pp.) & Full 8 QA Families + Red-Team & \texttt{DEF-011}--\texttt{DEF-015} (5 Logged, Remediated) & Detector audited all 25 pages: factual, citation, math, and build checks passed; 5 visual/ToC layout defects (\texttt{DEF-011}--\texttt{DEF-015}) remediated by Fixer (\texttt{INC-DEF-011}--\texttt{015}), awaiting final Detector retest. \\
+    \bottomrule
+  \end{tabularx}
+  }
+\end{table}
+
+\begin{sagebox}[Epistemic \& Governance Boundary]
+  Ten defects (\texttt{DEF-001}--\texttt{DEF-010}) were independently closed across Phases~0--5. Five Phase~6 layout/diagram defects (\texttt{DEF-011}--\texttt{DEF-015}) were logged by Detector on \texttt{main.pdf} and remediated by Fixer; final closure remains pending independent Detector retest.
+\end{sagebox}

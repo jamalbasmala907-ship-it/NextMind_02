@@ -1,0 +1,87 @@
+% ==============================================================================
+% main.tex
+% Full Preliminary Design Report — Fuel&Go (Team NextMind, Assignment 02)
+% Provisional Option A Target: Exactly 25 Total PDF Pages
+% Engine: LuaLaTeX + Biber (IEEE Style) | Custom Class: nextmind-pdr.cls v0.3.2
+% ==============================================================================
+\documentclass{nextmind-pdr}
+
+\usepackage{csquotes}
+\usepackage[backend=biber, style=ieee, sorting=none]{biblatex}
+\addbibresource{bib/references.bib}
+
+\setrunningtitle{Fuel\&Go --- Preliminary Design Report}
+\setrunningmeta{Team NextMind | Assignment 02}
+\setrunningfooter{Fuel\&Go Preliminary Design Report --- Conceptual System Design (\texttt{nextmind-pdr.cls} v0.3.3)}
+
+% Clean spacing calibration for exact 25-page Option A budget (preserves 10pt body font)
+\geometry{top=15mm, bottom=14.5mm, left=16.5mm, right=16.5mm, headsep=4.5mm, footskip=7.5mm}
+\setstretch{1.01}
+\setlength{\parskip}{1.5pt}
+\renewcommand{\arraystretch}{1.04}
+\setlength{\floatsep}{5pt plus 1pt minus 1pt}
+\setlength{\textfloatsep}{6pt plus 1pt minus 1pt}
+\setlength{\intextsep}{5pt plus 1pt minus 1pt}
+\setlength{\bibitemsep}{1pt}
+\renewcommand*{\bibfont}{\footnotesize}
+
+\begin{document}
+
+% ==============================================================================
+% FRONT MATTER (Pages 1–3: Cover, Document Control & Executive Summary, ToC)
+% ==============================================================================
+\input{front/cover}
+
+\input{front/executive_summary}
+
+% Compact Table of Contents (Page 3 — fits cleanly on 1 page)
+{\headingfont\Large\bfseries\color{fgEspresso} Table of Contents}\par
+\vspace{-2pt}\noindent\textcolor{fgAmber}{\rule{\linewidth}{1.1pt}}
+\vspace{2pt}
+{\small\setstretch{0.96}
+\makeatletter
+\@starttoc{toc}
+\makeatother
+}
+
+\clearpage
+
+% ==============================================================================
+% BODY CHAPTERS 1–9 (Continuous Flow — No Forced Blank Pages)
+% ==============================================================================
+\input{sections/sec01_intro}
+
+\vspace{10pt}
+\input{sections/sec02_users_stakeholders}
+
+\vspace{10pt}
+\input{sections/sec03_requirements}
+
+\vspace{10pt}
+\input{sections/sec04_architecture}
+
+\vspace{10pt}
+\input{sections/sec05_data_protocols}
+
+\vspace{10pt}
+\input{sections/sec06_ux_ui}
+
+\vspace{10pt}
+\input{sections/sec07_security_safety}
+
+\vspace{10pt}
+\input{sections/sec08_verification_qa}
+
+\vspace{10pt}
+\input{sections/sec09_plan_conclusions}
+
+\clearpage
+
+% ==============================================================================
+% BACK MATTER (IEEE References + Appendices)
+% ==============================================================================
+\printbibliography[heading=bibintoc, title={References}]
+
+\input{back/appendices}
+
+\end{document}

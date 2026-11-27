@@ -1,0 +1,46 @@
+Make one focused final revision to docs/REPORT_OUTLINE.md. Read the current file first and save this prompt verbatim using the next numbered filename in prompts/.
+
+Preserve the nine-chapter structure and the provisional budget totaling exactly 25 PDF pages. Keep the rule for counting front/back matter explicitly pending lecturer clarification.
+
+Apply these corrections:
+
+1. Make the layout feasible:
+   - Reduce or combine the overloaded figures/tables in Chapter 5.
+   - Reconsider fitting the ToC, figure/table lists, and acronyms on one page; retain only necessary navigation elements.
+   - Rebalance allocations if needed while preserving the 25-page total.
+   - Treat fractional allocations as indicative space budgets, not forced chapter page breaks. Preserve readable fonts and spacing.
+
+2. Strengthen management relevance:
+   - Integrate a concise business model, revenue mechanisms, major cost drivers, feasibility considerations, and success metrics into the existing chapters.
+   - Distinguish product delivery planning from production of this academic report.
+   - Require sources for factual figures and label scenario assumptions explicitly. Do not invent profitability, savings, adoption, or costs.
+
+3. Correct assurance language:
+   - Replace absolute safety guarantees with proposed controls, residual risks, assumptions, and required validation.
+   - Clarify that payment tokenization may reduce exposure and compliance scope but does not itself establish PCI DSS compliance.
+   - Identify the intended jurisdiction before selecting applicable privacy/regulatory requirements; do not assume GDPR automatically applies.
+
+4. Clarify integration boundaries:
+   - Distinguish application/backend APIs, charging-management interfaces, charger-to-management protocols, vehicle-to-charger communication, and forecourt gateway interfaces.
+   - Treat protocols and versions as candidates requiring verification, not confirmed implementations.
+
+5. Separate planned product verification from actual report QA:
+   - Product tests and performance targets remain proposed unless genuinely executed and evidenced.
+   - QA charts must use actual recorded outcomes with defined denominators; omit a chart if insufficient data exists.
+   - Do not imply that a successful report build validates the product.
+
+6. Record decisions accurately:
+   - Presentation-based visual direction is confirmed.
+   - Approval of the rendered visual sample remains pending.
+   - Keep proposed scope choices and unassigned human responsibilities pending; do not invent partner approvals.
+
+7. Tighten terminology and evidence:
+   - Use “weighted decision matrix” for the weighted scoring formula unless a genuine Pugh method is used.
+   - Preserve source references as references to be checked; do not elevate unverified claims to verified facts.
+   - Retain the observed-versus-proposed distinction in the visual brief. Any numerical contrast claims must be calculated or marked pending verification.
+
+Update PLAN.md and TODO.md only where needed to keep them consistent with this revision. Keep PRD.md unchanged.
+
+Do not create additional planning documents, delete files, write report chapters, launch agents, commit, or push.
+
+Finish briefly in Hebrew with changed paths, the final page-budget total, and any remaining decisions. Do not print entire files.

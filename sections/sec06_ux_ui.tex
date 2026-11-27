@@ -1,0 +1,63 @@
+% ==============================================================================
+% Chapter 6: UX/UI Preliminary Flows, Visual Identity & Accessibility
+% Indicative Space Budget: ~2.0 pages
+% Status: Draft — Prepared by Research; Pending Partner Review
+% ==============================================================================
+
+\fgchapter{06}{Chapter 06 --- UX/UI \& Accessibility}{UX/UI Preliminary Flows, Visual Identity \& Accessibility}{Dual-energy mobile journeys, error-prevention guardrails, and WCAG 2.2 Level AA controls}{sec:ux-ui}
+
+\subsection{Dual-Energy Mobile Journeys: Normal, Error, and Recovery States}
+\label{sec:ux-journeys}
+
+Outdoor forecourts and charging hubs impose high cognitive and environmental friction: bright sunlight, gloved or one-handed operation, time pressure, and the risk of costly misfueling. Fuel\&Go's conceptual mobile interface unifies ICE/Hybrid and EV journeys into a four-stage flow (\emph{Discover $\rightarrow$ Verify Bay $\rightarrow$ Monitor Live $\rightarrow$ Receipt}) while explicitly engineering error and recovery states (\texttt{FR-01}--\texttt{FR-06b}):
+
+\begin{itemize}[leftmargin=1.4em, itemsep=2pt]
+  \item \textbf{Normal Flow}: Drivers filter nearby stations by their saved \texttt{VehicleProfile} (\texttt{FR-01}, \texttt{FR-02}), scan a bay QR/NFC tag or confirm the bay number after a geofence check (\texttt{FR-03}), review an explicit pre-authorization summary, monitor live liters/kWh and running cost (\texttt{FR-04}), and receive an itemized digital receipt (\texttt{FR-05}).
+  \item \textbf{Error Prevention (Slide~50 Guardrail)}: Incompatible fuel grades (e.g., diesel vs.\ gasoline) or mismatched EV connectors (e.g., CHAdeMO vs.\ CCS2) are disabled or hidden based on the active vehicle profile, requiring an explicit confirmation modal before authorization dispatch.
+  \item \textbf{Fault \& Recovery States (\texttt{FR-06a}, \texttt{FR-06b})}: If PSP pre-authorization is explicitly declined or the operator explicitly rejects activation (\texttt{ABORTED\_VOID\_REQUESTED}), the UI prompts an alternative tokenized payment method and confirms the automated PSP hold-release request. Conversely, if an ambiguous authorization timeout or network drop occurs, the session enters \texttt{RECONCILING} (keeping the bay locked without blindly voiding the hold or retrying activation), displaying a persistent \emph{Reconciling Session} banner with a non-blocking status indicator (aligned with NN/g's $1.0\;\text{s}$--$10\;\text{s}$ feedback guidance~\cite{nielsen1993responsetimes}), disabled duplicate start controls, and a one-tap issue report linked to the session ID.
+\end{itemize}
+
+% ------------------------------------------------------------------------------
+% FIGURE 6.1 HOOK FOR DESIGN AGENT (TikZ Vector Diagram #5 — Conceptual Mockup)
+% 4-stage mobile journey + error/recovery callout states (Wrong Fuel Grade,
+% Bay/Connector Mismatch, Timeout/Reconciling, Payment Decline).
+% MUST be explicitly labeled "Conceptual Mockup".
+% ------------------------------------------------------------------------------
+\begin{figure}[!htbp]
+  \centering
+  \input{figures/ux_journey_flow.tex}
+  \caption{Dual-Energy Mobile User Journey, Error-Prevention Guardrails, and Fault-Recovery States (\emph{Conceptual Mockup --- Not an Implemented UI}).}
+  \label{fig:ux-journey}
+\end{figure}
+
+\subsection{Visual Identity Alignment and WCAG 2.2 Level AA Accessibility}
+\label{sec:ux-accessibility}
+
+Fuel\&Go's conceptual UI adapts the warm earthy palette of the original product presentation (\texttt{Fuel\&Go Whole Tasks.pptx}) while hardening contrast for outdoor legibility and accessibility-challenged drivers (Presentation Slide~4). All accessibility controls are anchored directly to W3C \textbf{WCAG~2.2 Level~AA}~\cite{w3c2023wcag22} (verified directly against the W3C Recommendation):
+
+\begin{itemize}[leftmargin=1.4em, itemsep=2pt]
+  \item \textbf{Text Contrast (SC~1.4.3)}: Normal text requires $\ge 4.5{:}1$ contrast and large text requires $\ge 3{:}1$~\cite{w3c2023wcag22}. Deterministic relative-luminance calculations confirm that Deep Espresso (\texttt{\#403011}) on White (\texttt{\#FFFFFF}, $12.74{:}1$) and Cream (\texttt{\#F6EBD4}, $10.77{:}1$) exceeds AAA, while White on Olive (\texttt{\#626C3B}, $5.63{:}1$) and Darkened Amber (\texttt{\#8C5A00}) on White ($5.87{:}1$) pass AA. Low-contrast golden amber (\texttt{\#E8AF3B}, $1.67{:}1$ on cream) is restricted strictly to non-text borders and graphical accents.
+  \item \textbf{Non-Text Contrast (SC~1.4.11) \& Color Independence}: UI borders, focus rings, and status icons maintain $\ge 3{:}1$ contrast~\cite{w3c2023wcag22}, and every fuel/EV status indicator pairs color with distinct iconography and text labels so colorblind drivers never rely on hue alone.
+  \item \textbf{Pointer Target Size (SC~2.5.8)}: Interactive controls (bay selectors, stop-charging button, fault-recovery actions) enforce at least $24 \times 24\;\text{CSS~px}$ minimum pointer target size~\cite{w3c2023wcag22}, with generous spacing for reliable outdoor one-handed touch input.
+\end{itemize}
+
+Table~\ref{tab:ux-accessibility} maps driver error-prevention guardrails and WCAG~2.2 Level~AA criteria to planned verification methods.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Driver Error-Prevention Guardrails and WCAG 2.2 Level AA Accessibility Matrix.}
+  \label{tab:ux-accessibility}
+  \small
+  \begin{tabularx}{\linewidth}{@{}P{28mm} P{26mm} L P{28mm}@{}}
+    \toprule
+    \rowcolor{fgOlive}
+    \fgtableheader{UX / Accessibility Area} & \fgtableheader{Governing Basis} & \fgtableheader{Proposed Interface Control} & \fgtableheader{Planned Verification} \\
+    \midrule
+    \textbf{Misfueling \& Connector Guardrail} & Slide~50; \texttt{FR-01}, \texttt{FR-03} & Hide/disable incompatible fuel grades or EV plugs; require explicit bay + energy-type confirmation before start. & Wireframe task-flow walkthrough \& heuristic audit. \\
+    \textbf{Timeout \& Payment Fault Recovery} & \texttt{FR-06a}, \texttt{FR-06b}; NN/g~\cite{nielsen1993responsetimes} & Disable duplicate start taps; display non-blocking progress/reconciliation banner; expose session-linked issue form. & State-machine UI walkthrough \& fault-injection test. \\
+    \textbf{Text \& Outdoor Legibility} & WCAG~2.2 SC~1.4.3~\cite{w3c2023wcag22}; \texttt{NFR-07a} & Enforce $\ge 4.5{:}1$ normal text contrast (\texttt{\#403011} on white/cream; \texttt{\#8C5A00} links); ban \texttt{\#E8AF3B} for text. & Deterministic luminance check \& visual inspection. \\
+    \textbf{Non-Text UI \& Colorblind Safety} & WCAG~2.2 SC~1.4.11~\cite{w3c2023wcag22} & Maintain $\ge 3{:}1$ contrast on controls/icons; pair every status color with explicit text and distinct shape/icon. & Grayscale render audit \& contrast calculation. \\
+    \textbf{Touch Target Ergonomics} & WCAG~2.2 SC~2.5.8~\cite{w3c2023wcag22}; Slide~4 & Enforce $\ge 24 \times 24\;\text{CSS~px}$ minimum pointer target size with clear spacing for one-handed forecourt use. & Component spec audit \& future usability testing. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}

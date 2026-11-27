@@ -1,0 +1,70 @@
+Perform a focused correction and independent review of the existing Fuel&Go Chapters 1–3 draft before proceeding to Chapters 4–9.
+
+Preserve existing work and the approved Fuel&Go visual style. First read the current project instructions, PRD.md, docs/REPORT_OUTLINE.md, docs/RESEARCH_NOTES.md, the chapter sources, graph-generation scripts, and qa/redteam/audit_draft_ch1_3.md.
+
+Save this prompt under the next available numbered filename in prompts/.
+
+Use the existing Research, Design, Detector, and Fixer sessions. Check their status before dispatching work; do not launch duplicate sessions. If delegation is unavailable, report it accurately rather than claiming an independent review.
+
+Address these findings:
+
+1. Figure 1 — misleading quantitative presentation
+- Do not plot vehicle sales in millions and percentages on a shared numerical axis.
+- Use separate clearly labeled panels or designed KPI cards.
+- Preserve “more than,” “approximately,” and other uncertainty qualifiers.
+- Do not represent China’s “less than 10 EVs per public charger” as an exact measured value of 10.
+- Verify definitions, year, geographical scope, and reciprocal calculations against the original primary source.
+- Update the Python source, generated figure, caption, and surrounding text consistently.
+
+2. Israeli data verification conflict
+- Resolve the contradiction in RESEARCH_NOTES.md: Israeli figures cannot be both pending primary-source verification and approved as verified chart inputs.
+- Without a directly inspected official source, mark these figures unverified and exclude them from empirical claims, charts, and calculations.
+- Correct any instructions permitting future reuse of those unverified figures.
+- Preserve an accurate record of what was and was not verified.
+
+3. Critical fault recovery
+- Separate essential transaction recovery from optional customer-support features.
+- Preventing duplicate charges, reconciling interrupted transactions, and handling authorization/connectivity failures must not depend on an optional support capability.
+- Check the current PRD priority and document any discrepancy explicitly. Do not silently change PRD.md or claim team approval.
+- Distinguish requesting release of a payment hold from the bank actually completing that release.
+- Keep acceptance criteria realistic and testable.
+
+4. Competitor evidence
+- Replace generic home-page references with exact official product/help pages supporting each material capability claim.
+- Record the inspected URL and access date.
+- Avoid categorical claims that a competitor lacks a capability unless the evidence establishes that limitation. Otherwise use appropriately bounded wording.
+- Ensure bibliography entries identify the actual source page and its real title.
+- Remove or qualify unsupported claims.
+
+5. Reader-facing report quality
+- Move internal question IDs, approval workflows, GitHub coordination, and README responsibilities out of the main report narrative and into planning/decision records.
+- Retain relevant scope assumptions and unresolved design decisions in clear language suitable for management readers.
+- Distinguish proposed capabilities from implemented or validated capabilities throughout the draft and research notes.
+- Preserve Maria’s report-production role and Basmala’s later review/README role accurately in project records; do not invent contributions or approvals.
+
+6. Evidence and technical consistency
+- Check cited standard editions, dates, and claims against accessible official sources.
+- Do not infer detailed normative requirements from catalog summaries or inaccessible standards.
+- Clearly distinguish UX guidance from an approved engineering performance target.
+- Qualify or source general session-duration claims.
+- Do not present communication protocols as proof of physical hardware safety.
+- Keep unresolved numerical targets explicitly provisional.
+- Review page allocation against the full 25-page report plan without shrinking text or changing the page-count requirement.
+
+Verification:
+- Research verifies the underlying external evidence, not merely agreement between internal notes and the bibliography.
+- Design rebuilds draft_ch1_3.pdf and visually inspects every page, including charts, diagrams, tables, and references.
+- Detector independently reviews the corrected artifacts and records concrete findings with file/page references.
+- Fixer addresses confirmed defects; Detector retests them.
+- Report only checks actually performed. A successful build or resolved citation key alone does not prove factual accuracy.
+- Update PLAN.md, TODO.md, and QA records to reflect the actual outcome.
+
+Do not write Chapters 4–9, edit PRD.md, overwrite README.md, delete existing work, commit, or push.
+
+Finish briefly in Hebrew with:
+1. The updated PDF path.
+2. Corrections completed.
+3. Actual build and independent-review results.
+4. Remaining evidence gaps or decisions.
+
+Do not print entire files.

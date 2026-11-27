@@ -1,0 +1,5 @@
+# Reproducible Python Figure Generation Dependencies — Fuel&Go (Team NextMind)
+# Verified Runtime: Python 3.12.16
+matplotlib==3.11.2
+pandas==3.1.1
+numpy==2.5.5

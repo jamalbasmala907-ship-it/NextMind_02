@@ -1,0 +1,102 @@
+% ==============================================================================
+% figures/sequence_auth_settlement.tex
+% TikZ Vector Diagram #4 (Figure 5.1): End-to-End Authorization, Telemetry,
+% and Settlement Sequence Across Six Interface Boundaries (Conceptual Design)
+% Strictly <= 16.5cm wide; all labels >= 9.5pt; ZERO nested tikzpictures
+% ==============================================================================
+\begin{tikzpicture}[
+  x=1cm, y=1cm,
+  >=Stealth,
+  actor/.style={
+    rectangle, rounded corners=3pt,
+    draw=#1, line width=1.05pt, fill=#1!12,
+    minimum width=2.85cm, minimum height=0.86cm,
+    align=center, inner sep=2.5pt,
+    font=\fontsize{9.5pt}{10.5pt}\selectfont\bfseries, text=fgEspresso
+  },
+  extactor/.style={
+    rectangle, rounded corners=3pt,
+    draw=#1, dashed, line width=1.05pt, fill=#1!8,
+    minimum width=2.95cm, minimum height=0.86cm,
+    align=center, inner sep=2.5pt,
+    font=\fontsize{9.5pt}{10.5pt}\selectfont\bfseries, text=fgEspresso
+  },
+  coremsg/.style={draw=fgTeal, line width=1.0pt, ->},
+  extmsg/.style={draw=fgEspresso!85, dashed, line width=1.0pt, ->},
+  msglbl/.style={font=\fontsize{9.5pt}{10.2pt}\selectfont, text=fgEspresso, fill=fgWhite, inner sep=1.2pt}
+]
+
+% ------------------------------------------------------------------------------
+% 5 Lifelines (x = 1.45, 4.80, 8.15, 11.50, 14.85 -> total width <= 16.35cm)
+% ------------------------------------------------------------------------------
+\node[actor=fgTeal]        (m)   at (1.45, 9.25) {Mobile App\\(Client)};
+\node[actor=fgTeal]        (b)   at (4.80, 9.25) {Fuel\&Go\\Backend};
+\node[extactor=fgOlive]    (p)   at (8.15, 9.25) {PSP\\(Tokenized)};
+\node[extactor=fgEcoGreen] (ev)  at (11.50, 9.25) {EV Operator\\CPMS (OCPI)};
+\node[extactor=fgTerracotta](fc) at (14.85, 9.25) {Forecourt /\\POS Gateway};
+
+\foreach \x in {1.45, 4.80, 8.15, 11.50, 14.85} {
+  \draw[fgRuleGray, line width=0.9pt, dashed] (\x, 8.80) -- (\x, 0.45);
+}
+
+% ------------------------------------------------------------------------------
+% Sequence Messages (Proposed Core Interfaces 1, 2, 5, 6 = Solid)
+% ------------------------------------------------------------------------------
+% 1. Mobile -> Backend (Boundary 1)
+\draw[coremsg] (1.45, 8.20) -- (4.80, 8.20)
+  node[msglbl, midway, above] {\textbf{[B1]} Scan Bay + Start (\texttt{idem\_key})};
+
+% 2. Backend -> PSP (Boundary 6)
+\draw[coremsg, draw=fgOlive] (4.80, 7.42) -- (8.15, 7.42)
+  node[msglbl, midway, above] {\textbf{[B6]} Pre-Auth Hold Request};
+
+% 3. PSP -> Backend (Boundary 6)
+\draw[coremsg, draw=fgOlive] (8.15, 6.72) -- (4.80, 6.72)
+  node[msglbl, midway, above] {\textbf{[B6]} Hold Approved (\texttt{PREAUTH\_HELD})};
+
+% 4. EV Path: Backend -> EV CPMS (Boundary 2)
+\draw[coremsg, draw=fgEcoGreen] (4.80, 5.90) -- (11.50, 5.90)
+  node[msglbl, pos=0.62, above] {\textbf{[B2: OCPI]} Remote Start Command (EV Path)};
+
+% External Context Box (Boundaries 3 & 4: OCPP & ISO 15118)
+\draw[fgEcoGreen, dashed, line width=1.05pt, rounded corners=3pt, fill=fgEcoTint!75]
+  (9.65, 4.58) rectangle (13.35, 5.50);
+\node[anchor=center, align=center, font=\fontsize{9.5pt}{10.5pt}\selectfont, text=fgEspresso]
+  at (11.50, 5.04) {\textbf{External Context Only}\\\textbf{[B3]} OCPP $\cdot$ \textbf{[B4]} ISO 15118};
+
+% 5. Fuel Path: Backend -> Forecourt (Boundary 5)
+\draw[coremsg, draw=fgTerracotta] (4.80, 4.00) -- (14.85, 4.00)
+  node[msglbl, pos=0.72, above] {\textbf{[B5: IFSF / POS]} Authorize Dispenser (Fuel Path)};
+
+% 6. Live Telemetry (Boundary 1 WebSocket)
+\draw[coremsg] (4.80, 3.18) -- (1.45, 3.18)
+  node[msglbl, midway, above] {\textbf{[B1: WS]} Live Telemetry (L/kWh/Cost)};
+
+% 7. Completion & Metered Total (Boundaries 2 & 5)
+\draw[coremsg, draw=fgEcoGreen] (11.50, 2.38) -- (4.80, 2.38)
+  node[msglbl, pos=0.38, above] {\textbf{[B2 / B5]} Session Stop + Metered Total / CDR};
+\draw[coremsg, draw=fgTerracotta] (14.85, 2.38) -- (11.65, 2.38);
+
+% 8. Exact Capture + Automated Hold-Release Request (Boundary 6)
+\draw[coremsg, draw=fgOlive] (4.80, 1.56) -- (8.15, 1.56)
+  node[msglbl, midway, above] {\textbf{[B6]} Exact Capture + Hold-Release Req.\ (or \texttt{RECONCILING} on timeout)};
+
+% 9. Digital Receipt (Boundary 1)
+\draw[coremsg] (4.80, 0.82) -- (1.45, 0.82)
+  node[msglbl, midway, above] {\textbf{[B1]} Digital Receipt + Final Status};
+
+% ------------------------------------------------------------------------------
+% Bottom Legend Bar
+% ------------------------------------------------------------------------------
+\draw[fgRuleGray, line width=0.7pt, rounded corners=3pt, fill=fgSoftCream]
+  (0.0, -0.35) rectangle (16.35, 0.30);
+
+\draw[coremsg] (0.25, -0.02) -- (1.15, -0.02);
+\node[anchor=west, font=\fontsize{9.5pt}{10.5pt}\selectfont\bfseries, text=fgTeal]
+  at (1.22, -0.02) {Proposed Core Interfaces: B1, B2, B5, B6 (Solid)};
+
+\draw[extmsg, draw=fgEcoGreen] (9.15, -0.02) -- (10.05, -0.02);
+\node[anchor=west, font=\fontsize{9.5pt}{10.5pt}\selectfont\bfseries, text=fgEspresso]
+  at (10.12, -0.02) {External Context Only: B3, B4 (Dashed)};
+
+\end{tikzpicture}

@@ -1,0 +1,83 @@
+% ==============================================================================
+% front/cover.tex
+% Front A — Cover Page (1.0 page indicative)
+% ==============================================================================
+\thispagestyle{empty}
+
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[fgCream] (current page.south west) rectangle (current page.north east);
+  \fill[fgPaleSage] ($(current page.north west)+(0,-68mm)$) -- (current page.north east) --
+                    ($(current page.north east)+(0,-112mm)$) -- ($(current page.north west)+(0,-88mm)$) -- cycle;
+  \fill[fgTeal] (current page.north west) rectangle ($(current page.north east)+(0,-7mm)$);
+  \fill[fgAmber] ($(current page.north west)+(0,-7mm)$) rectangle ($(current page.north east)+(0,-8.6mm)$);
+  \fill[fgTeal] (current page.south west) rectangle ($(current page.north west)+(6mm,-8.6mm)$);
+  \fill[fgSoftCream] (current page.south west) rectangle ($(current page.south east)+(0,30mm)$);
+  \draw[fgAmber, line width=1pt] ($(current page.south west)+(6mm,30mm)$) -- ($(current page.south east)+(0,30mm)$);
+\end{tikzpicture}
+
+\vspace*{2mm}
+
+\noindent
+\begin{tabularx}{\linewidth}{@{}m{26mm} L@{}}
+  \includegraphics[width=22mm]{figures/fuelandgo_logo.png} &
+  \kicker{Preliminary Design Report --- Conceptual System Design}\par
+  \vspace{2pt}
+  {\small\color{fgTeal}\textbf{Assignment 02} \quad|\quad Custom Document Class \texttt{nextmind-pdr.cls}}
+\end{tabularx}
+
+\vspace{5mm}
+
+{\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000
+  {\headingfont\fontsize{24pt}{28pt}\selectfont\bfseries\color{fgEspresso}
+    Fuel\&Go: Preliminary Design Report for a Unified Smart Fueling and EV Charging Platform\par}
+  \vspace{3mm}
+  {\large\color{fgTeal}\textbf{Business Context, System Architecture, Integration Boundaries, Safety Controls, and Verification Plan}\par}
+  \vspace{1.5mm}
+  {\normalsize\color{fgOliveDark} Unified Dual-Energy Core Scope (\texttt{FR-01}--\texttt{FR-06b}, \texttt{NFR-01a}--\texttt{NFR-07b}) \quad|\quad Conceptual System Design\par}
+}
+
+\vspace{4mm}
+\noindent\textcolor{fgAmber}{\rule{48mm}{2pt}}
+\vspace{4mm}
+
+\begin{center}
+  \input{figures/cover_illustration.tex}
+\end{center}
+
+\vspace{4mm}
+
+\noindent
+\begin{tcolorbox}[
+  enhanced,
+  colback=fgWhite,
+  colframe=fgRuleGray,
+  borderline west={4pt}{0pt}{fgOlive},
+  boxrule=0.6pt,
+  arc=3pt,
+  left=10pt, right=10pt, top=7pt, bottom=7pt
+]
+  \begin{tabularx}{\linewidth}{@{}L L@{}}
+    {\footnotesize\textcolor{fgTextAmber}{\textbf{PREPARED BY}}}\par
+    \vspace{2pt}
+    {\headingfont\large\bfseries\color{fgEspresso} Team NextMind}\par
+    {\small\color{fgEspresso} Maria Mnasra \quad\&\quad Basmala Jamal}\par
+    {\footnotesize\color{fgEspresso!80} Assignment 02 --- Department of Management, Bar-Ilan University (November 2026).}
+    &
+    {\footnotesize\textcolor{fgTextAmber}{\textbf{DOCUMENT GOVERNANCE STATUS}}}\par
+    \vspace{2pt}
+    {\small\color{fgTeal}\textbf{Conceptual System Design}}\par
+    {\footnotesize\color{fgEspresso!80} Working visual design direction applied; formal partner review and final scope sign-off remain pending. All runtime targets and delivery estimates are preliminary proposals.}
+  \end{tabularx}
+\end{tcolorbox}
+
+\vfill
+
+\noindent
+\begin{tabularx}{\linewidth}{@{}L r@{}}
+  {\footnotesize\color{fgEspresso!80}
+    \textbf{Epistemic Notice:} This report documents a conceptual system design. No production deployment, partner commercial agreements, or field measurements are claimed.
+  } &
+  {\footnotesize\color{fgTeal}\textbf{v1.0 (Working)}}
+\end{tabularx}
+
+\clearpage

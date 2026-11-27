@@ -1,6 +1,270 @@
 {
-  "version": "1.00",
+  "version": "1.06",
   "project": "Fuel&Go Preparatory Report",
   "team": "NextMind",
-  "defects": []
+  "last_audit": "2026-11-27",
+  "defects": [
+    {
+      "id": "DEF-001",
+      "category": "qa-citations",
+      "severity": "MAJOR",
+      "status": "CLOSED",
+      "assigned_to": "research",
+      "incident_id": "INC-DEF-001",
+      "location": [
+        "bib/references.bib (missing entry)",
+        "docs/RESEARCH_NOTES.md:66",
+        "data/ev_market_summary_verified.csv:7-8",
+        "data/README.md:16"
+      ],
+      "evidence": "BibTeX key 'israel_ev_2025_toi' is referenced in docs/RESEARCH_NOTES.md:66, data/ev_market_summary_verified.csv:7-8, and data/README.md:16, but does not exist in bib/references.bib (17 entries total). Additionally, docs/RESEARCH_NOTES.md:66 cites only 'Verified via web search summaries' with no canonical article URL or publication date.",
+      "broken_rule": "Detector SKILL.md Sec. 4 (qa-citations & qa-typeset: 0 undefined citations, verified bibliographic metadata) and RESEARCH_NOTES.md Zero-Fabrication policy.",
+      "acceptance_criteria": "Either (a) add a verified @online/@article entry for 'israel_ev_2025_toi' to bib/references.bib with exact title, publisher, date, and verified URL (and update RESEARCH_NOTES.md:66 and data/README.md:16), or (b) remove 'israel_ev_2025_toi' and the Israel rows from data/ev_market_summary_verified.csv until a primary CBS or verified article URL is retrieved.",
+      "verification_notes": "PASS (2026-11-26T19:50:00+02:00): Dangling key 'israel_ev_2025_toi' removed from docs/RESEARCH_NOTES.md:66, data/ev_market_summary_verified.csv:7-8, and data/README.md:16-17; replaced with PENDING_PRIMARY_SOURCE_URL and explicit 'Unverified Secondary Summary Pending Primary Source URL' provenance tag. Zero unresolved BibTeX keys remain; zero URLs fabricated."
+    },
+    {
+      "id": "DEF-002",
+      "category": "qa-citations",
+      "severity": "MAJOR",
+      "status": "CLOSED",
+      "assigned_to": "research",
+      "incident_id": "INC-DEF-002",
+      "location": [
+        "docs/RESEARCH_NOTES.md:70"
+      ],
+      "evidence": "Line 70 tags a broad statement on EV charging eMSP/CPO monetization models and eMSP cost drivers (CAC, roaming hub/interchange fees, PSP processing fees, 24/7 driver support, working-capital/settlement timing gaps) as '[Sourced Fact]' with zero BibTeX keys or source citations attached.",
+      "broken_rule": "docs/RESEARCH_NOTES.md:15 epistemic rule ('[Sourced Fact]: Directly verified from an official specification, statutory/regulatory text, government/agency report, or inspected local course PDF') and Detector SKILL.md Sec. 4 (qa-citations).",
+      "acceptance_criteria": "Attach verified BibTeX key(s) from bib/references.bib directly supporting each monetization/cost-driver claim, or split line 70 so only OCPI-verified roles/CDRs (evroaming2025ocpi) carry '[Sourced Fact]' while general commercial framing is tagged '[Assumption]' or '[Proposed Choice]'.",
+      "verification_notes": "PASS (2026-11-26T19:50:00+02:00): docs/RESEARCH_NOTES.md:70-71 cleanly split into '[Sourced Fact] (evroaming2025ocpi)' for OCPI CPO/eMSP roles & CDRs, and '[Assumption] / Industry Context Pending Primary Source' for general monetization/cost-driver framing."
+    },
+    {
+      "id": "DEF-003",
+      "category": "qa-citations",
+      "severity": "MINOR",
+      "status": "CLOSED",
+      "assigned_to": "research",
+      "incident_id": "INC-DEF-003",
+      "location": [
+        "data/ev_market_summary_verified.csv:5-6",
+        "docs/RESEARCH_NOTES.md:65"
+      ],
+      "evidence": "Rows 5-6 of data/ev_market_summary_verified.csv include China ('public_chargers_per_10_evs = 1.0', exceeded) and European Union ('evs_per_public_charger = 13.0', approx) attributed to 'iea2025gev', but docs/RESEARCH_NOTES.md:65 omits both numerical figures from its Supported Claims column for 'iea2025gev'.",
+      "broken_rule": "Source-to-claim traceability between verified datasets and RESEARCH_NOTES.md (Detector SKILL.md Sec. 4, qa-citations).",
+      "acceptance_criteria": "Document the verified China (>1.0 public chargers per 10 EVs) and EU (~13 EVs per public charger) IEA 2025 figures explicitly in docs/RESEARCH_NOTES.md:65, or remove them from data/ev_market_summary_verified.csv if not directly verified in iea2025gev.",
+      "verification_notes": "PASS (2026-11-26T19:50:00+02:00): docs/RESEARCH_NOTES.md:65 now explicitly documents both verified IEA 2025 figures (>1.0 public chargers per 10 EVs in China; ~13 EVs per public charger in the EU), matching data/ev_market_summary_verified.csv:5-6."
+    },
+    {
+      "id": "DEF-004",
+      "category": "qa-citations",
+      "severity": "MINOR",
+      "status": "CLOSED",
+      "assigned_to": "research",
+      "incident_id": "INC-DEF-004",
+      "location": [
+        "bib/references.bib:41",
+        "bib/references.bib:51",
+        "bib/references.bib:97",
+        "bib/references.bib:107",
+        "bib/references.bib:117",
+        "bib/references.bib:127",
+        "bib/references.bib:136"
+      ],
+      "evidence": "Seven entries use non-standard biblatex-ieee entry types (@standard and @legislation), which fall back to @misc in biblatex style=ieee and risk silently dropping 'number' (ISO identifiers) and 'journaltitle' (Official Journal of the European Union) during biber/lualatex rendering.",
+      "broken_rule": "Detector SKILL.md Sec. 4 (qa-citations: complete IEEE bibliographic rendering; qa-typeset).",
+      "acceptance_criteria": "Convert @standard/@legislation entries to standard biblatex-ieee supported types (@manual, @report, or @misc with explicit howpublished/note) OR verify in compiled PDF output that all ISO numbers and EU Official Journal titles render completely without omission.",
+      "verification_notes": "PASS (2026-11-26T19:50:00+02:00): All 5 @standard entries converted to @manual and both @legislation entries converted to @misc (with howpublished = {Official Journal of the European Union} on eu2016gdpr) in bib/references.bib. All 17 entries now use standard biblatex-ieee types."
+    },
+    {
+      "id": "DEF-005",
+      "category": "qa-typeset",
+      "severity": "MINOR",
+      "status": "CLOSED",
+      "assigned_to": "design",
+      "incident_id": "INC-DEF-005",
+      "location": [
+        "visual_preview.pdf (Page 3)",
+        "figures/arch_integration_preview.tex:8-83",
+        "visual_preview.log:1330"
+      ],
+      "evidence": "visual_preview.log:1330 reports 'Overfull \\hbox (13.1888pt too wide) in paragraph at lines 83--187' for Figure 1 (figures/arch_integration_preview.tex). Visually, the TikZ diagram and bottom legend line (*Candidate protocols pending verification) extend ~13.2pt past the right text margin relative to the table and caption.",
+      "broken_rule": "Detector SKILL.md Sec. 4 (qa-typeset: 0 overfull hbox > 5pt).",
+      "acceptance_criteria": "Adjust horizontal scaling/spacing or legend positioning in figures/arch_integration_preview.tex (or wrap in \\resizebox{\\linewidth}{!}{...} if appropriate while preserving >=8.5pt readability) so visual_preview.tex compiles with 0 overfull hbox > 5pt (specifically eliminating the 13.1888pt overfull on Page 3) and zero visual regressions.",
+      "verification_notes": "PASS (2026-11-26T22:27:00+02:00): visual_preview.log:1329-1356 confirms 0 overfull hbox on Page 3 (0 overfull hbox > 5pt document-wide) and strictly 3 pages (237,781 bytes). Visual inspection of qa/visual_preview-3.png and qa/visual_preview_gray-3.png confirms zero clipping/overlap, >=8.5pt labels, centered two-line legend within margins, and preserved solid-vs-dashed grayscale distinction."
+    },
+    {
+      "id": "DEF-006",
+      "category": "qa-img",
+      "severity": "MAJOR",
+      "status": "CLOSED",
+      "assigned_to": "fixer",
+      "incident_id": "INC-DEF-006",
+      "location": [
+        "draft_ch1_3.pdf (Page 8, Figure 2)",
+        "figures/use_case_diagram.tex:60-95",
+        "qa/draft_ch1_3-08.png"
+      ],
+      "evidence": "Three confirmed defects in Figure 2 (use_case_diagram.tex / qa/draft_ch1_3-08.png): (a) ICE/Hybrid Driver connects only to FR-01..FR-05 (lines 83-87) and omits FR-06 (Fault Handling & User Support), whereas EV Driver connects to FR-01..FR-06 (lines 89-94); (b) nested \\fgiconev[fgEcoGreen] inside the EV Driver TikZ node (line 65) renders as a distorted crosshair artifact due to nested tikzpicture inheriting outer TikZ options; (c) terracotta (ICE) and green (EV) horizontal arrow segments overlap directly onto identical fr1.west..fr5.west entry anchors (lines 83-94).",
+      "broken_rule": "Detector SKILL.md Sec. 4 (qa-img: clean vector diagrams, zero visual distortion/overlap; completeness against FR-01..FR-06).",
+      "acceptance_criteria": "(a) Add ICE/Hybrid Driver -> FR-06 link; (b) replace nested \\fgiconev / \\fgiconfuel inside TikZ nodes with native TikZ path/pic drawing (or saved box) so both icons render cleanly without crosshair distortion; (c) vertically offset terracotta and green arrow entry points into FR-01..FR-06 so horizontal segments do not overlap. Verify cleanly on recompiled Page 8 PNG (color & grayscale) with 0 overfull hbox > 5pt.",
+      "verification_notes": "PASS (2026-11-27T13:27:00+02:00): Verified figures/use_case_diagram.tex:60-105 and visual inspection of qa/draft_ch1_3-08.png & qa/draft_ch1_3_gray-08.png. ICE/Hybrid Driver now links to FR-01..FR-06; both fuel pump and EV bolt icons render crisply as native TikZ scopes with zero crosshair distortion; terracotta (+2.8pt) and green (-2.8pt) horizontal arrows are cleanly separated with zero overlap in color and grayscale. 0 overfull hbox > 5pt."
+    },
+    {
+      "id": "DEF-007",
+      "category": "qa-citations",
+      "severity": "MAJOR",
+      "status": "CLOSED",
+      "assigned_to": "fixer",
+      "incident_id": "INC-DEF-007",
+      "location": [
+        "draft_ch1_3.pdf (Page 5, Sec. 2.1 & Figure 1)",
+        "sections/sec02_users_stakeholders.tex:16,28",
+        "scripts/plots/fig2_1_market_context.py:63-65,181",
+        "qa/draft_ch1_3-05.png"
+      ],
+      "evidence": "(a) sections/sec02_users_stakeholders.tex:16 prints unverified secondary Israel BEV percentages ('roughly 25% in 2024 and 20% in 2025') from PENDING_PRIMARY_SOURCE_URL CSV rows directly in report body prose; (b) scripts/plots/fig2_1_market_context.py:65 computes a reciprocal conversion (china_evs_per_chg = 10.0 / china_chg_per_10 -> '<10 EVs/chg'), which is a [Calculation], yet the chart provenance footer (line 181) and Figure 1 caption (sec02_users_stakeholders.tex:28) list only '[Sourced Measurement]'.",
+      "broken_rule": "PRD.md Sec. 6.2 (Mandatory Data Provenance Distinction: [Sourced Measurement] vs. [Calculation]) and strict zero-use rule for PENDING_PRIMARY_SOURCE_URL data.",
+      "acceptance_criteria": "(a) Remove the unverified '25%' and '20%' percentages from sections/sec02_users_stakeholders.tex:16 while retaining the qualitative note that Israeli BEV share data is excluded pending primary CBS source verification; (b) update scripts/plots/fig2_1_market_context.py:181 and Figure 1 caption (sec02_users_stakeholders.tex:28) to explicitly tag '[Sourced Measurement]' + '[Calculation]' (disclosing the China reciprocal conversion 10 / 1.0 = <10 EVs/chg), regenerate figures/fig2_1_market_context.pdf, and recompile.",
+      "verification_notes": "PASS (2026-11-27T13:27:00+02:00): Verified sections/sec02_users_stakeholders.tex:16,28, scripts/plots/fig2_1_market_context.py:128,178-190, and visual inspection of qa/draft_ch1_3-05.png & qa/draft_ch1_3_gray-05.png. Unverified 25%/20% Israel percentages are completely removed from prose; both Figure 1 footer and LaTeX caption explicitly tag [Sourced Measurement] and [Calculation] (China reciprocal normalization 10 / >1.0 = <10 EVs/chg); Panel A y-axis clarifies mixed units."
+    },
+    {
+      "id": "DEF-008",
+      "category": "qa-table",
+      "severity": "MINOR",
+      "status": "CLOSED",
+      "assigned_to": "fixer",
+      "incident_id": "INC-DEF-008",
+      "location": [
+        "draft_ch1_3.pdf (Page 10, Table 4)",
+        "sections/sec03_requirements.tex:64-80",
+        "qa/draft_ch1_3-10.png"
+      ],
+      "evidence": "In Table 4 (sections/sec03_requirements.tex:64, qa/draft_ch1_3-10.png), justified narrow p{27mm} columns split '4.5 : 1' across lines ('(>= 4.5 :' / '1 text') in NFR-07a and stretch inter-word spacing awkwardly in NFR-01b, NFR-05, NFR-06, and NFR-07a.",
+      "broken_rule": "Detector SKILL.md Sec. 4 (qa-table & qa-typeset: clean readable table typography without awkward justification or split ratios).",
+      "acceptance_criteria": "Use ragged-right fixed-width columns (e.g., >{\\raggedright\\arraybackslash}p{...}) in Table 4 (and keep '4.5:1' / '3:1' non-breaking via \\mbox{...} or math spacing) so ratios never split across lines and inter-word stretching is eliminated. Verify on recompiled Page 10 PNG with 0 overfull hbox > 5pt.",
+      "verification_notes": "PASS (2026-11-27T13:27:00+02:00): Verified nextmind-pdr.cls:385 (reusable P{} column type), sections/sec03_requirements.tex:39,64,76, and visual inspection of qa/draft_ch1_3-09.png & qa/draft_ch1_3-10.png. Tables 3 and 4 render cleanly ragged-right with zero stretched rivers; NFR-07a contrast ratios (>= 4.5:1, >= 3:1) stay intact on single lines. 0 overfull hbox > 5pt."
+    },
+    {
+      "id": "DEF-009",
+      "category": "qa-img",
+      "severity": "MAJOR",
+      "status": "CLOSED",
+      "assigned_to": "fixer",
+      "incident_id": "INC-DEF-009",
+      "location": [
+        "draft_ch1_3.pdf (Page 10, Figure 2)",
+        "figures/use_case_diagram.tex:62-68",
+        "qa/draft_ch1_3-10.png",
+        "qa/draft_ch1_3_gray-10.png"
+      ],
+      "evidence": "Regression of DEF-006: During the FR-06a/FR-06b update to figures/use_case_diagram.tex, nested \\fgiconfuel[fgTerracotta] (line 63) and \\fgiconev[fgEcoGreen] (line 67) were reintroduced inside TikZ actor nodes. Visual inspection of qa/draft_ch1_3-10.png and qa/draft_ch1_3_gray-10.png confirms the EV Driver icon again renders as a distorted crosshair artifact instead of a clean lightning bolt.",
+      "broken_rule": "Detector SKILL.md Sec. 4 (qa-img: clean vector diagrams with zero visual distortion) and INC-DEF-006 Preventative Action (never nest tikzpicture inside a TikZ node).",
+      "acceptance_criteria": "Replace nested \\fgiconfuel and \\fgiconev inside (ice) and (ev) nodes in figures/use_case_diagram.tex:62-68 with native TikZ paths drawn in scoped coordinate shifts in the outer tikzpicture (as done in DEF-006). Verify crisp fuel dispenser and EV lightning bolt icons with zero crosshair distortion on recompiled PNG (color & grayscale).",
+      "verification_notes": "PASS (2026-11-27T14:28:00+02:00): Verified figures/use_case_diagram.tex:62-127 and visual inspection of qa/draft_ch1_3-09.png & qa/draft_ch1_3_gray-09.png. Both fuel pump and EV lightning bolt icons render crisply as native TikZ scopes with zero crosshair distortion; staggered dashed external arrows into Forecourt/POS, EV CPMS, and PSP are unambiguous; >=9.5pt labels and FR-06a/FR-06b intact; 0 overfull hbox > 5pt."
+    },
+    {
+      "id": "DEF-010",
+      "category": "qa-typeset",
+      "severity": "MINOR",
+      "status": "CLOSED",
+      "assigned_to": "fixer",
+      "incident_id": "INC-DEF-010",
+      "location": [
+        "draft_ch1_3.pdf (Pages 7-10, Figure 2 float placement)",
+        "sections/sec03_requirements.tex:29-34",
+        "qa/draft_ch1_3-10.png"
+      ],
+      "evidence": "Figure 2 (\\label{fig:use-case}) is introduced in Section 3.2 on Page 7 before Table 3 (Page 8) and Section 3.3 / Table 4 (Page 9), but floats out of section order onto an isolated float page (Page 10) after Section 3.3 and Table 4.",
+      "broken_rule": "Detector SKILL.md Sec. 4 (qa-img / qa-typeset: figures should appear near their referencing section without floating past subsequent subsections/tables onto an isolated trailing page).",
+      "acceptance_criteria": "Constrain Figure 2 float placement (e.g., via \\FloatBarrier / placeins, [!htbp] + slight vertical compaction, or ordering before Section 3.3) so Figure 2 appears in Section 3.2 near its text reference and before Section 3.3 / Table 4, with 0 overfull hbox > 5pt and no clipping.",
+      "verification_notes": "PASS (2026-11-27T14:28:00+02:00): Verified sections/sec03_requirements.tex:29,57 (\\FloatBarrier before Sec. 3.3) and visual inspection of qa/draft_ch1_3-07.png through -10.png. Figure 2 now renders on Page 9 strictly inside Section 3.2 before Section 3.3 and Table 4 (Page 10), with no body font shrinking, 0 clipping, and 0 overfull hbox > 5pt."
+    },
+    {
+      "id": "DEF-011",
+      "category": "qa-typeset",
+      "severity": "MAJOR",
+      "status": "CLOSED",
+      "assigned_to": "fixer",
+      "incident_id": "INC-DEF-011",
+      "location": [
+        "main.pdf (Page 3, Table of Contents)",
+        "nextmind-pdr.cls (\\fgchapter macro)",
+        "qa/main-03.png"
+      ],
+      "evidence": "On Page 3 (Table of Contents), Chapter 4 ('4 Preliminary System Architecture & Technology Trade-Offs') is listed on Page 8 (actual start: Page 11) and Chapter 8 ('8 Planned Product Verification vs. Actual Report QA & Red-Team Summary') is listed on Page 19 (actual start: Page 20). The \\fgchapter macro emits its ToC entry before a float/pagebreak pushes the banner to the next page.",
+      "broken_rule": "Detector SKILL.md Sec. 4 (qa-typeset: accurate cross-references and Table of Contents page numbers).",
+      "acceptance_criteria": "Fix \\fgchapter (e.g., emit \\FloatBarrier / \\needspace before \\addcontentsline / \\section) so every chapter entry in the Table of Contents matches its exact rendered PDF page number while preserving the 25-page target and 0 overfull hbox > 5pt.",
+      "verification_notes": "PASS (2026-11-27T19:41:00+02:00): Verified main.log (25 pages, 838144 bytes, 0 errors, max overfull 1.60pt), main.toc, and qa/main-03.png..25.png. Every chapter and back-matter ToC page number matches its rendered PDF page 100% (Ch.3=8, Ch.4=11, Ch.6=17, Ch.7=19, Ch.8=21, Refs=24, Appendices=25)."
+    },
+    {
+      "id": "DEF-012",
+      "category": "qa-img",
+      "severity": "MAJOR",
+      "status": "CLOSED",
+      "assigned_to": "fixer",
+      "incident_id": "INC-DEF-012",
+      "location": [
+        "main.pdf (Page 12, Figure 4)",
+        "figures/session_fsm.tex:114-119",
+        "qa/main-12.png",
+        "qa/main_gray-12.png"
+      ],
+      "evidence": "In Figure 4 (session_fsm.tex:114-119), the hardcoded cream rectangle (0.0, -0.62) rectangle (16.30, 0.30) is too short for the wrapped 4-line Idempotency & Lock Invariant text node, causing the top line ('Idempotency & Lock Invariant (FR-06a): Retries reuse') and bottom line ('PREAUTH_PENDING..RECONCILING; released only on operator evidence.') to overflow outside the box borders.",
+      "broken_rule": "Detector SKILL.md Sec. 4 (qa-img: zero clipping, zero text-border overflow).",
+      "acceptance_criteria": "Replace the fixed rectangle with a self-sizing TikZ node (draw=fgRuleGray, rounded corners=3pt, fill=fgSoftCream, inner sep=4pt, text width=15.9cm) or increase box height so all 4 lines sit cleanly inside the frame with >= 3pt vertical padding on color and grayscale PNGs.",
+      "verification_notes": "PASS (2026-11-27T19:41:00+02:00): Visual inspection of qa/main-12.png confirms self-sizing cream callout node cleanly encloses all 4 lines with generous vertical padding and zero border overflow."
+    },
+    {
+      "id": "DEF-013",
+      "category": "qa-img",
+      "severity": "MAJOR",
+      "status": "CLOSED",
+      "assigned_to": "fixer",
+      "incident_id": "INC-DEF-013",
+      "location": [
+        "main.pdf (Page 18, Figure 8)",
+        "figures/safety_trust_boundary.tex:77,103,105,110-111",
+        "qa/main-18.png",
+        "qa/main_gray-18.png"
+      ],
+      "evidence": "Three confirmed arrow/label collisions in Figure 8 (safety_trust_boundary.tex): (a) line 103 dashed arrow (sdk.south) |- (psp.west) cuts straight through the middle of the 'Bay Verification' box, obscuring its text; (b) line 105 vertical arrow (orch.south) -- (psp.north) overlaps directly on top of the 'Z3: External PSP Vault (PCI DSS CDE)' header text; (c) line 110 vertical arrow (fcc.south) -- (hwfuel.north) cuts through the 'No Safety Override' label.",
+      "broken_rule": "Detector SKILL.md Sec. 4 (qa-img: zero overlapping arrows/text in vector diagrams).",
+      "acceptance_criteria": "Reroute (sdk) -> (psp) cleanly around (bay) via the Z1-Z2 corridor; eliminate overlap between (orch) <-> (psp) arrow and the Z3 header; ensure 'NFR-06 Hardware Isolation' and 'No Safety Override' labels have clean non-overlapping placement/background relative to the (fcc) -> (hwfuel) arrow. Verify on color and grayscale Page 18 PNGs.",
+      "verification_notes": "PASS (2026-11-27T19:41:00+02:00): Visual inspection of qa/main-19.png confirms all 3 collisions eliminated: sdk -> psp routes cleanly around Bay Verification through Z1-Z2 gutter; Z3 label moved to bottom with zero overlap from orch <-> psp; fcc -> hwfuel shifted left with NFR-06 Hardware Isolation and No Safety Override unobstructed."
+    },
+    {
+      "id": "DEF-014",
+      "category": "qa-typeset",
+      "severity": "MINOR",
+      "status": "CLOSED",
+      "assigned_to": "fixer",
+      "incident_id": "INC-DEF-014",
+      "location": [
+        "main.pdf (Pages 7, 15-18)",
+        "sections/sec03_requirements.tex",
+        "sections/sec05_data_protocols.tex",
+        "sections/sec06_ux_ui.tex",
+        "sections/sec07_security_safety.tex"
+      ],
+      "evidence": "(a) Chapter 03 banner is orphaned at the bottom of Page 7 with Sec. 3.1 starting on Page 8; (b) Figure 6 (Sec. 5.3) floats onto an isolated page (Page 16) after Chapter 6 begins on Page 15 (splitting a bullet list); (c) Chapter 07 banner is orphaned at the bottom of Page 17 while Table 7 (Sec. 6.2) floats onto Page 18 after Chapter 7's banner.",
+      "broken_rule": "Detector SKILL.md Sec. 4 (qa-typeset: no orphan headings at page bottoms; figures/tables stay within their owning chapter).",
+      "acceptance_criteria": "Prevent orphan chapter banners (e.g., via \\needspace in \\fgchapter) and place \\FloatBarrier at chapter boundaries so Figure 6 stays in Ch. 5 and Table 7 stays in Ch. 6 while preserving the exact 25-page total PDF budget.",
+      "verification_notes": "PASS (2026-11-27T19:41:00+02:00): Verified on qa/main-08.png, -16.png, -17.png, -19.png, -21.png: zero orphan chapter banners, Fig. 6 contained inside Ch. 5, Table 7 inside Ch. 6, exact 25-page count, max overfull 1.60pt."
+    },
+    {
+      "id": "DEF-015",
+      "category": "qa-typeset",
+      "severity": "MINOR",
+      "status": "CLOSED",
+      "assigned_to": "fixer",
+      "incident_id": "INC-DEF-015",
+      "location": [
+        "main.pdf (Page 24)",
+        "qa/main-24.png"
+      ],
+      "evidence": "Page 24 (References continuation) contains only 6 bibliographic entries ([22]-[27]), leaving ~75% of the page whitespace before the forced \\clearpage in back/appendices.tex:6.",
+      "broken_rule": "Prompt 017 A.1 / Detector SKILL.md Sec. 4 (qa-typeset: avoid sparsely occupied pages where practical while preserving the 25-page target).",
+      "acceptance_criteria": "Improve vertical balance on Page 24 during pagination adjustments for DEF-011/DEF-014 if achievable without exceeding 25 pages or shrinking readable text.",
+      "verification_notes": "PASS (2026-11-27T19:41:00+02:00): Visual inspection of qa/main-24.png and qa/main-25.png confirms all 27 IEEE references ([1]-[27], incl. RTL Hebrew titles in [13]-[15]) fit cleanly on a balanced Page 24, followed by Appendices A & B on Page 25."
+    }
+  ]
 }
